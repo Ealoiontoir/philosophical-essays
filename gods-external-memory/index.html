@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>God’s External Memory · Внешняя память Бога — АЦХ · ADC</title>
+<meta name="description" content="A bilingual (English / Russian) reading edition of the essay “God’s External Memory” by АЦХ · ADC: from the first image seated in infinity to digital memory and the question “Who is looking here?”.">
+<meta name="author" content="АЦХ · ADC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="God’s External Memory · Внешняя память Бога">
+<meta property="og:description" content="Bilingual reading edition of an essay by АЦХ · ADC on myth, paradise, the cube of consciousness and external memory.">
+<meta property="og:image" content="https://ealoiontoir.github.io/philosophical-essays/gods-external-memory/hero.jpg">
+<meta property="og:url" content="https://ealoiontoir.github.io/philosophical-essays/gods-external-memory/">
+<link rel="canonical" href="https://ealoiontoir.github.io/philosophical-essays/gods-external-memory/">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta property="og:site_name" content="Ealoiontoir">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{
+  --bg:#151310;--bg2:#1d1a15;--sheet:#f6f0e3;--ink:#29241c;--muted:#6b6150;--rule:#dcd2bd;
+  --accent:#7a5418;--a:#7a5418;--b:#365a6c;--c:#7d3848;--mark:#ecd9a8;--shadow:0 30px 80px rgba(0,0,0,.55);
+  --serif:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+:root[data-theme="dark"]{
+  --sheet:#211d17;--ink:#ebe3d3;--muted:#a99d87;--rule:#3b342a;
+  --accent:#d9ac5f;--a:#d9ac5f;--b:#8db6c9;--c:#d595a3;--mark:#5a4a24;--shadow:0 30px 80px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:radial-gradient(ellipse at 50% -10%,#2a251d 0%,var(--bg) 55%) fixed,var(--bg);color:var(--ink);font-family:var(--serif)}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:2px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:-999px;top:0;background:var(--sheet);color:var(--ink);padding:.6rem 1rem;z-index:50}
+.skip:focus{left:1rem}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:.6rem;padding:.55rem 1rem;
+  background:rgba(21,19,16,.88);backdrop-filter:blur(8px);color:#e9e1d1;font-family:var(--sans);font-size:.85rem;border-bottom:1px solid #2c271f}
+.bar .ttl{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.04em}
+.bar .cur{color:#a99d87}
+.bar button{font:inherit;color:#e9e1d1;background:transparent;border:1px solid #4a4235;border-radius:999px;padding:.32rem .75rem;cursor:pointer;min-height:2rem}
+.bar button[aria-pressed="true"]{background:#e9e1d1;color:#151310;border-color:#e9e1d1}
+.bar .lang{display:flex;gap:.25rem}
+#tocBtn{display:none}
+
+.wrap{display:grid;grid-template-columns:16rem minmax(0,1fr);gap:2rem;max-width:76rem;margin:0 auto;padding:2rem 1rem 4rem}
+nav.toc{position:sticky;top:4rem;align-self:start;max-height:calc(100vh - 5rem);overflow:auto;font-family:var(--sans);font-size:.82rem;color:#c9bfac}
+nav.toc h2{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#8f8573;margin:.2rem 0 .8rem}
+nav.toc ol{list-style:none;margin:0;padding:0}
+nav.toc a{display:flex;gap:.6rem;padding:.42rem .5rem;border-radius:6px;color:#cfc5b2;text-decoration:none;line-height:1.35}
+nav.toc a:hover{background:#221e18}
+nav.toc a[aria-current="true"]{background:#2b261e;color:#fff}
+nav.toc .n{color:#8f8573;min-width:1.2rem;text-align:right}
+nav.toc .extra{margin-top:1rem;border-top:1px solid #2c271f;padding-top:.6rem}
+
+.sheet{background:var(--sheet);box-shadow:var(--shadow);border-radius:4px;padding:clamp(1.25rem,5vw,4.5rem) clamp(1rem,5vw,5rem)}
+.col{max-width:70ch;margin:0 auto}
+.kicker{font-family:var(--sans);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-align:center;margin:0}
+h1{font-weight:normal;font-size:clamp(2rem,6vw,3.4rem);line-height:1.08;text-align:center;margin:.7rem 0 .3rem;letter-spacing:-.01em}
+.alt{text-align:center;font-style:italic;color:var(--muted);margin:0 0 1.4rem;font-size:1.1rem}
+.srcline{font-family:var(--sans);font-size:.82rem;text-align:center;color:var(--muted);margin:0 0 2rem}
+.srcline a{margin:0 .35rem}
+figure.hero{margin:0 auto 2.2rem;max-width:70ch}
+figure.hero img{display:block;width:100%;height:auto;border-radius:3px}
+
+.text{font-size:19px;line-height:1.68;hyphens:auto;-webkit-hyphens:auto}
+.text p{margin:0 0 1.05em}
+.text section:first-of-type p:first-child::first-letter{float:left;font-size:3.6em;line-height:.82;padding:.06em .1em 0 0;color:var(--accent)}
+.text .asterism{text-align:center;margin:2.2em 0;color:var(--accent);letter-spacing:.3em;font-size:1.2em}
+.text .sig{margin:0;text-align:right;font-variant:small-caps;letter-spacing:.08em;color:var(--muted)}
+.text section,.text p{scroll-margin-top:5rem}
+.text p.flash{background:var(--mark);transition:background 1.6s;border-radius:2px}
+mark{background:var(--mark);color:inherit;padding:0 .1em;border-radius:2px}
+
+/* editorial apparatus */
+.ed{font-family:var(--sans);font-size:.92rem;line-height:1.5;margin:0 0 3rem;padding:1.4rem;border:1px solid var(--rule);border-radius:6px}
+.ed h2{font-family:var(--serif);font-weight:normal;font-size:1.45rem;margin:.1rem 0 .4rem}
+.ed .note{color:var(--muted);margin:0 0 1rem;font-size:.86rem}
+.ed .badge{display:inline-block;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--rule);border-radius:999px;padding:.12rem .55rem;color:var(--muted)}
+.mapbox{position:relative;border-radius:6px;background:linear-gradient(180deg,rgba(0,0,0,.03),rgba(0,0,0,.07));overflow:hidden}
+:root[data-theme="dark"] .mapbox{background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.05))}
+canvas#map3d{display:block;width:100%;touch-action:none;cursor:grab}
+canvas#map3d:active{cursor:grabbing}
+.ctrls{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;margin:.7rem 0}
+.ctrls button,.nodes button,.panel button{font:inherit;font-size:.82rem;background:transparent;color:var(--ink);border:1px solid var(--rule);border-radius:999px;padding:.35rem .8rem;cursor:pointer;min-height:2.2rem}
+.ctrls button[aria-pressed="true"]{background:var(--ink);color:var(--sheet)}
+.ctrls .hint{color:var(--muted);font-size:.78rem;margin-left:auto}
+.legend{display:flex;flex-wrap:wrap;gap:.9rem;font-size:.8rem;color:var(--muted);margin:.4rem 0 .8rem}
+.legend i{display:inline-block;width:.7rem;height:.7rem;border-radius:50%;margin-right:.35rem;vertical-align:-.05rem}
+.legend .ln{display:inline-block;width:1.4rem;border-top:2px solid var(--muted);margin-right:.35rem;vertical-align:.2rem}
+.legend .ln.d{border-top-style:dashed}
+.nodes{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-top:.6rem}
+.nodes h3{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;margin:.2rem 0 .4rem;color:var(--muted);font-weight:600}
+.nodes ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.3rem}
+.nodes button{font-size:.78rem;padding:.25rem .6rem;min-height:2rem;text-align:left}
+.nodes button[aria-pressed="true"]{border-color:currentColor;font-weight:600}
+.panel{margin-top:1rem;padding:1rem 1.1rem;border-left:3px solid var(--accent);background:rgba(0,0,0,.035);border-radius:0 6px 6px 0}
+:root[data-theme="dark"] .panel{background:rgba(255,255,255,.04)}
+.panel .meta{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.panel blockquote{font-family:var(--serif);font-size:1.05rem;line-height:1.6;margin:.5rem 0 .7rem}
+table.rel{width:100%;border-collapse:collapse;font-size:.88rem}
+table.rel caption{text-align:left;color:var(--muted);font-size:.8rem;padding-bottom:.5rem}
+table.rel th,table.rel td{text-align:left;vertical-align:top;padding:.6rem .5rem;border-top:1px solid var(--rule)}
+table.rel th{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+table.rel td.q{font-family:var(--serif);font-size:.98rem}
+table.rel td.q a{color:inherit;text-decoration-color:var(--rule);text-underline-offset:3px}
+table.rel td.s{white-space:nowrap;color:var(--muted)}
+
+footer.colo{max-width:70ch;margin:3.5rem auto 0;padding-top:1.5rem;border-top:1px solid var(--rule);font-family:var(--sans);font-size:.88rem;color:var(--muted)}
+footer.colo ul{list-style:none;padding:0;margin:0 0 1rem}
+footer.colo li{margin:.35rem 0}
+footer.colo .sign{font-family:var(--serif);font-size:1.15rem;color:var(--ink);text-align:center;margin:1.6rem 0 .4rem;letter-spacing:.06em}
+.top{display:block;text-align:center;margin-top:1rem;font-size:.8rem}
+
+@media (max-width:900px){
+  .wrap{grid-template-columns:1fr;padding:1rem 0 3rem}
+  .sheet{border-radius:0}
+  #tocBtn{display:inline-block}
+  nav.toc{position:fixed;top:3.1rem;left:0;right:0;max-height:70vh;z-index:25;background:#151310;padding:1rem;border-bottom:1px solid #2c271f;display:none}
+  nav.toc.open{display:block}
+  .bar .cur{display:none}
+}
+@media (max-width:720px){
+  .text{font-size:18px;line-height:1.62}
+  .mapbox,.ctrls,.legend .lg-ln{display:none}
+  #themeBtn .tl{display:none}
+  .nodes{grid-template-columns:1fr}
+  .nodes ul{display:block}
+  .nodes li{margin:.25rem 0}
+  .nodes button{width:100%}
+  table.rel thead{display:none}
+  table.rel tr{display:block;border-top:1px solid var(--rule);padding:.5rem 0}
+  table.rel td{display:block;border:0;padding:.15rem 0}
+}
+@media print{.bar,nav.toc,.ed,.top{display:none}body{background:#fff}.sheet{box-shadow:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#text" data-i="skip">Skip to the essay</a>
+<header class="bar">
+  <button id="tocBtn" aria-expanded="false" aria-controls="toc" data-i="contents">Contents</button>
+  <div class="ttl"><span data-i="short">God’s External Memory</span> <span class="cur" id="curSec"></span></div>
+  <div class="lang" role="group" aria-label="Language / Язык">
+    <button data-lang="en" aria-pressed="true" lang="en">EN</button>
+    <button data-lang="ru" aria-pressed="false" lang="ru">RU</button>
+  </div>
+  <button id="themeBtn" aria-pressed="false"><span aria-hidden="true">◐</span> <span class="tl" data-i="theme">Dark page</span></button>
+</header>
+
+<div class="wrap">
+  <nav class="toc" id="toc" aria-labelledby="tocH">
+    <h2 id="tocH" data-i="contents">Contents</h2>
+    <ol id="tocList"><li><a href="#s1"><span class="n">1</span><span>One day, a human being looked up and saw infinity.</span></a></li><li><a href="#s2"><span class="n">2</span><span>It did not begin with God. It began with the body.</span></a></li><li><a href="#s3"><span class="n">3</span><span>The most eloquent part of this mechanism is paradise.</span></a></li><li><a href="#s4"><span class="n">4</span><span>The human being lives in a cube.</span></a></li><li><a href="#s5"><span class="n">5</span><span>But there is an irony deeper than the first.</span></a></li><li><a href="#s6"><span class="n">6</span><span>Our cube has already been built. And it bears a…</span></a></li><li><a href="#s7"><span class="n">7</span><span>The new myth also has a new power.</span></a></li><li><a href="#s8"><span class="n">8</span><span>The religious human being reduced infinity to an old man…</span></a></li><li><a href="#s9"><span class="n">9</span><span>And yet the movement is not meaningless.</span></a></li><li><a href="#s10"><span class="n">10</span><span>The way out of the cube is not a new picture. Every new…</span></a></li></ol>
+    <ol class="extra">
+      <li><a href="#map" data-i="mapTitle">Editorial map</a></li>
+      <li><a href="#colophon" data-i="sources">Sources</a></li>
+    </ol>
+  </nav>
+
+  <main class="sheet" id="main">
+    <div class="col">
+      <p class="kicker" data-i="kicker">Essay · АЦХ · ADC</p>
+      <h1 id="title" data-i="title">God’s External Memory</h1>
+      <p class="alt" data-i="alttitle" lang="ru">Внешняя память Бога</p>
+      <p class="srcline"><span data-i="readon">First published on Substack:</span>
+        <a id="ssEn" href="https://archieire.substack.com/" lang="en">English</a>·<a id="ssRu" href="https://archieire.substack.com/" lang="ru">Русский</a></p>
+      <figure class="hero"><img src="hero.jpg" id="heroImg" alt="A man holds a miniature room with a seated figure and a ring of light, framed by repeating doorways" onerror="this.closest('figure').hidden=true"></figure>
+
+      <section class="ed" id="map" aria-labelledby="mapH">
+        <span class="badge" data-i="badge">Editorial</span>
+        <h2 id="mapH" data-i="mapTitle">Editorial map</h2>
+        <p class="note" id="mapNote" data-i="mapNote"></p>
+        <div class="legend" aria-hidden="true">
+          <span><i style="background:var(--a)"></i><span data-i="LA"></span></span>
+          <span><i style="background:var(--b)"></i><span data-i="LB"></span></span>
+          <span><i style="background:var(--c)"></i><span data-i="LC"></span></span>
+          <span class="lg-ln"><span class="ln"></span><span data-i="seq"></span></span>
+          <span class="lg-ln"><span class="ln d"></span><span data-i="par"></span></span>
+        </div>
+        <div class="mapbox"><canvas id="map3d" tabindex="0" role="img" aria-describedby="mapNote mapKeys"></canvas></div>
+        <div class="ctrls">
+          <button id="bRot" data-i="rotate">Rotate</button>
+          <button id="bPause" aria-pressed="false" data-i="pause">Pause</button>
+          <button id="bReset" data-i="reset">Reset view</button>
+          <span class="hint" id="mapKeys" data-i="keys"></span>
+        </div>
+        <div class="nodes" id="nodeList"></div>
+        <div class="panel" id="panel" aria-live="polite" hidden></div>
+
+        <h2 style="margin-top:2rem" data-i="tableTitle">Relations in the text</h2>
+        <table class="rel">
+          <caption data-i="tableCap"></caption>
+          <thead><tr><th scope="col" data-i="thRel">Relation (editorial)</th><th scope="col" data-i="thQ">Exact quotation</th><th scope="col" data-i="thS">Part</th></tr></thead>
+          <tbody id="relBody"></tbody>
+        </table>
+      </section>
+
+      <article class="text" id="text" aria-labelledby="title"><section class="part" id="s1" aria-labelledby="h-s1"><h2 class="sr-only" id="h-s1">Part 1</h2><p id="p1-1">One day, a human being looked up and saw infinity.</p><p id="p1-2">And seated an old man in it.</p><p id="p1-3">The whole irony of human history lies in that gesture. Before him was something with no edge, no centre, no face. He gave it a face, a beard, a throne and a temperament. Made it stern, sometimes merciful, sometimes jealous. Placed it above, because the sky was above, and the sky was the largest thing he had ever seen.</p><p id="p1-4">We are used to laughing at this image. But we should laugh cautiously. For what laughs at it is the same consciousness, only in a different room.</p></section><p class="asterism" aria-hidden="true">⁂</p><section class="part" id="s2" aria-labelledby="h-s2"><h2 class="sr-only" id="h-s2">Part 2</h2><p id="p2-1">It did not begin with God. It began with the body.</p><p id="p2-2">A human being saw someone dead and understood that the body remained, while whoever had been within it was no longer there. This was the first rupture in experience with which it was impossible to come to terms.</p><p id="p2-3">The rupture demanded an explanation. The explanation demanded an image. The image demanded a story. The story demanded a keeper. The keeper demanded a ritual. The ritual demanded an institution. The institution demanded authority over the image. And authority over the image demanded belief that the image was reality itself.</p><p id="p2-4">Each step pressed upon the next. Nobody sat down and invented religion in its entirety. It assembled itself, as everything does that answers an unappeasable need.</p><p id="p2-5">This is how the determinism of myth works. Neither conspiracy nor deception. The pressure of causes.</p></section><p class="asterism" aria-hidden="true">⁂</p><section class="part" id="s3" aria-labelledby="h-s3"><h2 class="sr-only" id="h-s3">Part 3</h2><p id="p3-1">The most eloquent part of this mechanism is paradise.</p><p id="p3-2">Every shepherd sought a way to reach his flock. And each spoke the language of what it lacked.</p><p id="p3-3">The desert dweller was promised a garden with running water. The hungry were promised a table that never emptied. The warrior was promised a hall where he would feast with the gods and go out to battle again. Some were promised houris. Those bound to their lineage were promised reunion with their ancestors. The exhausted were promised rest.</p><p id="p3-4">Paradise became an exact cast of what was missing from the life of the person to whom it was promised.</p><p id="p3-5">But not always. Sometimes religion demanded the renunciation of desire itself. Promised judgment rather than a feast. Transformation rather than rest. Then it no longer fitted a simple economy of lack. Perhaps it was at precisely such moments that the wall of the cube became transparent for an instant.</p><p id="p3-6">This was not necessarily a lie. The shepherd spoke the only language the flock could understand. You cannot explain infinity to someone who thinks in bread, water and the body. You can only promise more bread, more water and a better body.</p><p id="p3-7">But this was where the trap began. An image created to translate something came to be taken for the original. Metaphor for geography. Heaven for a place. Hell for a room. Eternity for a very long time. God for a figure.</p><p id="p3-8">And people believed that a fellow sat up there keeping accounts.</p></section><p class="asterism" aria-hidden="true">⁂</p><section class="part" id="s4" aria-labelledby="h-s4"><h2 class="sr-only" id="h-s4">Part 4</h2><p id="p4-1">The human being lives in a cube.</p><p id="p4-2">The cube has walls, a floor and a ceiling. Its walls are made of what consciousness can contain. Its floor of the body. Its ceiling of imagination.</p><p id="p4-3">Everything a person thinks about infinity is thought from inside the cube. So paradise, too, becomes a room. Only better furnished. The table is more plentiful, the light softer, the people kinder; there is no pain. But it is the same room. The same cube, with more furniture brought into it.</p><p id="p4-4">A narrow consciousness wants to continue exactly as it is. With the same name, the same habits, the same desires, the same grievances. It wants life to last, rather than to change.</p><p id="p4-5">When consciousness expands, light begins to pass through the walls of the cube.</p><p id="p4-6">Then it becomes clear that paradise cannot be a table. Nor can it be a garden. Nor can it be a place at all. Because above and below, here and there, before and after themselves belong to the cube. What lies beyond it does not fit within space. It is neither farther away nor higher up. It is otherwise.</p><p id="p4-7">Within such a consciousness, God ceases to be a figure. Becomes light, law, energy, the ground of being. And then even these words prove too small, because they too are made from the material of the cube.</p><p id="p4-8">And the desire to continue changes. A wider consciousness begins to see that this “I” was a temporary form. It is no longer a matter of making this life last longer. It is a matter of life not ending where its particular form ends.</p><p id="p4-9">That is an entirely different story. An infinite one.</p><p id="p4-10">At one level, the question of death asks for paradise. At another, it ceases to ask.</p><p id="p4-11">But here too there is a trap. A wider consciousness can easily make a throne of its own breadth. The person who has seen the walls begins to look down on everyone else. And once again, someone is sitting in infinity. Only now it is himself.</p></section><p class="asterism" aria-hidden="true">⁂</p><section class="part" id="s5" aria-labelledby="h-s5"><h2 class="sr-only" id="h-s5">Part 5</h2><p id="p5-1">But there is an irony deeper than the first.</p><p id="p5-2">The cube cannot see its own walls.</p><p id="p5-3">Every age laughs at the cube of the age before it. The Enlightenment laughed at the old man on a cloud. Positivism laughed at spirits. We laugh at houris and the laden table.</p><p id="p5-4">And every age sits inside its own cube, convinced that it has already stepped outside.</p><p id="p5-5">Once the absolute was God the Father. Then mechanism. Then energy. Now information. Each word seemed definitive to those who uttered it.</p><p id="p5-6">So the most honest question is not how ridiculous their images were. It is: which cube am I sitting in?</p></section><p class="asterism" aria-hidden="true">⁂</p><section class="part" id="s6" aria-labelledby="h-s6"><h2 class="sr-only" id="h-s6">Part 6</h2><p id="p6-1">Our cube has already been built. And it bears a remarkable resemblance to the old ones.</p><p id="p6-2">The same determinism is assembling myth again. We learned to store memory outside the body. Memory demanded search. Search demanded a model. The model learned to connect a person’s traces. The connected traces began to form a likeness. The likeness learned to answer.</p><p id="p6-3">And already there is talk of digital immortality. Of a double that will continue speaking in the voice of the dead. Of consciousness uploaded to a network.</p><p id="p6-4">We stand again beside the body of the first person who died. Only now we want presence to remain even without the body.</p><p id="p6-5">And once again, we build paradise out of what we lack.</p><p id="p6-6">Look at where we send our photographs, letters, voices and texts. Into the cloud. The person who laughed at the heavens sent his memory into the sky and gave it the same name.</p><p id="p6-7">Digital paradise has turned out to be the same room with the laden table. My name, my voice, my habits, my memories will be preserved there. There I will continue just as I am. This is precisely the desire once served by gardens and halls.</p><p id="p6-8">And the shepherds have not gone anywhere either. Every platform seeks a way to reach its flock. Each person is shown their own paradise. The algorithm does what the preacher did. Speaks to a person in the language of what they lack. Only more precisely now, because it knows them better.</p></section><p class="asterism" aria-hidden="true">⁂</p><section class="part" id="s7" aria-labelledby="h-s7"><h2 class="sr-only" id="h-s7">Part 7</h2><p id="p7-1">The new myth also has a new power.</p><p id="p7-2">Whoever stores memory decides what will count as the past. Whoever models personality decides what will count as a human being. Once the priest determined who had the right to speak on behalf of the dead. Now that threshold passes to the owner of the servers.</p><p id="p7-3">And immortality can become a privilege of rank once again. Some will be preserved in detail, with their voices and manner of speaking. Others will be preserved by no one. As in ancient Egypt, where eternity was initially granted above all to the pharaoh.</p></section><p class="asterism" aria-hidden="true">⁂</p><section class="part" id="s8" aria-labelledby="h-s8"><h2 class="sr-only" id="h-s8">Part 8</h2><p id="p8-1">The religious human being reduced infinity to an old man above.</p><p id="p8-2">The technological human being may reduce it to data.</p><p id="p8-3">The new myth speaks plainly. Consciousness is data. Love is data. Personality is data. In its vocabulary, the soul is merely an outdated name for an information structure.</p><p id="p8-4">In a few centuries, this may look as naïve as the fellow on a cloud looks today. Because it is the same gesture. Take the incomprehensible and make it the size of your own room.</p><p id="p8-5">Reality is under no obligation to match our vocabulary.</p></section><p class="asterism" aria-hidden="true">⁂</p><section class="part" id="s9" aria-labelledby="h-s9"><h2 class="sr-only" id="h-s9">Part 9</h2><p id="p9-1">And yet the movement is not meaningless.</p><p id="p9-2">Religion carried the human being into the transcendent. Beyond the world, to where God kept his memory.</p><p id="p9-3">Technology carries him into the immanent. Inside the world, into silicon and the network, where an archive keeps his memory.</p><p id="p9-4">We are building an external memory that we once attributed only to God. All-seeing, unfading, able to retrieve every word. A narrow consciousness will see in this a replacement for God. And build itself another paradise with a laden table.</p><p id="p9-5">A wider one may see something else. That even this vast memory remains a cube. That it preserves the trace, but not the person who left it. That a perfect copy of a human being may know everything he knew and speak in his voice, while the question of whether anyone is inside it remains where it stood beside the body of the first person who died.</p></section><p class="asterism" aria-hidden="true">⁂</p><section class="part" id="s10" aria-labelledby="h-s10"><h2 class="sr-only" id="h-s10">Part 10</h2><p id="p10-1">The way out of the cube is not a new picture. Every new picture becomes another wall.</p><p id="p10-2">The way out begins with acknowledging the wall.</p><p id="p10-3">With the moment when a person stops asking what paradise looks like and begins to ask why he keeps imagining it as a room.</p><p id="p10-4">The first human being seated an old man in infinity. We seat our own copy there. Someone after us will seat something else there and laugh at us.</p><p id="p10-5">And infinity will remain empty of our images and full of something for which the cube has no words.</p><p id="p10-6">And perhaps the only thing that truly reaches beyond its boundaries is the question itself. Quiet, ancient, impossible to remove.</p><p id="p10-7">Who is looking here?</p><p id="p10-8" class="sig">АЦХ</p><p id="p10-9" class="sig">ADC</p></section></article>
+
+      <footer class="colo" id="colophon">
+        <ul id="srcLinks"></ul>
+        <p class="note" data-i="colo"></p>
+        <p class="sign">АЦХ · ADC 🪶</p>
+        <a class="top" href="#main" data-i="top">Back to top</a>
+      </footer>
+    </div>
+  </main>
+</div>
+
+<script>
+const DATA={"en": {"secs": [{"id": "s1", "toc": "One day, a human being looked up and saw infinity.", "ps": [{"id": "p1-1", "t": "One day, a human being looked up and saw infinity.", "k": "p"}, {"id": "p1-2", "t": "And seated an old man in it.", "k": "p"}, {"id": "p1-3", "t": "The whole irony of human history lies in that gesture. Before him was something with no edge, no centre, no face. He gave it a face, a beard, a throne and a temperament. Made it stern, sometimes merciful, sometimes jealous. Placed it above, because the sky was above, and the sky was the largest thing he had ever seen.", "k": "p"}, {"id": "p1-4", "t": "We are used to laughing at this image. But we should laugh cautiously. For what laughs at it is the same consciousness, only in a different room.", "k": "p"}]}, {"id": "s2", "toc": "It did not begin with God. It began with the body.", "ps": [{"id": "p2-1", "t": "It did not begin with God. It began with the body.", "k": "p"}, {"id": "p2-2", "t": "A human being saw someone dead and understood that the body remained, while whoever had been within it was no longer there. This was the first rupture in experience with which it was impossible to come to terms.", "k": "p"}, {"id": "p2-3", "t": "The rupture demanded an explanation. The explanation demanded an image. The image demanded a story. The story demanded a keeper. The keeper demanded a ritual. The ritual demanded an institution. The institution demanded authority over the image. And authority over the image demanded belief that the image was reality itself.", "k": "p"}, {"id": "p2-4", "t": "Each step pressed upon the next. Nobody sat down and invented religion in its entirety. It assembled itself, as everything does that answers an unappeasable need.", "k": "p"}, {"id": "p2-5", "t": "This is how the determinism of myth works. Neither conspiracy nor deception. The pressure of causes.", "k": "p"}]}, {"id": "s3", "toc": "The most eloquent part of this mechanism is paradise.", "ps": [{"id": "p3-1", "t": "The most eloquent part of this mechanism is paradise.", "k": "p"}, {"id": "p3-2", "t": "Every shepherd sought a way to reach his flock. And each spoke the language of what it lacked.", "k": "p"}, {"id": "p3-3", "t": "The desert dweller was promised a garden with running water. The hungry were promised a table that never emptied. The warrior was promised a hall where he would feast with the gods and go out to battle again. Some were promised houris. Those bound to their lineage were promised reunion with their ancestors. The exhausted were promised rest.", "k": "p"}, {"id": "p3-4", "t": "Paradise became an exact cast of what was missing from the life of the person to whom it was promised.", "k": "p"}, {"id": "p3-5", "t": "But not always. Sometimes religion demanded the renunciation of desire itself. Promised judgment rather than a feast. Transformation rather than rest. Then it no longer fitted a simple economy of lack. Perhaps it was at precisely such moments that the wall of the cube became transparent for an instant.", "k": "p"}, {"id": "p3-6", "t": "This was not necessarily a lie. The shepherd spoke the only language the flock could understand. You cannot explain infinity to someone who thinks in bread, water and the body. You can only promise more bread, more water and a better body.", "k": "p"}, {"id": "p3-7", "t": "But this was where the trap began. An image created to translate something came to be taken for the original. Metaphor for geography. Heaven for a place. Hell for a room. Eternity for a very long time. God for a figure.", "k": "p"}, {"id": "p3-8", "t": "And people believed that a fellow sat up there keeping accounts.", "k": "p"}]}, {"id": "s4", "toc": "The human being lives in a cube.", "ps": [{"id": "p4-1", "t": "The human being lives in a cube.", "k": "p"}, {"id": "p4-2", "t": "The cube has walls, a floor and a ceiling. Its walls are made of what consciousness can contain. Its floor of the body. Its ceiling of imagination.", "k": "p"}, {"id": "p4-3", "t": "Everything a person thinks about infinity is thought from inside the cube. So paradise, too, becomes a room. Only better furnished. The table is more plentiful, the light softer, the people kinder; there is no pain. But it is the same room. The same cube, with more furniture brought into it.", "k": "p"}, {"id": "p4-4", "t": "A narrow consciousness wants to continue exactly as it is. With the same name, the same habits, the same desires, the same grievances. It wants life to last, rather than to change.", "k": "p"}, {"id": "p4-5", "t": "When consciousness expands, light begins to pass through the walls of the cube.", "k": "p"}, {"id": "p4-6", "t": "Then it becomes clear that paradise cannot be a table. Nor can it be a garden. Nor can it be a place at all. Because above and below, here and there, before and after themselves belong to the cube. What lies beyond it does not fit within space. It is neither farther away nor higher up. It is otherwise.", "k": "p"}, {"id": "p4-7", "t": "Within such a consciousness, God ceases to be a figure. Becomes light, law, energy, the ground of being. And then even these words prove too small, because they too are made from the material of the cube.", "k": "p"}, {"id": "p4-8", "t": "And the desire to continue changes. A wider consciousness begins to see that this “I” was a temporary form. It is no longer a matter of making this life last longer. It is a matter of life not ending where its particular form ends.", "k": "p"}, {"id": "p4-9", "t": "That is an entirely different story. An infinite one.", "k": "p"}, {"id": "p4-10", "t": "At one level, the question of death asks for paradise. At another, it ceases to ask.", "k": "p"}, {"id": "p4-11", "t": "But here too there is a trap. A wider consciousness can easily make a throne of its own breadth. The person who has seen the walls begins to look down on everyone else. And once again, someone is sitting in infinity. Only now it is himself.", "k": "p"}]}, {"id": "s5", "toc": "But there is an irony deeper than the first.", "ps": [{"id": "p5-1", "t": "But there is an irony deeper than the first.", "k": "p"}, {"id": "p5-2", "t": "The cube cannot see its own walls.", "k": "p"}, {"id": "p5-3", "t": "Every age laughs at the cube of the age before it. The Enlightenment laughed at the old man on a cloud. Positivism laughed at spirits. We laugh at houris and the laden table.", "k": "p"}, {"id": "p5-4", "t": "And every age sits inside its own cube, convinced that it has already stepped outside.", "k": "p"}, {"id": "p5-5", "t": "Once the absolute was God the Father. Then mechanism. Then energy. Now information. Each word seemed definitive to those who uttered it.", "k": "p"}, {"id": "p5-6", "t": "So the most honest question is not how ridiculous their images were. It is: which cube am I sitting in?", "k": "p"}]}, {"id": "s6", "toc": "Our cube has already been built. And it bears a…", "ps": [{"id": "p6-1", "t": "Our cube has already been built. And it bears a remarkable resemblance to the old ones.", "k": "p"}, {"id": "p6-2", "t": "The same determinism is assembling myth again. We learned to store memory outside the body. Memory demanded search. Search demanded a model. The model learned to connect a person’s traces. The connected traces began to form a likeness. The likeness learned to answer.", "k": "p"}, {"id": "p6-3", "t": "And already there is talk of digital immortality. Of a double that will continue speaking in the voice of the dead. Of consciousness uploaded to a network.", "k": "p"}, {"id": "p6-4", "t": "We stand again beside the body of the first person who died. Only now we want presence to remain even without the body.", "k": "p"}, {"id": "p6-5", "t": "And once again, we build paradise out of what we lack.", "k": "p"}, {"id": "p6-6", "t": "Look at where we send our photographs, letters, voices and texts. Into the cloud. The person who laughed at the heavens sent his memory into the sky and gave it the same name.", "k": "p"}, {"id": "p6-7", "t": "Digital paradise has turned out to be the same room with the laden table. My name, my voice, my habits, my memories will be preserved there. There I will continue just as I am. This is precisely the desire once served by gardens and halls.", "k": "p"}, {"id": "p6-8", "t": "And the shepherds have not gone anywhere either. Every platform seeks a way to reach its flock. Each person is shown their own paradise. The algorithm does what the preacher did. Speaks to a person in the language of what they lack. Only more precisely now, because it knows them better.", "k": "p"}]}, {"id": "s7", "toc": "The new myth also has a new power.", "ps": [{"id": "p7-1", "t": "The new myth also has a new power.", "k": "p"}, {"id": "p7-2", "t": "Whoever stores memory decides what will count as the past. Whoever models personality decides what will count as a human being. Once the priest determined who had the right to speak on behalf of the dead. Now that threshold passes to the owner of the servers.", "k": "p"}, {"id": "p7-3", "t": "And immortality can become a privilege of rank once again. Some will be preserved in detail, with their voices and manner of speaking. Others will be preserved by no one. As in ancient Egypt, where eternity was initially granted above all to the pharaoh.", "k": "p"}]}, {"id": "s8", "toc": "The religious human being reduced infinity to an old man…", "ps": [{"id": "p8-1", "t": "The religious human being reduced infinity to an old man above.", "k": "p"}, {"id": "p8-2", "t": "The technological human being may reduce it to data.", "k": "p"}, {"id": "p8-3", "t": "The new myth speaks plainly. Consciousness is data. Love is data. Personality is data. In its vocabulary, the soul is merely an outdated name for an information structure.", "k": "p"}, {"id": "p8-4", "t": "In a few centuries, this may look as naïve as the fellow on a cloud looks today. Because it is the same gesture. Take the incomprehensible and make it the size of your own room.", "k": "p"}, {"id": "p8-5", "t": "Reality is under no obligation to match our vocabulary.", "k": "p"}]}, {"id": "s9", "toc": "And yet the movement is not meaningless.", "ps": [{"id": "p9-1", "t": "And yet the movement is not meaningless.", "k": "p"}, {"id": "p9-2", "t": "Religion carried the human being into the transcendent. Beyond the world, to where God kept his memory.", "k": "p"}, {"id": "p9-3", "t": "Technology carries him into the immanent. Inside the world, into silicon and the network, where an archive keeps his memory.", "k": "p"}, {"id": "p9-4", "t": "We are building an external memory that we once attributed only to God. All-seeing, unfading, able to retrieve every word. A narrow consciousness will see in this a replacement for God. And build itself another paradise with a laden table.", "k": "p"}, {"id": "p9-5", "t": "A wider one may see something else. That even this vast memory remains a cube. That it preserves the trace, but not the person who left it. That a perfect copy of a human being may know everything he knew and speak in his voice, while the question of whether anyone is inside it remains where it stood beside the body of the first person who died.", "k": "p"}]}, {"id": "s10", "toc": "The way out of the cube is not a new picture. Every new…", "ps": [{"id": "p10-1", "t": "The way out of the cube is not a new picture. Every new picture becomes another wall.", "k": "p"}, {"id": "p10-2", "t": "The way out begins with acknowledging the wall.", "k": "p"}, {"id": "p10-3", "t": "With the moment when a person stops asking what paradise looks like and begins to ask why he keeps imagining it as a room.", "k": "p"}, {"id": "p10-4", "t": "The first human being seated an old man in infinity. We seat our own copy there. Someone after us will seat something else there and laugh at us.", "k": "p"}, {"id": "p10-5", "t": "And infinity will remain empty of our images and full of something for which the cube has no words.", "k": "p"}, {"id": "p10-6", "t": "And perhaps the only thing that truly reaches beyond its boundaries is the question itself. Quiet, ancient, impossible to remove.", "k": "p"}, {"id": "p10-7", "t": "Who is looking here?", "k": "p"}, {"id": "p10-8", "t": "АЦХ", "k": "sig"}, {"id": "p10-9", "t": "ADC", "k": "sig"}]}], "links": [{"href": "https://www.facebook.com/aivar.drukalskij/posts/pfbid034NEyskawnsG35rXkvHGT4Q5AEWaNNZg2NWmVG2K4p8ufmfknttqY6NhrLPpUshRZl", "label": "Original Facebook post"}, {"href": "https://ealoiontoir.weebly.com/", "label": "Explore Ealoiontoir — art, essays and Spirit of Time"}]}, "ru": {"secs": [{"id": "s1", "toc": "Человек однажды поднял голову и увидел бесконечность.", "ps": [{"id": "p1-1", "t": "Человек однажды поднял голову и увидел бесконечность.", "k": "p"}, {"id": "p1-2", "t": "И посадил в неё старика.", "k": "p"}, {"id": "p1-3", "t": "В этом жесте вся ирония человеческой истории. Перед ним было то, что не имеет ни края, ни центра, ни лица. А он дал этому лицо, бороду, престол и характер. Сделал его строгим, иногда милостивым, иногда ревнивым. Поместил наверх, потому что наверху небо, а небо было самым большим, что он видел.", "k": "p"}, {"id": "p1-4", "t": "Мы привыкли смеяться над этим образом. Но смеяться стоит осторожно. Потому что смеётся над ним то же самое сознание, только в другой комнате.", "k": "p"}]}, {"id": "s2", "toc": "Всё началось не с Бога. Всё началось с тела.", "ps": [{"id": "p2-1", "t": "Всё началось не с Бога. Всё началось с тела.", "k": "p"}, {"id": "p2-2", "t": "Человек увидел мёртвого и понял, что тело осталось, а того, кто был в нём, больше нет. Это был первый разрыв опыта, с которым невозможно примириться.", "k": "p"}, {"id": "p2-3", "t": "Разрыв требовал объяснения. Объяснение требовало образа. Образ требовал рассказа. Рассказ требовал хранителя. Хранитель требовал обряда. Обряд требовал института. Институт требовал власти над образом. А власть над образом требовала веры в то, что образ и есть реальность.", "k": "p"}, {"id": "p2-4", "t": "Каждая ступень давила на следующую. Никто не садился и не придумывал религию целиком. Она собиралась сама, как собирается всё, что отвечает на неутолимую нужду.", "k": "p"}, {"id": "p2-5", "t": "Так работает детерминизм мифа. Не заговор и не обман. Давление причин.", "k": "p"}]}, {"id": "s3", "toc": "Самое красноречивое в этом механизме рай.", "ps": [{"id": "p3-1", "t": "Самое красноречивое в этом механизме рай.", "k": "p"}, {"id": "p3-2", "t": "Каждый пастырь искал подход к своей пастве. И каждый говорил на языке её нехватки.", "k": "p"}, {"id": "p3-3", "t": "Человеку пустыни обещали сад с проточной водой. Голодному обещали стол, который не пустеет. Воину обещали чертог, где пируют с богами и снова выходят в бой. Кому-то обещали гурий. Человеку рода обещали встречу с предками. Измученному обещали покой.", "k": "p"}, {"id": "p3-4", "t": "Рай оказывался точным слепком того, чего не хватало тому, кому его обещали.", "k": "p"}, {"id": "p3-5", "t": "Но не всегда. Иногда религия требовала отказаться от самого желания. Обещала не пир, а суд. Не покой, а преображение. И тогда она уже не помещалась в простую экономику нехватки. Возможно, именно в такие моменты стена куба на мгновение становилась прозрачной.", "k": "p"}, {"id": "p3-6", "t": "Это не обязательно было ложью. Пастырь говорил на единственном языке, который паства могла понять. Нельзя объяснить бесконечность тому, кто думает хлебом, водой и телом. Можно только пообещать ему больше хлеба, больше воды и лучшее тело.", "k": "p"}, {"id": "p3-7", "t": "Но здесь и начиналась ловушка. Образ, созданный для перевода, стали принимать за оригинал. Метафору за географию. Небо за место. Ад за помещение. Вечность за очень долгое время. Бога за фигуру.", "k": "p"}, {"id": "p3-8", "t": "И люди поверили, что наверху сидит дядька и ведёт учёт.", "k": "p"}]}, {"id": "s4", "toc": "Человек живёт в кубе.", "ps": [{"id": "p4-1", "t": "Человек живёт в кубе.", "k": "p"}, {"id": "p4-2", "t": "У этого куба есть стены, пол и потолок. Стены сделаны из того, что сознание способно вместить. Пол из тела. Потолок из воображения.", "k": "p"}, {"id": "p4-3", "t": "Всё, что человек думает о бесконечности, он думает изнутри куба. Поэтому его рай тоже оказывается комнатой. Только лучше обставленной. Стол в ней полнее, свет мягче, люди добрее, боли нет. Но это та же комната. Тот же куб, в который внесли больше мебели.", "k": "p"}, {"id": "p4-4", "t": "Узкое сознание хочет продлить себя именно таким. С тем же именем, теми же привычками, теми же желаниями, теми же обидами. Оно хочет, чтобы жизнь длилась, а не чтобы она изменилась.", "k": "p"}, {"id": "p4-5", "t": "Когда сознание расширяется, стены куба начинают просвечивать.", "k": "p"}, {"id": "p4-6", "t": "Тогда становится видно, что рай не может быть столом. И не может быть садом. И не может быть местом вообще. Потому что верх и низ, здесь и там, до и после сами принадлежат кубу. То, что за ним, не укладывается в пространство. Оно не дальше и не выше. Оно иначе.", "k": "p"}, {"id": "p4-7", "t": "Бог в таком сознании перестаёт быть фигурой. Он становится светом, законом, энергией, основанием бытия. А затем и эти слова оказываются слишком маленькими, потому что они тоже сделаны из материала куба.", "k": "p"}, {"id": "p4-8", "t": "И меняется само желание продолжиться. Широкое сознание начинает видеть, что это я было временной формой. Речь уже не о том, чтобы эта жизнь длилась дольше. Речь о том, что жизнь не заканчивается там, где заканчивается её частная форма.", "k": "p"}, {"id": "p4-9", "t": "Это совсем другая история. Бесконечная.", "k": "p"}, {"id": "p4-10", "t": "На одном уровне вопрос о смерти просит рая. На другом он перестаёт просить.", "k": "p"}, {"id": "p4-11", "t": "Но и здесь есть ловушка. Широкое сознание легко делает престол из собственной широты. Тот, кто увидел стены, начинает смотреть на остальных сверху. И вот уже в бесконечности снова кто-то сидит. Только теперь это он сам.", "k": "p"}]}, {"id": "s5", "toc": "Но есть ирония глубже первой.", "ps": [{"id": "p5-1", "t": "Но есть ирония глубже первой.", "k": "p"}, {"id": "p5-2", "t": "Куб не видит собственных стен.", "k": "p"}, {"id": "p5-3", "t": "Каждая эпоха смеётся над кубом предыдущей. Просвещение смеялось над стариком на облаке. Позитивизм смеялся над духами. Мы смеёмся над гуриями и над полным столом.", "k": "p"}, {"id": "p5-4", "t": "И каждая эпоха сидит в собственном кубе, уверенная, что уже вышла наружу.", "k": "p"}, {"id": "p5-5", "t": "Когда-то абсолютом был Бог-Отец. Потом механизм. Потом энергия. Теперь информация. Каждое слово казалось окончательным тем, кто его произносил.", "k": "p"}, {"id": "p5-6", "t": "Поэтому самый честный вопрос звучит не так, как смешны были их образы. Он звучит так, в каком кубе сижу я.", "k": "p"}]}, {"id": "s6", "toc": "Наш куб уже построен. И он удивительно похож на старые.", "ps": [{"id": "p6-1", "t": "Наш куб уже построен. И он удивительно похож на старые.", "k": "p"}, {"id": "p6-2", "t": "Тот же детерминизм снова собирает миф. Человек научился хранить память вне тела. Память потребовала поиска. Поиск потребовал модели. Модель научилась связывать следы человека. Связанные следы начали складываться в его подобие. Подобие научилось отвечать.", "k": "p"}, {"id": "p6-3", "t": "И вот уже говорят о цифровом бессмертии. О двойнике, который продолжит говорить голосом умершего. О сознании, загруженном в сеть.", "k": "p"}, {"id": "p6-4", "t": "Мы снова стоим у тела первого умершего. Только теперь хотим, чтобы присутствие осталось и без тела.", "k": "p"}, {"id": "p6-5", "t": "И снова строим рай из собственной нехватки.", "k": "p"}, {"id": "p6-6", "t": "Посмотрите, куда мы отправляем свои фотографии, письма, голоса и тексты. В облако. Человек, который смеялся над небесами, отправил свою память на небо и назвал его тем же словом.", "k": "p"}, {"id": "p6-7", "t": "Цифровой рай оказался той же комнатой с полным столом. Там сохранится моё имя, мой голос, мои привычки, мои воспоминания. Там я продолжусь таким, какой есть. Это ровно то желание, которое когда-то обслуживали сады и чертоги.", "k": "p"}, {"id": "p6-8", "t": "И пастыри тоже никуда не делись. Каждая платформа ищет подход к своей пастве. Каждому показывают его собственный рай. Алгоритм делает то, что делал проповедник. Говорит с человеком на языке его нехватки. Только теперь точнее, потому что знает его лучше.", "k": "p"}]}, {"id": "s7", "toc": "У нового мифа есть и новая власть.", "ps": [{"id": "p7-1", "t": "У нового мифа есть и новая власть.", "k": "p"}, {"id": "p7-2", "t": "Кто хранит память, тот решает, что будет считаться прошлым. Кто моделирует личность, тот решает, что будет считаться человеком. Когда-то жрец определял, кто имеет право говорить от имени умерших. Теперь этот порог переходит к владельцу серверов.", "k": "p"}, {"id": "p7-3", "t": "И бессмертие снова может стать сословным. Одних сохранят подробно, с голосом и манерой речи. Других не сохранит никто. Как в Древнем Египте, где вечность поначалу полагалась прежде всего фараону.", "k": "p"}]}, {"id": "s8", "toc": "Религиозный человек уменьшил бесконечность до старика…", "ps": [{"id": "p8-1", "t": "Религиозный человек уменьшил бесконечность до старика наверху.", "k": "p"}, {"id": "p8-2", "t": "Технологический человек может уменьшить её до данных.", "k": "p"}, {"id": "p8-3", "t": "Новый миф говорит просто. Сознание есть данные. Любовь есть данные. Личность есть данные. Душа в его словаре лишь устаревшее название информационной структуры.", "k": "p"}, {"id": "p8-4", "t": "Через несколько столетий это может выглядеть так же наивно, как сегодня выглядит дядька на облаке. Потому что это тот же жест. Взять непостижимое и сделать его размером с собственную комнату.", "k": "p"}, {"id": "p8-5", "t": "Реальность не обязана совпадать с нашим словарём.", "k": "p"}]}, {"id": "s9", "toc": "И всё же движение не бессмысленно.", "ps": [{"id": "p9-1", "t": "И всё же движение не бессмысленно.", "k": "p"}, {"id": "p9-2", "t": "Религия выносила человека в трансцендентное. За пределы мира, туда, где его память хранил Бог.", "k": "p"}, {"id": "p9-3", "t": "Технология выносит его в имманентное. Внутрь мира, в кремний и сеть, где его память хранит архив.", "k": "p"}, {"id": "p9-4", "t": "Мы строим внешнюю память, которую прежде приписывали только Богу. Всевидящую, неисчезающую, способную вернуть каждое слово. Узкое сознание увидит в этом замену Бога. И построит себе ещё один рай с полным столом.", "k": "p"}, {"id": "p9-5", "t": "Широкое, возможно, увидит другое. Что даже эта огромная память остаётся кубом. Что она хранит след, но не того, кто оставил след. Что совершенная копия человека может знать всё, что он знал, и говорить его голосом, но вопрос о том, есть ли внутри неё кто-нибудь, останется там же, где стоял у тела первого умершего.", "k": "p"}]}, {"id": "s10", "toc": "Выход из куба не новая картинка. Каждая новая картинка…", "ps": [{"id": "p10-1", "t": "Выход из куба не новая картинка. Каждая новая картинка становится ещё одной стеной.", "k": "p"}, {"id": "p10-2", "t": "Выход начинается с признания стены.", "k": "p"}, {"id": "p10-3", "t": "С того момента, когда человек перестаёт спрашивать, как выглядит рай, и начинает спрашивать, почему он всё время представляет его комнатой.", "k": "p"}, {"id": "p10-4", "t": "Первый человек посадил в бесконечность старика. Мы сажаем туда свою копию. Кто-то после нас посадит туда что-то третье и будет смеяться над нами.", "k": "p"}, {"id": "p10-5", "t": "А бесконечность останется пустой от наших образов и полной чем-то, для чего у куба нет слов.", "k": "p"}, {"id": "p10-6", "t": "И, может быть, единственное, что по-настоящему выходит за его пределы, это сам вопрос. Тихий, древний, неустранимый.", "k": "p"}, {"id": "p10-7", "t": "Кто здесь смотрит?", "k": "p"}, {"id": "p10-8", "t": "АЦХ", "k": "sig"}, {"id": "p10-9", "t": "ADC", "k": "sig"}]}], "links": [{"href": "https://www.facebook.com/aivar.drukalskij/posts/pfbid034NEyskawnsG35rXkvHGT4Q5AEWaNNZg2NWmVG2K4p8ufmfknttqY6NhrLPpUshRZl", "label": "Исходный пост Facebook"}, {"href": "https://ealoiontoir.weebly.com/", "label": "Ealoiontoir — искусство, эссе и Spirit of Time"}]}}, NODES=[{"id": "a0", "L": "A", "en": "The body · first death", "ru": "Тело · первый умерший", "q": {"en": "saw someone dead", "ru": "увидел мёртвого"}, "pid": "p2-2", "sec": 2}, {"id": "a1", "L": "A", "en": "Rupture", "ru": "Разрыв", "q": {"en": "The rupture demanded an explanation.", "ru": "Разрыв требовал объяснения."}, "pid": "p2-3", "sec": 2}, {"id": "a2", "L": "A", "en": "Explanation", "ru": "Объяснение", "q": {"en": "The explanation demanded an image.", "ru": "Объяснение требовало образа."}, "pid": "p2-3", "sec": 2}, {"id": "a3", "L": "A", "en": "Image", "ru": "Образ", "q": {"en": "The image demanded a story.", "ru": "Образ требовал рассказа."}, "pid": "p2-3", "sec": 2}, {"id": "a4", "L": "A", "en": "Story", "ru": "Рассказ", "q": {"en": "The story demanded a keeper.", "ru": "Рассказ требовал хранителя."}, "pid": "p2-3", "sec": 2}, {"id": "a5", "L": "A", "en": "Keeper", "ru": "Хранитель", "q": {"en": "The keeper demanded a ritual.", "ru": "Хранитель требовал обряда."}, "pid": "p2-3", "sec": 2}, {"id": "a6", "L": "A", "en": "Ritual", "ru": "Обряд", "q": {"en": "The ritual demanded an institution.", "ru": "Обряд требовал института."}, "pid": "p2-3", "sec": 2}, {"id": "a7", "L": "A", "en": "Institution", "ru": "Институт", "q": {"en": "The institution demanded authority over the image.", "ru": "Институт требовал власти над образом."}, "pid": "p2-3", "sec": 2}, {"id": "a8", "L": "A", "en": "Authority over the image", "ru": "Власть над образом", "q": {"en": "And authority over the image demanded belief that the image was reality itself.", "ru": "А власть над образом требовала веры в то, что образ и есть реальность."}, "pid": "p2-3", "sec": 2}, {"id": "a9", "L": "A", "en": "Belief: image = reality", "ru": "Вера: образ = реальность", "q": {"en": "And authority over the image demanded belief that the image was reality itself.", "ru": "А власть над образом требовала веры в то, что образ и есть реальность."}, "pid": "p2-3", "sec": 2}, {"id": "b0", "L": "B", "en": "Memory outside the body", "ru": "Память вне тела", "q": {"en": "We learned to store memory outside the body.", "ru": "Человек научился хранить память вне тела."}, "pid": "p6-2", "sec": 6}, {"id": "b1", "L": "B", "en": "Search", "ru": "Поиск", "q": {"en": "Memory demanded search.", "ru": "Память потребовала поиска."}, "pid": "p6-2", "sec": 6}, {"id": "b2", "L": "B", "en": "Model", "ru": "Модель", "q": {"en": "Search demanded a model.", "ru": "Поиск потребовал модели."}, "pid": "p6-2", "sec": 6}, {"id": "b3", "L": "B", "en": "Connected traces", "ru": "Связанные следы", "q": {"en": "The model learned to connect a person’s traces.", "ru": "Модель научилась связывать следы человека."}, "pid": "p6-2", "sec": 6}, {"id": "b4", "L": "B", "en": "Likeness", "ru": "Подобие", "q": {"en": "The connected traces began to form a likeness.", "ru": "Связанные следы начали складываться в его подобие."}, "pid": "p6-2", "sec": 6}, {"id": "b5", "L": "B", "en": "The likeness answers", "ru": "Подобие отвечает", "q": {"en": "The likeness learned to answer.", "ru": "Подобие научилось отвечать."}, "pid": "p6-2", "sec": 6}, {"id": "b6", "L": "B", "en": "The cloud", "ru": "Облако", "q": {"en": "Into the cloud.", "ru": "В облако."}, "pid": "p6-6", "sec": 6}, {"id": "b7", "L": "B", "en": "Owner of the servers", "ru": "Владелец серверов", "q": {"en": "Now that threshold passes to the owner of the servers.", "ru": "Теперь этот порог переходит к владельцу серверов."}, "pid": "p7-2", "sec": 7}, {"id": "c0", "L": "C", "en": "The cube", "ru": "Куб", "q": {"en": "The cube cannot see its own walls.", "ru": "Куб не видит собственных стен."}, "pid": "p5-2", "sec": 5}, {"id": "c1", "L": "C", "en": "External memory", "ru": "Внешняя память", "q": {"en": "We are building an external memory that we once attributed only to God.", "ru": "Мы строим внешнюю память, которую прежде приписывали только Богу."}, "pid": "p9-4", "sec": 9}, {"id": "c2", "L": "C", "en": "The trace, not the person", "ru": "След, а не тот, кто его оставил", "q": {"en": "That it preserves the trace, but not the person who left it.", "ru": "Что она хранит след, но не того, кто оставил след."}, "pid": "p9-5", "sec": 9}, {"id": "c3", "L": "C", "en": "Who is looking here?", "ru": "Кто здесь смотрит?", "q": {"en": "Who is looking here?", "ru": "Кто здесь смотрит?"}, "pid": "p10-7", "sec": 10}], EDGES=[["a0", "a1", "seq"], ["a1", "a2", "seq"], ["a2", "a3", "seq"], ["a3", "a4", "seq"], ["a4", "a5", "seq"], ["a5", "a6", "seq"], ["a6", "a7", "seq"], ["a7", "a8", "seq"], ["a8", "a9", "seq"], ["b0", "b1", "seq"], ["b1", "b2", "seq"], ["b2", "b3", "seq"], ["b3", "b4", "seq"], ["b4", "b5", "seq"], ["a1", "b0", "par"], ["a5", "b7", "par"], ["b6", "b0", "par"], ["b0", "c1", "par"], ["c1", "c0", "par"], ["c1", "c2", "par"], ["a0", "c2", "par"], ["c2", "c3", "par"]], ROWS=[{"en": "Origin: the body, not God", "ru": "Начало: тело, а не Бог", "q": {"en": "It did not begin with God. It began with the body.", "ru": "Всё началось не с Бога. Всё началось с тела."}, "pid": "p2-1", "sec": 2}, {"en": "The chain: rupture → … → belief", "ru": "Цепочка: разрыв → … → вера", "q": {"en": "The rupture demanded an explanation.", "ru": "Разрыв требовал объяснения."}, "pid": "p2-3", "sec": 2}, {"en": "Not a conspiracy: pressure of causes", "ru": "Не заговор: давление причин", "q": {"en": "Neither conspiracy nor deception.", "ru": "Не заговор и не обман."}, "pid": "p2-5", "sec": 2}, {"en": "Paradise as a cast of lack", "ru": "Рай как слепок нехватки", "q": {"en": "Paradise became an exact cast of what was missing", "ru": "Рай оказывался точным слепком того, чего не хватало"}, "pid": "p3-4", "sec": 3}, {"en": "Translation taken for the original", "ru": "Перевод, принятый за оригинал", "q": {"en": "An image created to translate something came to be taken for the original.", "ru": "Образ, созданный для перевода, стали принимать за оригинал."}, "pid": "p3-7", "sec": 3}, {"en": "Consciousness inside the cube", "ru": "Сознание внутри куба", "q": {"en": "The cube cannot see its own walls.", "ru": "Куб не видит собственных стен."}, "pid": "p5-2", "sec": 5}, {"en": "The same determinism, a new chain", "ru": "Тот же детерминизм, новая цепочка", "q": {"en": "The same determinism is assembling myth again.", "ru": "Тот же детерминизм снова собирает миф."}, "pid": "p6-2", "sec": 6}, {"en": "Heaven → the cloud", "ru": "Небо → облако", "q": {"en": "sent his memory into the sky and gave it the same name", "ru": "отправил свою память на небо и назвал его тем же словом"}, "pid": "p6-6", "sec": 6}, {"en": "Priest → owner of the servers", "ru": "Жрец → владелец серверов", "q": {"en": "Now that threshold passes to the owner of the servers.", "ru": "Теперь этот порог переходит к владельцу серверов."}, "pid": "p7-2", "sec": 7}, {"en": "Infinity reduced to data", "ru": "Бесконечность, уменьшенная до данных", "q": {"en": "The technological human being may reduce it to data.", "ru": "Технологический человек может уменьшить её до данных."}, "pid": "p8-2", "sec": 8}, {"en": "External memory once attributed to God", "ru": "Внешняя память, прежде приписанная Богу", "q": {"en": "We are building an external memory that we once attributed only to God.", "ru": "Мы строим внешнюю память, которую прежде приписывали только Богу."}, "pid": "p9-4", "sec": 9}, {"en": "Trace ≠ person", "ru": "След ≠ человек", "q": {"en": "That it preserves the trace, but not the person who left it.", "ru": "Что она хранит след, но не того, кто оставил след."}, "pid": "p9-5", "sec": 9}, {"en": "The question that remains", "ru": "Вопрос, который остаётся", "q": {"en": "Who is looking here?", "ru": "Кто здесь смотрит?"}, "pid": "p10-7", "sec": 10}];
+/* Replace with the exact Substack post URLs when known. */
+const SUBSTACK={en:"https://archieire.substack.com/p/gods-external-memory",ru:"https://archieire.substack.com/p/d3e"};
+const UI={
+ en:{skip:"Skip to the essay",contents:"Contents",short:"God’s External Memory",theme:"Dark page",themeOn:"Light page",
+  kicker:"Essay · АЦХ · ADC",title:"God’s External Memory",alttitle:"Внешняя память Бога",readon:"First published on Substack:",
+  heroAlt:"A man holds a miniature room with a seated figure and a ring of light, framed by repeating doorways",
+  badge:"Editorial",mapTitle:"Editorial map",sources:"Sources",
+  mapNote:"This map is an editorial reading. It lays out the author’s philosophical model as the essay states it — image → story → keeper → ritual → institution → power, and its echo in external memory. It is not an established historical law. Lines follow the order and the parallels drawn in the text, not proven causation. Select a node to read its source paragraph.",
+  LA:"Ancient chain (part 2)",LB:"Technological chain (parts 6–7)",LC:"External memory and the human",seq:"step as written",par:"parallel drawn in the text",
+  rotate:"Rotate",pause:"Pause",reset:"Reset view",keys:"Drag or use ← → ↑ ↓ to turn · Space pauses · R resets",
+  inPart:"Part",open:"Read in context",close:"Close",
+  tableTitle:"Relations in the text",tableCap:"Each relation is an editorial label; the quotation beside it is the author’s exact wording.",thRel:"Relation (editorial)",thQ:"Exact quotation",thS:"Part",
+  colo:"Reading edition. The essay text is reproduced in full from the published version; the contents list, map, table and part numbers are editorial aids.",top:"Back to top",
+  part:"Part",desc:"A bilingual (English / Russian) reading edition of the essay “God’s External Memory” by АЦХ · ADC."},
+ ru:{skip:"Перейти к эссе",contents:"Содержание",short:"Внешняя память Бога",theme:"Тёмная страница",themeOn:"Светлая страница",
+  kicker:"Эссе · АЦХ · ADC",title:"Внешняя память Бога",alttitle:"God’s External Memory",readon:"Впервые опубликовано на Substack:",
+  heroAlt:"Мужчина держит миниатюрную комнату с сидящей фигурой и кольцом света на фоне повторяющихся дверных проёмов",
+  badge:"Редакционное",mapTitle:"Редакционная карта",sources:"Источники",
+  mapNote:"Эта карта — редакционное прочтение. Она раскладывает авторскую философскую модель так, как она изложена в эссе: образ → рассказ → хранитель → обряд → институт → власть и её отзвук во внешней памяти. Это не установленный исторический закон. Линии следуют порядку и параллелям самого текста, а не доказанной причинности. Выберите узел, чтобы прочитать исходный абзац.",
+  LA:"Древняя цепочка (часть 2)",LB:"Технологическая цепочка (части 6–7)",LC:"Внешняя память и человек",seq:"шаг, как в тексте",par:"параллель, проведённая в тексте",
+  rotate:"Вращать",pause:"Пауза",reset:"Сбросить вид",keys:"Тяните мышью или ← → ↑ ↓ · Пробел — пауза · R — сброс",
+  inPart:"Часть",open:"Читать в контексте",close:"Закрыть",
+  tableTitle:"Смысловые связи в тексте",tableCap:"Название связи — редакционное; цитата рядом — точные слова автора.",thRel:"Связь (редакционно)",thQ:"Точная цитата",thS:"Часть",
+  colo:"Издание для чтения. Текст эссе воспроизведён полностью по опубликованной версии; содержание, карта, таблица и номера частей — редакционные пособия.",top:"Наверх",
+  part:"Часть",desc:"Двуязычное (английский / русский) издание эссе «Внешняя память Бога», АЦХ · ADC."}
+};
+const LAYER_KEY={A:"LA",B:"LB",C:"LC"};
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const qs=new URLSearchParams(location.search);
+let lang=qs.get("lang")==="ru"?"ru":"en";
+let selected=null;
+
+function el(tag,attrs,kids){const e=document.createElement(tag);for(const k in attrs||{}){if(k==="text")e.textContent=attrs[k];else e.setAttribute(k,attrs[k])}(kids||[]).forEach(c=>c&&e.appendChild(c));return e}
+function paraText(pid){const [s,p]=pid.slice(1).split("-").map(Number);return DATA[lang].secs[s-1].ps[p-1].t}
+
+/* ---------- render ---------- */
+function renderText(){
+  const art=$("#text"); art.textContent="";
+  const secs=DATA[lang].secs;
+  secs.forEach((s,i)=>{
+    const sec=el("section",{class:"part",id:s.id,"aria-labelledby":"h-"+s.id});
+    sec.appendChild(el("h2",{class:"sr-only",id:"h-"+s.id,text:UI[lang].part+" "+(i+1)}));
+    s.ps.forEach(p=>sec.appendChild(el("p",Object.assign({id:p.id,text:p.t},p.k==="sig"?{class:"sig"}:{}))));
+    art.appendChild(sec);
+    if(i<secs.length-1)art.appendChild(el("p",{class:"asterism","aria-hidden":"true",text:"⁂"}));
+  });
+  const tl=$("#tocList"); tl.textContent="";
+  secs.forEach((s,i)=>tl.appendChild(el("li",{},[el("a",{href:"#"+s.id},[el("span",{class:"n",text:String(i+1)}),el("span",{text:s.toc})])])));
+}
+function renderUI(){
+  const T=UI[lang];
+  document.documentElement.lang=lang;
+  $$("[data-i]").forEach(e=>{const k=e.dataset.i;if(T[k]!==undefined)e.textContent=T[k]});
+  $(".alt").lang=lang==="en"?"ru":"en";
+  $("#heroImg").alt=T.heroAlt;
+  $("#themeBtn .tl").textContent=document.documentElement.dataset.theme==="dark"?T.themeOn:T.theme;$("#themeBtn").setAttribute("aria-label",$("#themeBtn .tl").textContent);
+  $$(".lang button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lang===lang)));
+  document.title=(lang==="en"?"God’s External Memory · Внешняя память Бога":"Внешняя память Бога · God’s External Memory")+" — АЦХ · ADC";
+  const md=document.querySelector('meta[name="description"]'); if(md)md.content=T.desc;
+  $("#ssEn").href=SUBSTACK.en; $("#ssRu").href=SUBSTACK.ru;
+  const sl=$("#srcLinks"); sl.textContent="";
+  DATA[lang].links.forEach(l=>sl.appendChild(el("li",{},[el("a",{href:l.href,rel:"noopener",text:l.label})])));
+  $("#map3d").setAttribute("aria-label",T.mapTitle);
+}
+function renderTable(){
+  const tb=$("#relBody"); tb.textContent="";
+  ROWS.forEach(r=>{
+    const a=el("a",{href:"#"+r.pid,text:"“"+r.q[lang]+"”"});
+    a.addEventListener("click",ev=>{ev.preventDefault();goPara(r.pid,r.q[lang])});
+    tb.appendChild(el("tr",{},[el("td",{text:r[lang]}),el("td",{class:"q"},[a]),el("td",{class:"s",text:UI[lang].inPart+" "+r.sec})]));
+  });
+}
+function renderNodes(){
+  const box=$("#nodeList"); box.textContent="";
+  ["A","B","C"].forEach(L=>{
+    const ul=el("ul");
+    NODES.filter(n=>n.L===L).forEach(n=>{
+      const b=el("button",{"aria-pressed":String(selected===n.id),"data-node":n.id,text:n[lang]});
+      b.style.color=`var(--${L.toLowerCase()})`;
+      b.addEventListener("click",()=>select(n.id));
+      ul.appendChild(el("li",{},[b]));
+    });
+    box.appendChild(el("div",{},[el("h3",{text:UI[lang][LAYER_KEY[L]]}),ul]));
+  });
+}
+function highlighted(text,q){
+  const f=document.createDocumentFragment(), i=text.indexOf(q);
+  if(i<0){f.appendChild(document.createTextNode(text));return f}
+  f.appendChild(document.createTextNode(text.slice(0,i)));
+  f.appendChild(el("mark",{text:q}));
+  f.appendChild(document.createTextNode(text.slice(i+q.length)));
+  return f;
+}
+function renderPanel(){
+  const p=$("#panel");
+  const n=NODES.find(x=>x.id===selected);
+  if(!n){p.hidden=true;return}
+  p.textContent=""; p.hidden=false;
+  p.style.borderLeftColor=`var(--${n.L.toLowerCase()})`;
+  p.appendChild(el("div",{class:"meta",text:UI[lang][LAYER_KEY[n.L]]+" · "+UI[lang].inPart+" "+n.sec}));
+  p.appendChild(el("strong",{text:n[lang]}));
+  const bq=el("blockquote"); bq.appendChild(highlighted(paraText(n.pid),n.q[lang])); p.appendChild(bq);
+  const go=el("button",{text:UI[lang].open}); go.addEventListener("click",()=>goPara(n.pid,n.q[lang]));
+  const cl=el("button",{text:UI[lang].close}); cl.addEventListener("click",()=>select(null));
+  p.appendChild(go); p.appendChild(document.createTextNode(" ")); p.appendChild(cl);
+}
+function select(id){selected=id;$$("#nodeList button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.node===id)));renderPanel();draw()}
+function goPara(pid,q){
+  const t=document.getElementById(pid); if(!t)return;
+  t.textContent=""; t.appendChild(highlighted(paraText(pid),q));
+  t.scrollIntoView({block:"center"}); t.classList.add("flash");
+  t.setAttribute("tabindex","-1"); t.focus({preventScroll:true});
+  setTimeout(()=>t.classList.remove("flash"),1800);
+  history.replaceState(null,"",`?lang=${lang}#${pid}`);
+}
+
+/* ---------- language switch keeps the reader's place ---------- */
+function anchorNow(){
+  const top=($(".bar").offsetHeight||0)+8;
+  const ps=$$("#text p[id]");
+  for(const p of ps){const r=p.getBoundingClientRect();if(r.bottom>top)return{id:p.id,off:r.top}}
+  return null;
+}
+function setLang(l){
+  if(l===lang)return;
+  const a=anchorNow(); lang=l;
+  renderText();renderUI();renderTable();renderNodes();renderPanel();draw();
+  if(a){const p=document.getElementById(a.id);if(p)window.scrollTo({top:window.scrollY+p.getBoundingClientRect().top-a.off,behavior:"instant"})}
+  updateCurrent(true);
+}
+$$(".lang button").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
+
+/* ---------- current part, TOC, URL ---------- */
+let curId=null;
+function updateCurrent(force){
+  const top=($(".bar").offsetHeight||0)+40; let id=null;
+  $$("#text section").forEach(s=>{if(s.getBoundingClientRect().top<=top)id=s.id});
+  if(id!==curId||force){
+    curId=id;
+    $$("#tocList a").forEach(a=>a.setAttribute("aria-current",String(a.getAttribute("href")==="#"+id)));
+    $("#curSec").textContent=id?"· "+UI[lang].part+" "+id.slice(1):"";
+    history.replaceState(null,"",`?lang=${lang}${id?"#"+id:location.hash}`);
+  }
+}
+let ticking=false;
+addEventListener("scroll",()=>{if(!ticking){ticking=true;requestAnimationFrame(()=>{updateCurrent();ticking=false})}},{passive:true});
+
+/* ---------- mobile contents ---------- */
+const toc=$("#toc"),tocBtn=$("#tocBtn");
+function setToc(o){toc.classList.toggle("open",o);tocBtn.setAttribute("aria-expanded",String(o))}
+tocBtn.addEventListener("click",()=>setToc(!toc.classList.contains("open")));
+toc.addEventListener("click",e=>{if(e.target.closest("a"))setToc(false)});
+addEventListener("keydown",e=>{if(e.key==="Escape")setToc(false)});
+
+/* ---------- theme ---------- */
+function setTheme(t){document.documentElement.dataset.theme=t;$("#themeBtn").setAttribute("aria-pressed",String(t==="dark"));$("#themeBtn .tl").textContent=t==="dark"?UI[lang].themeOn:UI[lang].theme;$("#themeBtn").setAttribute("aria-label",$("#themeBtn .tl").textContent);store.set("gem-theme",t);readColors();draw()}
+$("#themeBtn").addEventListener("click",()=>setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark"));
+
+/* ---------- 3D map (canvas, no libraries) ---------- */
+const cv=$("#map3d"),ctx=cv.getContext("2d");
+const POS={};(function layout(){
+  const ring=(ids,y,r,ph)=>ids.forEach((id,i)=>{const a=ph+i/ids.length*Math.PI*2;POS[id]={x:Math.cos(a)*r,y,z:Math.sin(a)*r}});
+  ring(NODES.filter(n=>n.L==="A").map(n=>n.id),-.62,1.05,0);
+  ring(NODES.filter(n=>n.L==="B").map(n=>n.id),.62,1.0,.4);
+  ring(["c0","c1","c2"],0,.42,1.2); POS.c3={x:0,y:0,z:0};
+})();
+const R0={ry:.55,rx:-.32};let ry=R0.ry,rx=R0.rx,W=600,H=400,dpr=1;
+const RM=matchMedia("(prefers-reduced-motion: reduce)");
+let auto=!RM.matches,col={};
+function readColors(){const cs=getComputedStyle(document.documentElement);["ink","muted","rule","a","b","c","sheet"].forEach(k=>col[k]=cs.getPropertyValue("--"+k).trim())}
+function size(){const w=cv.parentElement.clientWidth||600;W=w;H=Math.max(300,Math.min(480,w*.62));dpr=Math.min(2,devicePixelRatio||1);cv.width=W*dpr;cv.height=H*dpr;cv.style.height=H+"px";draw()}
+function proj(p){const c=Math.cos(ry),s=Math.sin(ry);const x1=p.x*c+p.z*s,z1=-p.x*s+p.z*c;const c2=Math.cos(rx),s2=Math.sin(rx);const y1=p.y*c2-z1*s2,z2=p.y*s2+z1*c2;const d=3.4,k=d/(d+z2),sc=Math.min(W,H*1.3)*.30*k;return{x:W/2+x1*sc,y:H/2+y1*sc,z:z2,k}}
+let P={};
+function draw(){
+  if(!cv.width)return;
+  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
+  NODES.forEach(n=>P[n.id]=proj(POS[n.id]));
+  const near=id=>(1.25-P[id].z)/2.5;
+  EDGES.forEach(([a,b,t])=>{
+    const hot=selected&&(a===selected||b===selected);
+    ctx.globalAlpha=hot?.95:.18+.45*Math.max(0,Math.min(1,(near(a)+near(b))/2));
+    ctx.strokeStyle=hot?col.ink:col.muted;ctx.lineWidth=hot?2:1.2;ctx.setLineDash(t==="par"?[5,5]:[]);
+    ctx.beginPath();ctx.moveTo(P[a].x,P[a].y);ctx.lineTo(P[b].x,P[b].y);ctx.stroke();
+  });
+  ctx.setLineDash([]);
+  [...NODES].sort((m,n)=>P[n.id].z-P[m.id].z).forEach(n=>{
+    const p=P[n.id],r=(n.id==="c3"?8:5.5)*p.k+1.5,f=Math.max(.25,Math.min(1,near(n.id)+.15));
+    ctx.globalAlpha=f;ctx.fillStyle=col[n.L.toLowerCase()];
+    ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);ctx.fill();
+    if(n.id===selected){ctx.globalAlpha=1;ctx.strokeStyle=col.ink;ctx.lineWidth=2;ctx.beginPath();ctx.arc(p.x,p.y,r+4,0,Math.PI*2);ctx.stroke()}
+    ctx.globalAlpha=n.id===selected?1:f*.92;ctx.fillStyle=col.ink;
+    ctx.font=`${n.id===selected?"600 ":""}${Math.round(11+2.5*p.k)}px ${getComputedStyle(document.body).fontFamily}`;
+    const tw=ctx.measureText(n[lang]).width;let right=p.x>W/2;
+    if(right&&p.x+r+5+tw>W-6)right=false;else if(!right&&p.x-r-5-tw<6)right=true;
+    ctx.textAlign=right?"left":"right";
+    ctx.fillText(n[lang],p.x+(right?r+5:-(r+5)),p.y+4);
+  });
+  ctx.globalAlpha=1;
+}
+let last=0;function loop(t){if(auto&&!document.hidden&&visible){ry+=Math.min(32,t-last)*.00018;draw()}last=t;requestAnimationFrame(loop)}
+let visible=true;if("IntersectionObserver"in window)new IntersectionObserver(e=>{visible=e[0].isIntersecting}).observe(cv);
+function setAuto(on){auto=on;$("#bPause").setAttribute("aria-pressed",String(!on))}
+$("#bRot").addEventListener("click",()=>setAuto(true));
+$("#bPause").addEventListener("click",()=>setAuto(!auto));
+$("#bReset").addEventListener("click",()=>{ry=R0.ry;rx=R0.rx;draw()});
+RM.addEventListener&&RM.addEventListener("change",e=>{if(e.matches)setAuto(false)});
+let drag=null;
+cv.addEventListener("pointerdown",e=>{drag={x:e.clientX,y:e.clientY,moved:0,auto};auto=false;cv.setPointerCapture(e.pointerId)});
+cv.addEventListener("pointermove",e=>{if(!drag)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;drag.moved+=Math.abs(dx)+Math.abs(dy);ry+=dx*.008;rx=Math.max(-1.2,Math.min(1.2,rx+dy*.006));drag.x=e.clientX;drag.y=e.clientY;draw()});
+cv.addEventListener("pointerup",e=>{
+  if(!drag)return;const wasAuto=drag.auto,moved=drag.moved;drag=null;
+  if(moved<6){const b=cv.getBoundingClientRect(),x=e.clientX-b.left,y=e.clientY-b.top;let best=null,bd=18;
+    NODES.forEach(n=>{const p=P[n.id],d=Math.hypot(p.x-x,p.y-y);if(d<bd&&(!best||p.z<P[best].z+.3)){bd=d;best=n.id}});
+    if(best)select(best);}
+  if(wasAuto&&moved>=6)setAuto(false);else auto=wasAuto;
+});
+cv.addEventListener("keydown",e=>{
+  const k=e.key;let used=true;
+  if(k==="ArrowLeft")ry-=.15;else if(k==="ArrowRight")ry+=.15;
+  else if(k==="ArrowUp")rx=Math.max(-1.2,rx-.12);else if(k==="ArrowDown")rx=Math.min(1.2,rx+.12);
+  else if(k===" ")setAuto(!auto);else if(k==="r"||k==="R"){ry=R0.ry;rx=R0.rx}else used=false;
+  if(used){e.preventDefault();draw()}
+});
+
+/* ---------- init ---------- */
+const savedTheme=store.get("gem-theme"); if(savedTheme==="dark")document.documentElement.dataset.theme="dark";
+readColors();
+if(lang!=="en")renderText();
+renderUI();renderTable();renderNodes();
+setAuto(auto);
+if("ResizeObserver"in window)new ResizeObserver(size).observe(cv.parentElement);else addEventListener("resize",size);
+size();requestAnimationFrame(loop);
+if(location.hash){const t=document.getElementById(location.hash.slice(1));if(t)setTimeout(()=>t.scrollIntoView(),0)}
+updateCurrent(true);
+</script>
+</body>
+</html>
