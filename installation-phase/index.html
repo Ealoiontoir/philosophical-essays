@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Фаза установки</title>
+<meta name="description" content="О сбоях, деньгах и сценарии без автора. Эссе о буме ИИ и ноябрьских сбоях 2026 года. The Installation Phase: on outages, money and a scenario without an author.">
+<meta property="og:title" content="Фаза установки · The Installation Phase">
+<meta property="og:description" content="О сбоях, деньгах и сценарии без автора · On outages, money and a scenario without an author">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Layout idea: a construction drawing. Hairline grid paper, technical annotations in mono, the essay in a calm serif column, figures break out wider. */
+  --paper: #f1f3f1;
+  --paper-2: #e6eae7;
+  --ink: #121a26;
+  --muted: #586273;
+  --rule: #cfd5d2;
+  --accent: #a87a16;
+  --fin: #b8871f;
+  --chg: #1f8ca3;
+  --frg: #c9573a;
+  --att: #7d62c7;
+  --pol: #3f8f50;
+  --no: #c23d4a;
+  --grid: rgba(18, 26, 38, 0.05);
+  --font-display: "Unbounded", "Arial Black", system-ui, sans-serif;
+  --font-body: "Literata", "Georgia", "Times New Roman", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0e131a; --paper-2: #151c25; --ink: #e5e9ef; --muted: #98a3b2; --rule: #263140; --accent: #e3b552;
+    --fin: #e3b552; --chg: #4fc3d9; --frg: #ef7a5a; --att: #b195f2; --pol: #7fcf8a; --no: #e05561; --grid: rgba(229, 233, 239, 0.045);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0e131a; --paper-2: #151c25; --ink: #e5e9ef; --muted: #98a3b2; --rule: #263140; --accent: #e3b552;
+  --fin: #e3b552; --chg: #4fc3d9; --frg: #ef7a5a; --att: #b195f2; --pol: #7fcf8a; --no: #e05561; --grid: rgba(229, 233, 239, 0.045);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 19px; line-height: 1.62;
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px; -webkit-font-smoothing: antialiased; }
+body.lang-ru .en, body.lang-en .ru { display: none !important; }
+a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+ 
+/* top bar */
+.bar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 10px 20px; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px); border-bottom: 1px solid var(--rule); font-family: var(--font-mono); font-size: 12px; }
+.bar .mark { letter-spacing: .12em; text-transform: uppercase; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.seg { display: inline-flex; border: 1px solid var(--ink); border-radius: 999px; overflow: hidden; flex: none; }
+.seg button { font: 600 12px var(--font-mono); letter-spacing: .08em; background: transparent; color: var(--ink); border: 0; padding: 7px 14px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent); z-index: 30; width: 0; }
+ 
+/* hero */
+.hero { position: relative; max-width: 1180px; margin: 0 auto; padding: 72px 20px 40px; }
+#heroCanvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: .9; }
+.hero-inner { position: relative; }
+.kicker { font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin: 0 0 18px; }
+h1 { font-family: var(--font-display); font-weight: 800; font-size: clamp(44px, 9.2vw, 128px); line-height: .92; letter-spacing: -.02em;
+  margin: 0; text-wrap: balance; text-transform: uppercase; }
+h1 .thin { font-weight: 400; display: block; font-size: .42em; letter-spacing: .02em; margin-top: .28em; text-transform: none; color: var(--muted); }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 28px; font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); }
+.meta b { color: var(--ink); font-weight: 600; }
+ 
+/* six days strip */
+.days { max-width: 1180px; margin: 0 auto 30px; padding: 0 20px; }
+.days-grid { display: grid; grid-template-columns: repeat(6, 1fr); border: 1px solid var(--ink); background: var(--paper); }
+.day { border-right: 1px solid var(--rule); padding: 12px 10px 14px; min-height: 150px; display: flex; flex-direction: column; gap: 6px; }
+.day:last-child { border-right: 0; }
+.day .dn { font-family: var(--font-display); font-weight: 600; font-size: 26px; line-height: 1; }
+.day .dm { font-family: var(--font-mono); font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 6px; }
+.ev { font-family: var(--font-mono); font-size: 11.5px; line-height: 1.3; padding: 5px 7px; border-left: 3px solid; background: var(--paper-2); }
+.ev.fin { border-color: var(--fin); } .ev.chg { border-color: var(--chg); } .ev.frg { border-color: var(--frg); }
+.ev.att { border-color: var(--att); } .ev.pol { border-color: var(--pol); }
+.ev.quiet { border-color: var(--rule); color: var(--muted); background: transparent; }
+.days-legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 10px; font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); }
+.days-legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; margin-right: 6px; vertical-align: -1px; background: var(--c); }
+@media (max-width: 760px) {
+  .days-grid { grid-template-columns: repeat(3, 1fr); }
+  .day:nth-child(3) { border-right: 0; }
+  .day:nth-child(-n+3) { border-bottom: 1px solid var(--rule); }
+}
+ 
+/* essay column */
+main { max-width: 1180px; margin: 0 auto; padding: 0 20px 60px; }
+.chapter { max-width: 680px; margin: 0 auto; }
+.chapter + .chapter { margin-top: 70px; }
+.chap-head { display: grid; grid-template-columns: auto 1fr; gap: 0 16px; align-items: baseline; margin: 0 0 22px;
+  border-top: 2px solid var(--ink); padding-top: 14px; }
+.chap-no { font-family: var(--font-mono); font-size: 13px; color: var(--accent); letter-spacing: .1em; }
+h2 { font-family: var(--font-display); font-weight: 600; font-size: clamp(22px, 3.2vw, 31px); line-height: 1.15; margin: 0; text-wrap: balance; letter-spacing: -.005em; }
+p { margin: 0 0 1.05em; }
+.chap-head + div > p:first-of-type::first-letter { font-family: var(--font-display); font-weight: 800; float: left;
+  font-size: 3.1em; line-height: .86; padding: .06em .1em 0 0; color: var(--accent); }
+ol.steps { list-style: none; counter-reset: s; padding: 0; margin: 0 0 1.1em; }
+ol.steps li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; gap: 10px; margin-bottom: 6px; }
+ol.steps li::before { content: counter(s); font-family: var(--font-mono); font-size: 13px; color: var(--accent); padding-top: 4px; }
+.pull { font-family: var(--font-display); font-weight: 600; font-size: clamp(22px, 3vw, 30px); line-height: 1.25; margin: 34px 0; padding-left: 18px;
+  border-left: 4px solid var(--accent); text-wrap: balance; }
+ 
+/* figures */
+figure { margin: 42px auto; max-width: 980px; }
+figure.narrow { max-width: 680px; }
+.fig-box { border: 1px solid var(--ink); background: var(--paper); padding: 20px; position: relative; }
+.fig-tag { position: absolute; top: -10px; left: 14px; background: var(--paper); padding: 0 8px; font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+figcaption { font-family: var(--font-mono); font-size: 12px; line-height: 1.55; color: var(--muted); margin-top: 10px; max-width: 75ch; }
+svg { display: block; max-width: 100%; height: auto; }
+svg text { font-family: var(--font-mono); fill: var(--ink); }
+svg .m { fill: var(--muted); }
+.tbl-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-family: var(--font-mono); font-size: 12.5px; line-height: 1.45; }
+th, td { text-align: left; vertical-align: top; padding: 9px 10px; border-bottom: 1px solid var(--rule); }
+th { font-weight: 600; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--ink); }
+td:first-child { font-weight: 600; white-space: nowrap; }
+.pill { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 999px; border: 1px solid; white-space: nowrap; }
+.pill.ok { color: var(--pol); } .pill.rep { color: var(--chg); } .pill.unk { color: var(--muted); } .pill.att { color: var(--att); }
+.nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--ink); }
+.num { padding: 18px 16px; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.num:nth-child(3n) { border-right: 0; }
+.num:nth-last-child(-n+3) { border-bottom: 0; }
+.num .v { font-family: var(--font-display); font-weight: 600; font-size: clamp(24px, 3.4vw, 36px); line-height: 1.05; font-variant-numeric: tabular-nums; }
+.num .l { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); margin-top: 8px; line-height: 1.45; }
+@media (max-width: 680px) {
+  .nums { grid-template-columns: 1fr 1fr; }
+  .num:nth-child(3n) { border-right: 1px solid var(--rule); }
+  .num:nth-child(2n) { border-right: 0; }
+  .num:nth-last-child(-n+3) { border-bottom: 1px solid var(--rule); }
+  .num:nth-last-child(-n+2) { border-bottom: 0; }
+}
+.mech { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.mech .card { border: 1px solid var(--rule); padding: 14px; background: var(--paper); }
+.mech h3 { font-family: var(--font-display); font-size: 15px; font-weight: 600; margin: 10px 0 6px; }
+.mech p { font-family: var(--font-mono); font-size: 12px; line-height: 1.5; color: var(--muted); margin: 0; }
+@media (max-width: 760px) { .mech { grid-template-columns: 1fr; } }
+.checks { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; font-family: var(--font-mono); font-size: 13px; }
+.checks li { display: grid; grid-template-columns: 26px 1fr auto; gap: 10px; align-items: center; padding: 10px 12px; border: 1px solid var(--rule); }
+.checks li.done { border-color: var(--ink); }
+.checks .box { width: 18px; height: 18px; border: 1.5px solid var(--ink); display: grid; place-items: center; font-size: 12px; line-height: 1; }
+.checks li.done .box { background: var(--accent); border-color: var(--accent); color: #fff; }
+.checks .st { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+.watch { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.watch div { border: 1px solid var(--rule); padding: 14px; font-family: var(--font-mono); font-size: 12.5px; line-height: 1.5; }
+.watch b { display: block; font-family: var(--font-display); font-weight: 600; font-size: 15px; margin-bottom: 6px; }
+.watch .s { display: inline-block; margin-top: 8px; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; padding: 2px 8px; border: 1px solid; }
+.watch .s.seen { color: var(--frg); } .watch .s.not { color: var(--muted); }
+@media (max-width: 600px) { .watch { grid-template-columns: 1fr; } }
+ 
+/* 3D map */
+.map-wrap { max-width: 1180px; margin: 70px auto; }
+.map-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 24px; margin-bottom: 12px; }
+.map-head h2 { font-size: clamp(22px, 3vw, 30px); }
+.map-ctrl { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-family: var(--font-mono); font-size: 12px; }
+.btn { font: 600 12px var(--font-mono); letter-spacing: .04em; padding: 8px 14px; border: 1px solid var(--ink); background: var(--ink); color: var(--paper); cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--ink); }
+#mapBox { position: relative; height: min(76vh, 680px); min-height: 460px; background: #0d1117; border: 1px solid var(--ink); overflow: hidden; color: #e7ecf3; color-scheme: dark; }
+#mapCanvas { position: absolute; inset: 0; }
+#mapLabels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.lbl { position: absolute; transform: translate(-50%, -135%); font: 500 11.5px var(--font-mono); line-height: 1.2; white-space: nowrap; padding: 2px 7px;
+  background: rgba(13, 17, 23, .78); border: 1px solid rgba(160, 180, 205, .2); color: #e7ecf3; pointer-events: auto; cursor: pointer; }
+.lbl.dim { opacity: .25; }
+.lbl.sel { border-color: #e3b552; background: rgba(40, 32, 12, .92); }
+.layerlbl { position: absolute; transform: translate(-100%, -50%); padding-right: 8px; font: 600 11px var(--font-display); letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; pointer-events: none; }
+.tick { position: absolute; transform: translate(-50%, 0); font: 400 10.5px var(--font-mono); color: #94a3b8; white-space: nowrap; pointer-events: none; }
+#mapLegend { position: absolute; left: 12px; bottom: 12px; display: grid; gap: 5px; font: 400 11px var(--font-mono); color: #c9d3df;
+  background: rgba(13, 17, 23, .8); border: 1px solid rgba(160, 180, 205, .2); padding: 10px 12px; }
+#mapLegend div { display: flex; align-items: center; gap: 8px; }
+#mapLegend svg text { fill: #c9d3df; }
+#mapDate { position: absolute; left: 12px; top: 12px; font: 600 12px var(--font-mono); color: #e3b552; background: rgba(13, 17, 23, .8); padding: 6px 10px; border: 1px solid rgba(160, 180, 205, .2); }
+#mapCard { position: absolute; right: 12px; top: 12px; width: 340px; max-height: calc(100% - 24px); overflow: auto; background: rgba(18, 24, 33, .94);
+  border: 1px solid rgba(160, 180, 205, .25); padding: 16px; display: none; font-family: var(--font-mono); font-size: 12.5px; line-height: 1.5; }
+#mapCard.open { display: block; }
+#mapCard h3 { font: 600 16px var(--font-display); margin: 6px 0 4px; line-height: 1.3; color: #e7ecf3; }
+#mapCard .when { color: #e3b552; margin-bottom: 8px; }
+#mapCard p { color: #d4dbe4; margin: 0 0 10px; }
+#mapCard ul { list-style: none; padding: 0; margin: 0 0 10px; display: grid; gap: 6px; }
+#mapCard li button { all: unset; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; color: #e7ecf3; }
+#mapCard .k { display: block; color: #94a3b8; font-size: 11px; }
+#mapCard a { color: #4fc3d9; }
+#mapCard .x { position: absolute; top: 8px; right: 8px; background: transparent; color: #e7ecf3; border: 1px solid rgba(160, 180, 205, .3); cursor: pointer; padding: 2px 8px; font: 12px var(--font-mono); }
+.layer-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.lchip { display: inline-flex; align-items: center; gap: 6px; font: 500 11.5px var(--font-mono); padding: 5px 10px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); cursor: pointer; }
+.lchip i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.lchip[aria-pressed="false"] { opacity: .4; }
+@media (max-width: 760px) {
+  #mapCard { left: 12px; right: 12px; top: auto; bottom: 12px; width: auto; max-height: 55%; }
+  #mapLegend { display: none; }
+  .lbl { font-size: 10px; }
+}
+ 
+/* sources + footer */
+.sources { max-width: 680px; margin: 70px auto 0; }
+.sources ol { padding-left: 22px; font-family: var(--font-mono); font-size: 12px; line-height: 1.5; }
+.sources li { margin-bottom: 9px; }
+.sources a { word-break: break-all; color: var(--muted); }
+footer { max-width: 680px; margin: 60px auto 0; padding: 22px 20px 50px; border-top: 2px solid var(--ink); font-family: var(--font-mono); font-size: 12.5px; color: var(--muted);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+footer .sig { color: var(--ink); font-weight: 600; letter-spacing: .06em; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+@media (max-width: 600px) { body { font-size: 17.5px; } .hero { padding-top: 48px; } }
+</style>
+<link rel="canonical" href="https://ealoiontoir.github.io/philosophical-essays/installation-phase/">
+<meta property="og:image" content="https://ealoiontoir.github.io/philosophical-essays/installation-phase/cover.jpg">
+</head>
+<body class="lang-ru">
+<div class="progress" id="progress"></div>
+ 
+<header class="bar">
+  <span class="mark"><span class="ru">Фаза установки · эссе · 17.11.2026</span><span class="en">The Installation Phase · essay · 17.11.2026</span></span>
+  <div class="seg" role="group" aria-label="Язык / Language">
+    <button id="btnRu" aria-pressed="true">RU</button>
+    <button id="btnEn" aria-pressed="false">EN</button>
+  </div>
+</header>
+ 
+<section class="hero">
+  <canvas id="heroCanvas" aria-hidden="true"></canvas>
+  <div class="hero-inner">
+    <p class="kicker"><span class="ru">Хроника · ИИ, деньги, инфраструктура</span><span class="en">Chronicle · AI, money, infrastructure</span></p>
+    <h1><span class="ru">Фаза установки<span class="thin">О сбоях, деньгах и сценарии без автора</span></span><span class="en">The Installation Phase<span class="thin">On outages, money and a scenario without an author</span></span></h1>
+    <div class="meta">
+      <span class="ru"><b>17 ноября 2026</b></span><span class="en"><b>17 November 2026</b></span>
+      <span class="ru">9 глав · 12 схем · 3D-карта · 43 источников</span><span class="en">9 chapters · 12 figures · 3D map · 43 sources</span>
+      <span class="ru">≈ 15 минут чтения</span><span class="en">≈ 14 min read</span>
+    </div>
+  </div>
+</section>
+<figure class="narrow" style="margin:32px auto"><img class="ru" src="cover.jpg" alt="Персонажи сатирического мультфильма о круговом финансировании ИИ" style="width:100%;border-radius:12px"><img class="en" src="cover-en.jpg" alt="The digital economy depicted as a satirical board game" style="width:100%;border-radius:12px"><figcaption><span class="ru">Образ из авторского мультфильма к эссе.</span><span class="en">A scene from the satirical film accompanying the essay.</span></figcaption></figure>
+ 
+<section class="days" aria-label="Шесть дней ноября">
+  <div class="days-grid">
+    <div class="day"><div class="dn">12</div><div class="dm"><span class="ru">ноября · чт</span><span class="en">Nov · Thu</span></div>
+      <div class="ev frg"><span class="ru">Microsoft 365 отказывает в 74 странах</span><span class="en">Microsoft 365 fails in 74 countries</span></div>
+      <div class="ev fin"><span class="ru">Хуанг уходит из Nvidia</span><span class="en">Huang leaves Nvidia</span></div></div>
+    <div class="day"><div class="dn">13</div><div class="dm"><span class="ru">ноября · пт</span><span class="en">Nov · Fri</span></div>
+      <div class="ev frg"><span class="ru">FAA останавливает все вылеты</span><span class="en">FAA halts every departure</span></div>
+      <div class="ev pol"><span class="ru">Германия считает ущерб бизнесу</span><span class="en">Germany counts the damage</span></div></div>
+    <div class="day"><div class="dn">14</div><div class="dm"><span class="ru">ноября · сб</span><span class="en">Nov · Sat</span></div>
+      <div class="ev att"><span class="ru">Фишинг на сбое Microsoft</span><span class="en">Phishing rides the outage</span></div></div>
+    <div class="day"><div class="dn">15</div><div class="dm"><span class="ru">ноября · вс</span><span class="en">Nov · Sun</span></div>
+      <div class="ev quiet"><span class="ru">Тишина</span><span class="en">Quiet</span></div></div>
+    <div class="day"><div class="dn">16</div><div class="dm"><span class="ru">ноября · пн</span><span class="en">Nov · Mon</span></div>
+      <div class="ev frg"><span class="ru">United без данных для взлёта</span><span class="en">United loses takeoff data</span></div>
+      <div class="ev frg"><span class="ru">Ошибка JPMorgan</span><span class="en">JPMorgan software bug</span></div>
+      <div class="ev att"><span class="ru">Optimizely, 178 сайтов</span><span class="en">Optimizely, 178 sites</span></div>
+      <div class="ev pol"><span class="ru">Правило BIS</span><span class="en">BIS rule</span></div></div>
+    <div class="day"><div class="dn">17</div><div class="dm"><span class="ru">ноября · вт</span><span class="en">Nov · Tue</span></div>
+      <div class="ev frg"><span class="ru">NSANet ложится</span><span class="en">NSANet goes down</span></div></div>
+  </div>
+  <div class="days-legend">
+    <span style="--c:var(--frg)" class="ru">отказ</span><span style="--c:var(--frg)" class="en">failure</span>
+    <span style="--c:var(--att)" class="ru">атака</span><span style="--c:var(--att)" class="en">attack</span>
+    <span style="--c:var(--fin)" class="ru">деньги</span><span style="--c:var(--fin)" class="en">money</span>
+    <span style="--c:var(--pol)" class="ru">политика</span><span style="--c:var(--pol)" class="en">politics</span>
+  </div>
+</section>
+ 
+<main>
+ 
+<!-- I -->
+<article class="chapter" id="prologue">
+  <div class="chap-head"><span class="chap-no">1</span><h2><span class="ru">Пролог. Неделя, когда ломалось всё</span><span class="en">Prologue. The week everything broke</span></h2></div>
+  <div class="ru">
+    <p>12 ноября у Microsoft отказала Exchange Online. Сообщения о нарушениях пришли из 74 стран. Основной удар пришёлся на почту, а также на функции Teams и Copilot, зависящие от Exchange. Федеральное ведомство по информационной безопасности Германии предупредило, что затронуто очень большое число немецких компаний.</p>
+    <p>В тот же день Nvidia объявила об уходе Дженсена Хуанга. 33 года во главе компании закончились без переходного периода. За отставкой стояла связь с женщиной, которую американская разведка считала агентом китайского МГБ.</p>
+    <p>13 ноября FAA остановила все вылеты в США. Такого не было с января 2023 года. Тысячи рейсов задержаны или отменены.</p>
+    <p>16 ноября United не смогла выпустить самолёты, потому что пилоты потеряли данные о весе и центровке. В тот же день программная ошибка в JPMorgan замедлила переводы между банками. Через платформу Optimizely вредоносный код попал на сайты 178 организаций. Министерство торговли ввело правило о доступе к вычислениям через зарубежные дата-центры.</p>
+    <p>17 ноября легла NSANet, внутренняя секретная сеть Агентства национальной безопасности.</p>
+  </div>
+  <div class="en">
+    <p>On 12 November Exchange Online failed at Microsoft. Disruptions were reported in 74 countries. Mail bore the main impact, along with Exchange-dependent features in Teams and Copilot. Germany's Federal Office for Information Security warned that a very large number of German companies were affected.</p>
+    <p>The same day Nvidia announced that Jensen Huang was leaving. 33 years at the head of the company ended with no transition. Behind the resignation stood a relationship with a woman whom American intelligence considered an agent of China's Ministry of State Security.</p>
+    <p>On 13 November the FAA halted every departure in the United States. It had not happened since January 2023. Thousands of flights were delayed or cancelled.</p>
+    <p>On 16 November United could not dispatch its planes because pilots had lost weight and balance data. The same day a software error at JPMorgan slowed transfers between banks. Through the Optimizely platform malicious code reached the websites of 178 organisations. The Commerce Department introduced a rule on access to computing through data centres abroad.</p>
+    <p>On 17 November NSANet went down, the internal classified network of the National Security Agency.</p>
+  </div>
+  <p class="pull"><span class="ru">6 дней. Авиация, банки, связь, разведка, рынок. Разум ищет в этом руку.</span><span class="en">6 days. Aviation, banks, communications, intelligence, markets. The mind looks for a hand behind it.</span></p>
+</article>
+ 
+<section class="chapter" id="film" style="margin:40px auto">
+<h2><span class="ru">Фаза установки · сатирический мультфильм</span><span class="en">The Installation Phase · a satirical short film</span></h2>
+<div class="ru"><video controls playsinline preload="metadata" poster="cover.jpg" style="width:100%;border-radius:12px" src="installation-phase-cartoon-ru.mp4"></video><p style="font-size:14px">Сатирическая визуальная интерпретация эссе · 61 с.</p></div>
+<div class="en"><video controls playsinline preload="metadata" poster="cover-en.jpg" style="width:100%;border-radius:12px" src="installation-phase-en.mp4"></video><p style="font-size:14px">A satirical visual interpretation of the essay · 60 s.</p></div>
+</section>
+<!-- II -->
+<article class="chapter" id="author">
+  <div class="chap-head"><span class="chap-no">2</span><h2><span class="ru">Соблазн единого автора</span><span class="en">The temptation of a single author</span></h2></div>
+  <div class="ru">
+    <p>Гипотеза сценария естественна. Когда за неделю отказывает всё, совпадение кажется слишком удобным объяснением. Подозрение здесь не паранойя, а нормальная работа ума, который ищет причину.</p>
+    <p>Её можно проверить. Единый автор оставил бы общий след. Общего поставщика, общий код, общий путь атаки, одинаковые технические признаки.</p>
+    <p>Расследования показывают другое. У Microsoft дефект появился при более раннем расширении сетевой мощности и проявился после следующего изменения сети. У FAA сеть залило запросами во время работ L3Harris с новым маршрутизатором в Эль-Дорадо, хотя окончательную причину ведомство ещё расследует. Сбой NSANet директор национальной разведки Джей Клейтон объяснил установкой патча против уязвимостей, найденных месяцем раньше. JPMorgan назвал ошибку в собственных серверах. United потеряла данные для расчёта взлёта, причина не названа.</p>
+  </div>
+  <div class="en">
+    <p>The scenario hypothesis is natural. When everything fails within a week, coincidence feels like too convenient an explanation. Suspicion here is not paranoia. It is the normal work of a mind searching for a cause.</p>
+    <p>It can be tested. A single author would leave a common trace. A shared supplier, shared code, a shared attack path, identical technical signatures.</p>
+    <p>The investigations show something else. At Microsoft the defect was introduced during an earlier network capacity expansion and surfaced after the next network change. At the FAA the network was flooded with requests during L3Harris work on a new router in El Dorado, although the agency is still investigating the final cause. Director of National Intelligence Jay Clayton attributed the NSANet failure to a patch against vulnerabilities found a month earlier. JPMorgan named an error in its own servers. United lost the data needed to calculate takeoff, and no cause was given.</p>
+  </div>
+</article>
+ 
+<figure>
+  <div class="fig-box"><span class="fig-tag"><span class="ru">Схема 1 · 5 отказов, 5 механизмов</span><span class="en">Figure 1 · 5 failures, 5 mechanisms</span></span>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th><span class="ru">Система</span><span class="en">System</span></th><th><span class="ru">Что отказало</span><span class="en">What failed</span></th><th><span class="ru">Названная причина</span><span class="en">Stated cause</span></th><th><span class="ru">Статус</span><span class="en">Status</span></th></tr></thead>
+      <tbody>
+        <tr><td>Microsoft 365</td><td><span class="ru">почта, Teams, Copilot в 74 странах</span><span class="en">mail, Teams, Copilot in 74 countries</span></td><td><span class="ru">дефект раннего апгрейда сети, вскрыт следующим изменением</span><span class="en">defect from an earlier network upgrade, exposed by the next change</span></td><td><span class="pill ok"><span class="ru">компания</span><span class="en">company</span></span></td></tr>
+        <tr><td>FAA</td><td><span class="ru">все вылеты в США</span><span class="en">every US departure</span></td><td><span class="ru">работы L3Harris с новым маршрутизатором</span><span class="en">L3Harris work on a new router</span></td><td><span class="pill rep"><span class="ru">предварительно</span><span class="en">preliminary</span></span></td></tr>
+        <tr><td>NSANet</td><td><span class="ru">секретная сеть NSA</span><span class="en">NSA classified network</span></td><td><span class="ru">патч против уязвимостей октября</span><span class="en">patch for October vulnerabilities</span></td><td><span class="pill ok"><span class="ru">DNI</span><span class="en">DNI</span></span></td></tr>
+        <tr><td>JPMorgan</td><td><span class="ru">переводы между банками</span><span class="en">interbank transfers</span></td><td><span class="ru">ошибка в собственных серверах</span><span class="en">error in its own servers</span></td><td><span class="pill ok"><span class="ru">банк</span><span class="en">bank</span></span></td></tr>
+        <tr><td>United</td><td><span class="ru">данные для расчёта взлёта</span><span class="en">takeoff calculation data</span></td><td><span class="ru">не названа</span><span class="en">not given</span></td><td><span class="pill unk"><span class="ru">неизвестно</span><span class="en">unknown</span></span></td></tr>
+        <tr><td>Optimizely</td><td><span class="ru">сайты 178 организаций</span><span class="en">sites of 178 organisations</span></td><td><span class="ru">атака через уязвимость платформы</span><span class="en">attack via a platform vulnerability</span></td><td><span class="pill att"><span class="ru">атака</span><span class="en">attack</span></span></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <figcaption><span class="ru">Столбец «Статус» говорит, кто назвал причину. Общего поставщика, кода или пути атаки ни в одном расследовании нет.</span><span class="en">The status column says who named the cause. No investigation shows a shared supplier, code or attack path.</span></figcaption>
+</figure>
+ 
+<article class="chapter">
+  <div class="ru">
+    <p>5 отказов дают 5 разных механизмов. Подтверждённая атака 1, Optimizely. Её технических связей с остальными никто не показал.</p>
+    <p>Есть и статистическая ловушка. По данным ThousandEyes, с 9 по 15 ноября в США было 282 сетевых инцидента, на 21% больше предыдущей недели. В конце августа их было 537, в конце сентября 406. Мировой показатель за ту же неделю снизился на 7%. Неделя запомнилась громкостью, а не числом. Мы выбрали её уже после того, как увидели события.</p>
+  </div>
+  <div class="en">
+    <p>5 failures yield 5 different mechanisms. There is 1 confirmed attack, Optimizely. Nobody has shown a technical link between it and the rest.</p>
+    <p>There is also a statistical trap. According to ThousandEyes, the United States saw 282 network incidents between 9 and 15 November, 21% more than the week before. At the end of August there were 537, at the end of September 406. The global figure for the same week fell by 7%. The week was remembered for its volume, not its count. We chose it after we had already seen the events.</p>
+  </div>
+</article>
+ 
+<figure class="narrow">
+  <div class="fig-box"><span class="fig-tag"><span class="ru">Схема 2 · сетевые инциденты в США за неделю</span><span class="en">Figure 2 · US network incidents per week</span></span>
+    <svg viewBox="0 0 640 300" role="img" aria-label="ThousandEyes">
+      <g stroke="var(--rule)" stroke-width="1">
+        <line x1="60" y1="40" x2="620" y2="40"/><line x1="60" y1="92.5" x2="620" y2="92.5"/><line x1="60" y1="145" x2="620" y2="145"/><line x1="60" y1="197.5" x2="620" y2="197.5"/>
+      </g>
+      <line x1="60" y1="250" x2="620" y2="250" stroke="var(--ink)" stroke-width="1.5"/>
+      <text x="50" y="44" text-anchor="end" font-size="11" class="m">600</text><text x="50" y="96.5" text-anchor="end" font-size="11" class="m">450</text>
+      <text x="50" y="149" text-anchor="end" font-size="11" class="m">300</text><text x="50" y="201.5" text-anchor="end" font-size="11" class="m">150</text><text x="50" y="254" text-anchor="end" font-size="11" class="m">0</text>
+      <!-- scale: 210px per 600 → 0.35 px per incident -->
+      <rect x="90" y="62.05" width="90" height="187.95" fill="var(--muted)" opacity=".55"/>
+      <rect x="230" y="107.9" width="90" height="142.1" fill="var(--muted)" opacity=".55"/>
+      <rect x="370" y="168.45" width="90" height="81.55" fill="none" stroke="var(--muted)" stroke-dasharray="4 3"/>
+      <rect x="510" y="151.3" width="90" height="98.7" fill="var(--frg)"/>
+      <text x="135" y="54" text-anchor="middle" font-size="14" font-weight="600">537</text>
+      <text x="275" y="100" text-anchor="middle" font-size="14" font-weight="600">406</text>
+      <text x="415" y="160" text-anchor="middle" font-size="14" font-weight="600">≈233</text>
+      <text x="555" y="143" text-anchor="middle" font-size="14" font-weight="600">282</text>
+      <text x="135" y="270" text-anchor="middle" font-size="11" class="m ru">конец августа</text><text x="135" y="270" text-anchor="middle" font-size="11" class="m en">end of August</text>
+      <text x="275" y="270" text-anchor="middle" font-size="11" class="m ru">конец сентября</text><text x="275" y="270" text-anchor="middle" font-size="11" class="m en">end of September</text>
+      <text x="415" y="270" text-anchor="middle" font-size="11" class="m ru">2–8 ноября</text><text x="415" y="270" text-anchor="middle" font-size="11" class="m en">2–8 November</text>
+      <text x="555" y="270" text-anchor="middle" font-size="11" class="m ru">9–15 ноября</text><text x="555" y="270" text-anchor="middle" font-size="11" class="m en">9–15 November</text>
+      <text x="555" y="288" text-anchor="middle" font-size="11" fill="var(--frg)" class="ru">мир за неделю −7%</text><text x="555" y="288" text-anchor="middle" font-size="11" fill="var(--frg)" class="en">worldwide that week −7%</text>
+    </svg>
+  </div>
+  <figcaption><span class="ru">Данные ThousandEyes по отчётам Network World. Значение за 2–8 ноября рассчитано из прироста в 21%. Неделя громких сбоев не была рекордной по числу инцидентов.</span><span class="en">ThousandEyes data as reported by Network World. The 2–8 November value is derived from the 21% rise. The loud week was not a record by incident count.</span></figcaption>
+</figure>
+ 
+<article class="chapter">
+  <div class="ru"><p>Гипотеза единого организатора не подтверждается. Но отвергнуть её мало. Остаётся вопрос, почему всё это кажется связанным. Оно и связано, только иначе.</p></div>
+  <div class="en"><p>The single organiser hypothesis is not confirmed. But rejecting it is not enough. The question remains why it all feels connected. It is connected, only differently.</p></div>
+</article>
+ 
+<!-- III -->
+<article class="chapter" id="fragility">
+  <div class="chap-head"><span class="chap-no">3</span><h2><span class="ru">Анатомия хрупкости</span><span class="en">The anatomy of fragility</span></h2></div>
+  <div class="ru">
+    <p>Причины сбоев складываются в 3 механизма. Отказ резерва. Скрытый дефект. Распространение через зависимости.</p>
+    <p>Отказ резерва показал Лондон. 20 октября повреждённый кабель на городской сети отключил питание зоны Google Cloud. Аварийные генераторы не запустились из-за ошибки конфигурации, а часть защиты уже была снята на обслуживание. Легли банковские приложения, почтовая служба и часть видеосвязи судов Англии и Уэльса. Отказ возник не из-за одной причины, а из совпадения условий.</p>
+    <p>Скрытый дефект показала Microsoft. Одно изменение заложило предпосылку, другое запустило отказ. Между ними система работала и выглядела здоровой.</p>
+    <p>Распространение через зависимости показал JPMorgan. Ошибка в одном банке замедлила переводы клиентам Bank of America, Wells Fargo и US Bank. Жалобы на 5 банков не означали 5 аварий. Авария была 1, а её эхо шло по связям.</p>
+  </div>
+  <div class="en">
+    <p>The causes of the outages fall into 3 mechanisms. Backup failure. Latent defect. Propagation through dependencies.</p>
+    <p>London showed backup failure. On 20 October a damaged cable on the city grid cut power to a Google Cloud zone. The emergency generators did not start because of a configuration error, and part of the protection had already been taken down for maintenance. Banking apps went down, as did a postal service and part of the video link system of the courts of England and Wales. The failure did not come from one cause. It came from a coincidence of conditions.</p>
+    <p>Microsoft showed the latent defect. One change laid the precondition, another triggered the failure. Between them the system worked and looked healthy.</p>
+    <p>JPMorgan showed propagation through dependencies. An error at one bank slowed transfers for customers of Bank of America, Wells Fargo and US Bank. Complaints about 5 banks did not mean 5 failures. There was 1 failure, and its echo travelled along the connections.</p>
+  </div>
+</article>
+ 
+<figure>
+  <div class="fig-box"><span class="fig-tag"><span class="ru">Схема 3 · 3 механизма хрупкости</span><span class="en">Figure 3 · 3 mechanisms of fragility</span></span>
+    <div class="mech">
+      <div class="card">
+        <svg viewBox="0 0 260 130" aria-hidden="true">
+          <line x1="20" y1="40" x2="110" y2="40" stroke="var(--ink)" stroke-width="2"/>
+          <g stroke="var(--frg)" stroke-width="3"><line x1="58" y1="30" x2="72" y2="50"/><line x1="72" y1="30" x2="58" y2="50"/></g>
+          <text x="20" y="28" font-size="10" class="m ru">городская сеть</text><text x="20" y="28" font-size="10" class="m en">city grid</text>
+          <rect x="30" y="80" width="56" height="34" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+          <text x="58" y="101" font-size="10" text-anchor="middle" class="ru">генер.</text><text x="58" y="101" font-size="10" text-anchor="middle" class="en">gen.</text>
+          <g stroke="var(--frg)" stroke-width="3"><line x1="80" y1="74" x2="94" y2="94"/><line x1="94" y1="74" x2="80" y2="94"/></g>
+          <path d="M110 40 H150 M86 97 H150" stroke="var(--rule)" stroke-width="2" stroke-dasharray="4 3" fill="none"/>
+          <rect x="150" y="30" width="90" height="74" fill="var(--paper-2)" stroke="var(--muted)" stroke-width="1.5"/>
+          <text x="195" y="64" font-size="11" text-anchor="middle" class="m ru">зона</text><text x="195" y="64" font-size="11" text-anchor="middle" class="m en">zone</text>
+          <text x="195" y="80" font-size="11" text-anchor="middle" class="m ru">без питания</text><text x="195" y="80" font-size="11" text-anchor="middle" class="m en">no power</text>
+        </svg>
+        <h3><span class="ru">Отказ резерва</span><span class="en">Backup failure</span></h3>
+        <p><span class="ru">Google Cloud, Лондон, 20 октября. Отказали основной канал и запасной, плюс шла плановая работа.</span><span class="en">Google Cloud, London, 20 October. Main feed and backup failed while maintenance was under way.</span></p>
+      </div>
+      <div class="card">
+        <svg viewBox="0 0 260 130" aria-hidden="true">
+          <line x1="16" y1="70" x2="244" y2="70" stroke="var(--rule)" stroke-width="2"/>
+          <circle cx="40" cy="70" r="9" fill="var(--chg)"/>
+          <circle cx="40" cy="70" r="3" fill="var(--frg)"/>
+          <text x="40" y="100" font-size="10" text-anchor="middle" class="m ru">изменение 1</text><text x="40" y="100" font-size="10" text-anchor="middle" class="m en">change 1</text>
+          <text x="40" y="114" font-size="10" text-anchor="middle" fill="var(--frg)" class="ru">дефект</text><text x="40" y="114" font-size="10" text-anchor="middle" fill="var(--frg)" class="en">defect</text>
+          <text x="125" y="58" font-size="10" text-anchor="middle" class="m ru">выглядит здоровой</text><text x="125" y="58" font-size="10" text-anchor="middle" class="m en">looks healthy</text>
+          <circle cx="200" cy="70" r="9" fill="var(--chg)"/>
+          <text x="200" y="100" font-size="10" text-anchor="middle" class="m ru">изменение 2</text><text x="200" y="100" font-size="10" text-anchor="middle" class="m en">change 2</text>
+          <g fill="var(--frg)"><path d="M226 50 l6 14 l12 -8 l-5 14 l14 4 l-14 5 l6 13 l-13 -6 l-4 14 l-5 -14 l-13 6 l6 -13 l-14 -5 l14 -4 l-5 -14 l12 8 z" transform="translate(-12 -10) scale(.9)"/></g>
+        </svg>
+        <h3><span class="ru">Скрытый дефект</span><span class="en">Latent defect</span></h3>
+        <p><span class="ru">Microsoft 365, 12 ноября. Ошибку заложил ранний апгрейд сети, запустило следующее изменение.</span><span class="en">Microsoft 365, 12 November. An earlier network upgrade planted the bug, the next change set it off.</span></p>
+      </div>
+      <div class="card">
+        <svg viewBox="0 0 260 130" aria-hidden="true">
+          <g stroke="var(--muted)" stroke-width="1.5"><line x1="70" y1="65" x2="190" y2="25"/><line x1="70" y1="65" x2="200" y2="65"/><line x1="70" y1="65" x2="190" y2="105"/></g>
+          <circle cx="70" cy="65" r="22" fill="var(--frg)"/>
+          <text x="70" y="69" font-size="10" text-anchor="middle" fill="#fff" style="fill:#fff">JPM</text>
+          <circle cx="198" cy="25" r="13" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+          <circle cx="208" cy="65" r="13" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+          <circle cx="198" cy="105" r="13" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+          <text x="218" y="29" font-size="10">BofA</text><text x="228" y="69" font-size="10">WF</text><text x="218" y="109" font-size="10">USB</text>
+        </svg>
+        <h3><span class="ru">Распространение по связям</span><span class="en">Propagation through dependencies</span></h3>
+        <p><span class="ru">JPMorgan, 16 ноября. Одна авария, жалобы клиентов пяти банков.</span><span class="en">JPMorgan, 16 November. One failure, complaints from customers of 5 banks.</span></p>
+      </div>
+    </div>
+  </div>
+</figure>
+ 
+<article class="chapter">
+  <div class="ru">
+    <p>Атаки строятся на той же структуре. Автору атаки на Optimizely не понадобилось взламывать 178 компаний. Хватило одного общего сервиса. Тот же приём всю осень применяли и другие. С 27 августа по 3 сентября группа, которую связывают с APT29, внедрила код в трекер украинского сервиса Plerdy, загружавшийся на тысячах сайтов. Вредоносная активность не вспыхнула 16 ноября. Она шла фоном и стала заметной в момент общей тревоги.</p>
+    <p>Над всем этим стоит концентрация. Один провайдер обслуживает 74 страны, и его ошибка становится мировой. Загрузка дата-центров, по прогнозу Goldman Sachs, к концу 2026 года превысит 95%. Выше 90% центр считается заполненным.</p>
+  </div>
+  <div class="en">
+    <p>Attacks are built on the same structure. The attacker behind Optimizely did not need to break into 178 companies. One shared service was enough. Others used the same technique all autumn. Between 27 August and 3 September a group linked to APT29 planted code in a tracker of the Ukrainian service Plerdy, which loaded on thousands of websites. Malicious activity did not flare up on 16 November. It ran in the background and became visible at a moment of general alarm.</p>
+    <p>Above all of this stands concentration. One provider serves 74 countries, and its error becomes global. Data centre utilisation, according to a Goldman Sachs forecast, will exceed 95% by the end of 2026. Above 90% a centre is considered full.</p>
+  </div>
+</article>
+ 
+<figure class="narrow">
+  <div class="fig-box"><span class="fig-tag"><span class="ru">Схема 4 · загрузка мировых дата-центров</span><span class="en">Figure 4 · global data centre utilisation</span></span>
+    <svg viewBox="0 0 600 250" role="img" aria-label="95%">
+      <path d="M100 210 A200 200 0 0 1 500 210" fill="none" stroke="var(--paper-2)" stroke-width="34"/>
+      <path d="M100 210 A200 200 0 0 1 490.2 148.2" fill="none" stroke="var(--muted)" stroke-width="34" opacity=".45"/>
+      <path d="M490.2 148.2 A200 200 0 0 1 500 210" fill="none" stroke="var(--frg)" stroke-width="34"/>
+      <line x1="300" y1="210" x2="492.6" y2="179.5" stroke="var(--ink)" stroke-width="3"/>
+      <circle cx="300" cy="210" r="8" fill="var(--ink)"/>
+      <line x1="466.4" y1="155.9" x2="504.5" y2="143.6" stroke="var(--ink)" stroke-width="2"/>
+      <text x="508" y="138" font-size="12" class="ru">90% · заполнен</text><text x="508" y="138" font-size="12" class="en">90% · full</text>
+      <text x="300" y="150" font-size="44" text-anchor="middle" font-weight="600" style="font-family:var(--font-display)">&gt;95%</text>
+      <text x="300" y="176" font-size="12" text-anchor="middle" class="m ru">прогноз на конец 2026</text><text x="300" y="176" font-size="12" text-anchor="middle" class="m en">forecast for end of 2026</text>
+      <text x="100" y="236" font-size="11" text-anchor="middle" class="m">0</text><text x="500" y="236" font-size="11" text-anchor="middle" class="m">100</text>
+    </svg>
+  </div>
+  <figcaption><span class="ru">Прогноз Goldman Sachs. Выше 90% у центра не остаётся буфера на сбои и обслуживание.</span><span class="en">Goldman Sachs forecast. Above 90% a centre has no buffer left for failures and maintenance.</span></figcaption>
+</figure>
+ 
+<article class="chapter">
+  <div class="ru"><p>Система может выглядеть здоровой, хотя внутри уже накопились условия крупного отказа. Работа без запаса и частые изменения превращают эти условия в события. Так выглядит хрупкость, которой не нужен автор.</p></div>
+  <div class="en"><p>A system can look healthy while the conditions for a major failure have already accumulated inside it. Running without reserve and changing often turn those conditions into events. This is what fragility looks like when it needs no author.</p></div>
+</article>
+ 
+<!-- IV -->
+<article class="chapter" id="money">
+  <div class="chap-head"><span class="chap-no">4</span><h2><span class="ru">Деньги</span><span class="en">Money</span></h2></div>
+  <div class="ru">
+    <p>Хрупкость имеет источник, и это деньги. Amazon, Alphabet, Meta, Microsoft и SpaceX планируют от 803 до 828 миллиардов долларов капитальных затрат на 2026 год. За три квартала они уже потратили около 556 миллиардов.</p>
+    <p>До 2024 года такие вложения покрывались собственным денежным потоком. В 2026 году их впервые массово финансируют долгом. Вице-председатель ФРС Мишель Боуман 10 ноября сказала, что долг, связанный с ИИ, в этом году превысит 800 миллиардов долларов. Прочие обязательства, по её оценке, больше долга более чем втрое.</p>
+  </div>
+  <div class="en">
+    <p>Fragility has a source, and that source is money. Amazon, Alphabet, Meta, Microsoft and SpaceX plan between 803 and 828 billion dollars of capital spending for 2026. In 3 quarters they have already spent about 556 billion.</p>
+    <p>Until 2024 such investment was covered by their own cash flow. In 2026 it is financed with debt at scale for the first time. On 10 November Federal Reserve Vice Chair for Supervision Michelle Bowman said that AI-related debt will exceed 800 billion dollars this year. Other obligations, by her estimate, are more than 3 times larger than the debt.</p>
+  </div>
+</article>
+ 
+<figure>
+  <div class="nums">
+    <div class="num"><div class="v">803–828</div><div class="l"><span class="ru">млрд $ капзатрат 5 компаний на 2026 год</span><span class="en">$bn of 2026 capex by 5 companies</span></div></div>
+    <div class="num"><div class="v">556</div><div class="l"><span class="ru">млрд $ уже потрачено за 3 квартала</span><span class="en">$bn already spent in 3 quarters</span></div></div>
+    <div class="num"><div class="v">&gt;800</div><div class="l"><span class="ru">млрд $ долга, связанного с ИИ, по оценке ФРС</span><span class="en">$bn of AI-related debt, per the Fed</span></div></div>
+    <div class="num"><div class="v">×3+</div><div class="l"><span class="ru">прочие обязательства больше долга более чем втрое</span><span class="en">other obligations exceed the debt more than threefold</span></div></div>
+    <div class="num"><div class="v">2,5 <span class="ru">трлн $</span><span class="en">$tn</span></div><div class="l"><span class="ru">стёрто с Nasdaq 100 распродажей 5 ноября</span><span class="en">wiped off the Nasdaq 100 on 5 November</span></div></div>
+    <div class="num"><div class="v">−12%</div><div class="l"><span class="ru">Nvidia за утро после ухода Хуанга</span><span class="en">Nvidia in one morning after Huang left</span></div></div>
+  </div>
+</figure>
+ 
+<figure class="narrow">
+  <div class="fig-box"><span class="fig-tag"><span class="ru">Схема 5 · капзатраты 2026, план и факт</span><span class="en">Figure 5 · 2026 capex, plan and actual</span></span>
+    <svg viewBox="0 0 640 130" role="img" aria-label="capex">
+      <defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--fin)" stroke-width="2"/></pattern></defs>
+      <!-- scale 0..900bn over 40..600 => 0.6222 px/bn -->
+      <rect x="40" y="40" width="560" height="34" fill="var(--paper-2)"/>
+      <rect x="40" y="40" width="345.9" height="34" fill="var(--fin)"/>
+      <rect x="539.6" y="40" width="15.6" height="34" fill="url(#hatch)" stroke="var(--fin)"/>
+      <rect x="385.9" y="40" width="153.7" height="34" fill="none" stroke="var(--fin)" stroke-dasharray="4 3"/>
+      <text x="48" y="62" font-size="13" font-weight="600" style="fill:#1b1405">556</text>
+      <text x="547" y="30" font-size="12" text-anchor="middle">803–828</text>
+      <text x="40" y="96" font-size="11" class="m">0</text><text x="600" y="96" font-size="11" text-anchor="end" class="m">900</text>
+      <text x="40" y="118" font-size="11" class="m ru">млрд $ · закрашено потрачено за 3 квартала · штриховка диапазон плана на год</text>
+      <text x="40" y="118" font-size="11" class="m en">$bn · solid is spent in 3 quarters · hatched is the full-year plan range</text>
+    </svg>
+  </div>
+</figure>
+ 
+<article class="chapter">
+  <div class="ru">
+    <p>Деньги ходят по кругу. Производитель чипов инвестирует в разработчика моделей. Разработчик покупает вычисления у облачного оператора. Оператор покупает чипы у первого инвестора. В октябре акции операторов CoreWeave и Nebius потеряли по 25%. Аналитики Baird назвали их и Oracle самыми слабыми по свободному денежному потоку.</p>
+  </div>
+  <div class="en">
+    <p>The money moves in a circle. A chipmaker invests in a model developer. The developer buys computing from a cloud operator. The operator buys chips from the first investor. In October shares of the operators CoreWeave and Nebius lost 25% each. Baird analysts named them and Oracle the weakest on free cash flow.</p>
+  </div>
+</article>
+ 
+<figure class="narrow">
+  <div class="fig-box"><span class="fig-tag"><span class="ru">Схема 6 · круговое финансирование</span><span class="en">Figure 6 · circular financing</span></span>
+    <svg id="loopSvg" viewBox="0 0 600 400" role="img" aria-label="loop">
+      <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--ink)"/></marker></defs>
+      <path id="loopPath" d="M300 92 C 430 110, 470 200, 455 262 C 420 330, 180 330, 145 262 C 130 200, 170 110, 300 92 Z" fill="none" stroke="none"/>
+      <path d="M345 98 C 420 118, 455 180, 452 228" fill="none" stroke="var(--ink)" stroke-width="2" marker-end="url(#arr)"/>
+      <path d="M410 300 C 350 330, 250 330, 190 300" fill="none" stroke="var(--ink)" stroke-width="2" marker-end="url(#arr)"/>
+      <path d="M148 228 C 145 180, 180 118, 255 98" fill="none" stroke="var(--ink)" stroke-width="2" marker-end="url(#arr)"/>
+      <circle cx="300" cy="80" r="46" fill="var(--paper)" stroke="var(--fin)" stroke-width="3"/>
+      <circle cx="455" cy="275" r="46" fill="var(--paper)" stroke="var(--chg)" stroke-width="3"/>
+      <circle cx="145" cy="275" r="46" fill="var(--paper)" stroke="var(--att)" stroke-width="3"/>
+      <text x="300" y="85" text-anchor="middle" font-size="14" font-weight="600" class="ru">Чипы</text><text x="300" y="85" text-anchor="middle" font-size="14" font-weight="600" class="en">Chips</text>
+      <text x="455" y="280" text-anchor="middle" font-size="14" font-weight="600" class="ru">Модели</text><text x="455" y="280" text-anchor="middle" font-size="14" font-weight="600" class="en">Models</text>
+      <text x="145" y="280" text-anchor="middle" font-size="14" font-weight="600" class="ru">Облако</text><text x="145" y="280" text-anchor="middle" font-size="14" font-weight="600" class="en">Cloud</text>
+      <text x="472" y="150" font-size="12" class="ru">инвестиции</text><text x="472" y="150" font-size="12" class="en">investment</text>
+      <text x="300" y="352" text-anchor="middle" font-size="12" class="ru">оплата вычислений</text><text x="300" y="352" text-anchor="middle" font-size="12" class="en">pays for computing</text>
+      <text x="128" y="150" text-anchor="end" font-size="12" class="ru">покупка чипов</text><text x="128" y="150" text-anchor="end" font-size="12" class="en">buys chips</text>
+      <g id="coin"><circle r="15" fill="var(--fin)" stroke="var(--ink)" stroke-width="1.5"/><text y="5" text-anchor="middle" font-size="14" font-weight="600" style="fill:#1b1405">$</text>
+        <animateMotion dur="6s" repeatCount="indefinite" rotate="0"><mpath href="#loopPath"/></animateMotion></g>
+      <text x="300" y="215" text-anchor="middle" font-size="13" class="m ru">одни и те же деньги</text><text x="300" y="215" text-anchor="middle" font-size="13" class="m en">the same money</text>
+      <text x="300" y="234" text-anchor="middle" font-size="13" class="m ru">учитываются трижды</text><text x="300" y="234" text-anchor="middle" font-size="13" class="m en">counted 3 times</text>
+    </svg>
+  </div>
+  <figcaption><span class="ru">Схема круга, описанного в материалах о финансировании бума. Каждая стрелка показывает реальный тип сделки, но не конкретный договор.</span><span class="en">The circle as described in reporting on the boom's financing. Each arrow is a real type of deal, not a specific contract.</span></figcaption>
+</figure>
+ 
+<article class="chapter">
+  <div class="ru">
+    <p>Спрос при этом реален. Anthropic за 9 месяцев 2026 года получила 33,2 миллиарда выручки. Но рост в третьем квартале замедлился до 47% против 144 во втором. Скидки срезали около 600 миллионов, а обязательства на вычисления достигли 895,4 миллиарда.</p>
+  </div>
+  <div class="en">
+    <p>Demand is real all the same. Anthropic took in 33.2 billion in revenue over the first 9 months of 2026. But growth in the third quarter slowed to 47% from 144 in the second. Discounts cut about 600 million, and compute commitments reached 895.4 billion.</p>
+  </div>
+</article>
+ 
+<figure class="narrow">
+  <div class="fig-box"><span class="fig-tag"><span class="ru">Схема 7 · выручка против обязательств</span><span class="en">Figure 7 · revenue against commitments</span></span>
+    <svg viewBox="0 0 640 260" role="img" aria-label="Anthropic">
+      <!-- scale 0..900bn over 170..620 = 0.5 px/bn -->
+      <text x="160" y="52" text-anchor="end" font-size="12" class="ru">выручка, 9 мес.</text><text x="160" y="52" text-anchor="end" font-size="12" class="en">revenue, 9 months</text>
+      <rect x="170" y="36" width="16.6" height="24" fill="var(--pol)"/>
+      <text x="194" y="53" font-size="13" font-weight="600">33,2</text>
+      <text x="160" y="102" text-anchor="end" font-size="12" class="ru">обязательства</text><text x="160" y="102" text-anchor="end" font-size="12" class="en">compute</text>
+      <text x="160" y="117" text-anchor="end" font-size="12" class="ru">на вычисления</text><text x="160" y="117" text-anchor="end" font-size="12" class="en">commitments</text>
+      <rect x="170" y="88" width="447.7" height="24" fill="var(--fin)"/>
+      <text x="606" y="105" text-anchor="end" font-size="13" font-weight="600" style="fill:#1b1405">895,4</text>
+      <text x="170" y="138" font-size="11" class="m ru">млрд $ · обязательства многолетние, выручка за 9 месяцев</text>
+      <text x="170" y="138" font-size="11" class="m en">$bn · commitments span years, revenue covers nine months</text>
+      <line x1="20" y1="160" x2="620" y2="160" stroke="var(--rule)"/>
+      <text x="160" y="196" text-anchor="end" font-size="12" class="ru">рост, 2-й кв.</text><text x="160" y="196" text-anchor="end" font-size="12" class="en">growth, Q2</text>
+      <rect x="170" y="180" width="288" height="22" fill="var(--chg)"/>
+      <text x="466" y="196" font-size="13" font-weight="600">144%</text>
+      <text x="160" y="236" text-anchor="end" font-size="12" class="ru">рост, 3-й кв.</text><text x="160" y="236" text-anchor="end" font-size="12" class="en">growth, Q3</text>
+      <rect x="170" y="220" width="94" height="22" fill="var(--chg)" opacity=".6"/>
+      <text x="272" y="236" font-size="13" font-weight="600">47%</text>
+    </svg>
+  </div>
+  <figcaption><span class="ru">По проспекту Anthropic перед IPO в изложении прессы. Цены падают, а обязательства растут.</span><span class="en">From Anthropic's IPO filing as reported. Prices fall while obligations grow.</span></figcaption>
+</figure>
+ 
+<article class="chapter">
+  <div class="ru">
+    <p>Цены падают, а обязательства растут. 5 ноября распродажа акций ИИ стёрла около 2,5 триллиона долларов капитализации Nasdaq 100. Через неделю уход Хуанга обрушил акции Nvidia почти на 12% за утро.</p>
+    <p>Есть и тихий риск в бухгалтерии. Если чип экономически устаревает за 2 года, а амортизируется за 5 лет, прибыль завышена. Будущие затраты занижены.</p>
+  </div>
+  <div class="en">
+    <p>Prices fall while obligations grow. On 5 November a sell-off in AI stocks wiped about 2.5 trillion dollars off the Nasdaq 100. A week later Huang's departure knocked Nvidia shares down almost 12% in a morning.</p>
+    <p>There is also a quiet risk in the accounting. If a chip becomes economically obsolete in 2 years but is depreciated over 5, profit is overstated. Future costs are understated.</p>
+  </div>
+</article>
+ 
+<figure class="narrow">
+  <div class="fig-box"><span class="fig-tag"><span class="ru">Схема 8 · срок службы чипа на бумаге и в жизни</span><span class="en">Figure 8 · chip life on paper and in practice</span></span>
+    <svg viewBox="0 0 640 150" role="img" aria-label="depreciation">
+      <text x="20" y="34" font-size="12" class="ru">амортизация</text><text x="20" y="34" font-size="12" class="en">depreciation</text>
+      <g fill="var(--muted)" opacity=".5"><rect x="150" y="18" width="88" height="24"/><rect x="242" y="18" width="88" height="24"/><rect x="334" y="18" width="88" height="24"/><rect x="426" y="18" width="88" height="24"/><rect x="518" y="18" width="88" height="24"/></g>
+      <text x="20" y="84" font-size="12" class="ru">полезность</text><text x="20" y="84" font-size="12" class="en">useful life</text>
+      <g fill="var(--frg)"><rect x="150" y="68" width="88" height="24"/><rect x="242" y="68" width="88" height="24"/></g>
+      <rect x="334" y="68" width="272" height="24" fill="none" stroke="var(--frg)" stroke-dasharray="4 3"/>
+      <text x="470" y="85" text-anchor="middle" font-size="11" fill="var(--frg)" class="ru">прибыль на бумаге завышена</text><text x="470" y="85" text-anchor="middle" font-size="11" fill="var(--frg)" class="en">paper profit overstated</text>
+      <g font-size="11" class="m"><text x="194" y="120" text-anchor="middle" class="m">1</text><text x="286" y="120" text-anchor="middle" class="m">2</text><text x="378" y="120" text-anchor="middle" class="m">3</text><text x="470" y="120" text-anchor="middle" class="m">4</text><text x="562" y="120" text-anchor="middle" class="m">5</text></g>
+      <text x="150" y="140" font-size="11" class="m ru">годы</text><text x="150" y="140" font-size="11" class="m en">years</text>
+    </svg>
+  </div>
+  <figcaption><span class="ru">Условная иллюстрация довода из эссе: 2 года экономической жизни против 5 лет амортизации.</span><span class="en">An illustration of the essay's argument: 2 years of economic life against 5 years of depreciation.</span></figcaption>
+</figure>
+ 
+<!-- V -->
+<article class="chapter" id="huang">
+  <div class="chap-head"><span class="chap-no">5</span><h2><span class="ru">Хуанг, Китай и вычисление как власть</span><span class="en">Huang, China and computing as power</span></h2></div>
+  <div class="ru">
+    <p>Скандал вокруг Хуанга интересен не личной стороной. Алиса Хуанг руководила в сингапурской Megaspeed, крупном покупателе чипов Nvidia. По данным New York Times, американская разведка считала, что её завербовало МГБ Китая. Задача состояла в сборе сведений о чипах и в давлении в пользу ослабления экспортного контроля.</p>
+    <p>В мае Рубио сообщил об этом Трампу на борту Air Force One. Это было как минимум второе такое предупреждение за 7 месяцев. Хуанг всё равно полетел в Пекин по личному приглашению президента.</p>
+    <p>16 ноября Министерство торговли закрыло лазейку. Теперь нужна лицензия на чипы для дата-центров, которые продают вычисления компаниям из Китая. Лицензии понадобятся операторам в Сингапуре, Малайзии, Таиланде, Индонезии и Бразилии. Правило вышло в день отъезда Трампа на встречу с Си Цзиньпином.</p>
+  </div>
+  <div class="en">
+    <p>The Huang scandal matters not for its personal side. Alice Huang held a senior role at Singapore's Megaspeed, a major buyer of Nvidia chips. According to the New York Times, American intelligence believed she had been recruited by China's Ministry of State Security. Her task was to gather information on chips and to push for looser export controls.</p>
+    <p>In May Rubio told Trump about this aboard Air Force One. It was at least the second such warning in 7 months. Huang flew to Beijing anyway, at the president's personal invitation.</p>
+    <p>On 16 November the Commerce Department closed the loophole. A licence is now required for chips going to data centres that sell computing to Chinese companies. Operators in Singapore, Malaysia, Thailand, Indonesia and Brazil will need licences. The rule came out on the day Trump left for a meeting with Xi Jinping.</p>
+  </div>
+</article>
+ 
+<figure>
+  <div class="fig-box"><span class="fig-tag"><span class="ru">Схема 9 · лазейка удалённого доступа и новый шлагбаум</span><span class="en">Figure 9 · the remote access loophole and the new gate</span></span>
+    <svg viewBox="0 0 960 230" role="img" aria-label="BIS">
+      <defs><marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--ink)"/></marker></defs>
+      <rect x="20" y="70" width="190" height="90" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/>
+      <text x="115" y="108" text-anchor="middle" font-size="14" font-weight="600" class="ru">Чипы из США</text><text x="115" y="108" text-anchor="middle" font-size="14" font-weight="600" class="en">US chips</text>
+      <text x="115" y="130" text-anchor="middle" font-size="11" class="m ru">прямой экспорт в Китай</text><text x="115" y="130" text-anchor="middle" font-size="11" class="m en">direct export to China</text>
+      <text x="115" y="145" text-anchor="middle" font-size="11" class="m ru">уже ограничен</text><text x="115" y="145" text-anchor="middle" font-size="11" class="m en">already restricted</text>
+      <line x1="210" y1="115" x2="368" y2="115" stroke="var(--ink)" stroke-width="2" marker-end="url(#arr2)"/>
+      <g transform="translate(290 115)"><rect x="-6" y="-46" width="12" height="92" fill="var(--pol)"/><rect x="-60" y="-8" width="120" height="16" fill="var(--pol)"/></g>
+      <text x="290" y="184" text-anchor="middle" font-size="11" fill="var(--pol)" class="ru">лицензия с 16.11</text><text x="290" y="184" text-anchor="middle" font-size="11" fill="var(--pol)" class="en">licence from 16.11</text>
+      <rect x="370" y="40" width="270" height="150" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/>
+      <text x="505" y="70" text-anchor="middle" font-size="14" font-weight="600" class="ru">Дата-центры за рубежом</text><text x="505" y="70" text-anchor="middle" font-size="14" font-weight="600" class="en">Data centres abroad</text>
+      <g font-size="12" text-anchor="middle"><text x="505" y="98" class="ru">Сингапур · Малайзия</text><text x="505" y="98" class="en">Singapore · Malaysia</text>
+      <text x="505" y="118" class="ru">Таиланд · Индонезия</text><text x="505" y="118" class="en">Thailand · Indonesia</text>
+      <text x="505" y="138" class="ru">Бразилия</text><text x="505" y="138" class="en">Brazil</text></g>
+      <text x="505" y="170" text-anchor="middle" font-size="11" class="m ru">продают вычисления, а не чипы</text><text x="505" y="170" text-anchor="middle" font-size="11" class="m en">sell computing, not chips</text>
+      <line x1="640" y1="115" x2="738" y2="115" stroke="var(--ink)" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arr2)"/>
+      <text x="689" y="104" text-anchor="middle" font-size="11" class="m ru">удалённо</text><text x="689" y="104" text-anchor="middle" font-size="11" class="m en">remotely</text>
+      <rect x="740" y="70" width="200" height="90" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/>
+      <text x="840" y="108" text-anchor="middle" font-size="14" font-weight="600" class="ru">Компании из Китая</text><text x="840" y="108" text-anchor="middle" font-size="14" font-weight="600" class="en">Chinese companies</text>
+      <text x="840" y="130" text-anchor="middle" font-size="11" class="m ru">арендуют мощность</text><text x="840" y="130" text-anchor="middle" font-size="11" class="m en">rent the capacity</text>
+    </svg>
+  </div>
+  <figcaption><span class="ru">Контроль сместился с товара на право им пользоваться. Шлагбаум стоит на пути чипов к операторам, которые продают вычисления компаниям из Китая.</span><span class="en">Control moved from the good to the right to use it. The gate sits on the path of chips to operators that sell computing to Chinese companies.</span></figcaption>
+</figure>
+ 
+<article class="chapter">
+  <div class="ru">
+    <p>Здесь меняется сама природа товара. Раньше контролировали станки, процессоры, двигатели. Теперь контролируют право пользоваться вычислением, даже если машина стоит в чужой стране.</p>
+    <p>Внутри Вашингтона идёт борьба. Производителям нужны продажи. Службам безопасности нужен запрет. Скандал сместил баланс, и для этого не требовалось, чтобы его кто-то устроил. Достаточно того, что после него стали возможны другие решения.</p>
+  </div>
+  <div class="en">
+    <p>Here the nature of the commodity itself changes. Controls once covered machine tools, processors, engines. Now they cover the right to use computing, even when the machine stands in another country.</p>
+    <p>Inside Washington a struggle is under way. Manufacturers need sales. Security services need a ban. The scandal shifted the balance, and nobody had to stage it for that. It was enough that other decisions became possible after it.</p>
+  </div>
+</article>
+ 
+<!-- VI -->
+<article class="chapter" id="trader">
+  <div class="chap-head"><span class="chap-no">6</span><h2><span class="ru">Трейдер в Белом доме</span><span class="en">A trader in the White House</span></h2></div>
+  <div class="ru">
+    <p>Через инвестиционные счета Трампа в первом квартале 2026 года прошло более 3600 заявок. В среднем 50 сделок в каждый биржевой день. Среди них сделки с Nvidia на сумму до 6 миллионов долларов.</p>
+    <p>Белый дом утверждает, что портфелем управляют независимые управляющие. Представитель семейного бизнеса говорит об их исключительном контроле над решениями.</p>
+  </div>
+  <div class="en">
+    <p>More than 3,600 orders passed through Trump's investment accounts in the first quarter of 2026. On average 50 trades every trading day. Among them were Nvidia trades worth up to 6 million dollars.</p>
+    <p>The White House says the portfolio is run by independent managers. A representative of the family business speaks of their exclusive control over decisions.</p>
+  </div>
+</article>
+ 
+<figure class="narrow">
+  <div class="fig-box"><span class="fig-tag"><span class="ru">Схема 10 · один биржевой день</span><span class="en">Figure 10 · one trading day</span></span>
+    <svg id="dots" viewBox="0 0 640 170" role="img" aria-label="50"></svg>
+  </div>
+  <figcaption><span class="ru">Пятьдесят сделок в среднем за один биржевой день. При таком потоке рядом с любой датой найдётся сделка с любой крупной акцией. Это довод о базовой частоте, а не о конкретных сделках.</span><span class="en">Fifty trades on an average trading day. With that flow any date will sit next to a trade in any large stock. This is an argument about base rates, not about specific trades.</span></figcaption>
+</figure>
+ 
+<article class="chapter">
+  <div class="ru">
+    <p>Последовательность выглядит подозрительно. Брифинг в мае, продажа акций 18 мая, обратная покупка 21 мая. Но при 50 сделках в день рядом с любой датой найдётся сделка с Nvidia. И майское предупреждение не было первым. Сам факт повторного брифинга не показывает, какую новую информацию получили его участники.</p>
+    <p>Доказательства инсайда здесь нет. Есть другое. Президент владеет бумагами компаний, чью судьбу решает своей подписью. Конфликт интересов не требует умысла. Он встроен в саму позицию.</p>
+  </div>
+  <div class="en">
+    <p>The sequence looks suspicious. A briefing in May, a sale of shares on 18 May, a buyback on 21 May. But with 50 trades a day an Nvidia trade will turn up next to any date. And the May warning was not the first. The fact of a repeated briefing does not establish what new information its participants received.</p>
+    <p>There is no proof of insider trading here. There is something else. The president owns shares in companies whose fate he decides with his signature. A conflict of interest needs no intent. It is built into the position itself.</p>
+  </div>
+</article>
+ 
+<!-- VII -->
+<article class="chapter" id="history">
+  <div class="chap-head"><span class="chap-no">7</span><h2><span class="ru">История уже видела это</span><span class="en">History has seen this before</span></h2></div>
+  <div class="ru">
+    <p>Британия 1840-х годов строила железные дороги быстрее, чем росли перевозки. Мания закончилась крахом, вкладчики разорились. Рельсы остались и служили следующему веку.</p>
+    <p>В 1990-е годы телекоммуникационные компании проложили оптоволокно на сотни миллиардов долларов. В 2001 году пузырь лопнул, вскрылись бухгалтерские махинации Enron и WorldCom. Сети скупили за бесценок, и на этом волокне вырос интернет следующего десятилетия.</p>
+    <p>Экономист Карлота Перес описала этот цикл. Сначала идёт фаза установки, когда финансовый капитал строит инфраструктуру с избытком. Затем наступает крах. После него приходит фаза развёртывания, когда технология становится обыденной и начинает приносить отдачу.</p>
+  </div>
+  <div class="en">
+    <p>Britain in the 1840s built railways faster than traffic grew. The mania ended in a crash, and investors were ruined. The rails remained and served the next century.</p>
+    <p>In the 1990s telecom companies laid hundreds of billions of dollars of optical fibre. In 2001 the bubble burst, and the accounting frauds of Enron and WorldCom came to light. The networks were bought for next to nothing, and the internet of the following decade grew on that fibre.</p>
+    <p>Economist Carlota Perez described this cycle. First comes the installation phase, when financial capital builds infrastructure in excess. Then comes the crash. After it comes the deployment phase, when the technology becomes ordinary and starts to pay back.</p>
+  </div>
+</article>
+ 
+<figure>
+  <div class="fig-box"><span class="fig-tag"><span class="ru">Схема 11 · цикл Карлоты Перес</span><span class="en">Figure 11 · the Carlota Perez cycle</span></span>
+    <svg viewBox="0 0 960 330" role="img" aria-label="Perez">
+      <line x1="40" y1="280" x2="930" y2="280" stroke="var(--ink)" stroke-width="1.5"/>
+      <rect x="40" y="30" width="410" height="250" fill="var(--fin)" opacity=".08"/>
+      <rect x="450" y="30" width="80" height="250" fill="var(--frg)" opacity=".1"/>
+      <rect x="530" y="30" width="400" height="250" fill="var(--chg)" opacity=".08"/>
+      <path d="M40 268 C 140 266, 220 250, 300 190 C 350 150, 390 70, 430 58 C 455 52, 470 120, 490 170 C 505 205, 525 200, 560 190 C 650 165, 760 110, 930 70" fill="none" stroke="var(--ink)" stroke-width="3"/>
+      <path d="M40 270 C 200 268, 400 262, 530 245 C 680 225, 820 160, 930 112" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <text x="60" y="56" font-size="13" font-weight="600" class="ru">Фаза установки</text><text x="60" y="56" font-size="13" font-weight="600" class="en">Installation phase</text>
+      <text x="60" y="74" font-size="11" class="m ru">капитал строит с избытком</text><text x="60" y="74" font-size="11" class="m en">capital builds in excess</text>
+      <text x="490" y="300" text-anchor="middle" font-size="12" fill="var(--frg)" class="ru">крах</text><text x="490" y="300" text-anchor="middle" font-size="12" fill="var(--frg)" class="en">crash</text>
+      <text x="910" y="56" text-anchor="end" font-size="13" font-weight="600" class="ru">Фаза развёртывания</text><text x="910" y="56" text-anchor="end" font-size="13" font-weight="600" class="en">Deployment phase</text>
+      <text x="910" y="74" text-anchor="end" font-size="11" class="m ru">технология приносит отдачу</text><text x="910" y="74" text-anchor="end" font-size="11" class="m en">technology pays back</text>
+      <circle cx="405" cy="80" r="11" fill="var(--accent)"/>
+      <circle cx="405" cy="80" r="20" fill="none" stroke="var(--accent)" stroke-width="2"><animate attributeName="r" values="12;26;12" dur="2.4s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0;1" dur="2.4s" repeatCount="indefinite"/></circle>
+      <text x="380" y="118" text-anchor="end" font-size="13" font-weight="600" class="ru">2026 · мы здесь</text><text x="380" y="118" text-anchor="end" font-size="13" font-weight="600" class="en">2026 · we are here</text>
+      <text x="300" y="230" font-size="11" class="m ru">финансовый капитал</text><text x="300" y="230" font-size="11" class="m en">financial capital</text>
+      <text x="700" y="232" font-size="11" class="m ru">реальное использование</text><text x="700" y="232" font-size="11" class="m en">real use</text>
+      <text x="40" y="318" font-size="11" class="m ru">Железные дороги 1840-х и оптоволокно 1990-х прошли весь цикл.</text>
+      <text x="40" y="318" font-size="11" class="m en">Railways in the 1840s and fibre in the 1990s went through the whole cycle.</text>
+    </svg>
+  </div>
+  <figcaption><span class="ru">Схематическое изображение модели Перес, не график данных. Отметка 2026 года показывает положение, которое описывает эссе.</span><span class="en">A schematic of the Perez model, not a data chart. The 2026 marker shows the position the essay describes.</span></figcaption>
+</figure>
+ 
+<article class="chapter">
+  <div class="ru"><p>Последовательность почти всегда одна.</p></div>
+  <div class="en"><p>The sequence is almost always the same.</p></div>
+</article>
+ 
+<figure class="narrow">
+  <ul class="checks">
+    <li class="done"><span class="box">✓</span><span><span class="ru">Технология реальна</span><span class="en">The technology is real</span></span><span class="st"><span class="ru">есть</span><span class="en">yes</span></span></li>
+    <li class="done"><span class="box">✓</span><span><span class="ru">Капитал опережает спрос</span><span class="en">Capital runs ahead of demand</span></span><span class="st"><span class="ru">есть</span><span class="en">yes</span></span></li>
+    <li class="done"><span class="box">✓</span><span><span class="ru">Появляется круговое финансирование и долг</span><span class="en">Circular financing and debt appear</span></span><span class="st"><span class="ru">есть</span><span class="en">yes</span></span></li>
+    <li><span class="box"></span><span><span class="ru">В конце вскрываются нарушения</span><span class="en">At the end violations come to light</span></span><span class="st"><span class="ru">пока нет</span><span class="en">not yet</span></span></li>
+    <li><span class="box"></span><span><span class="ru">Инфраструктуру забирает тот, у кого остались деньги</span><span class="en">The infrastructure goes to whoever still has money</span></span><span class="st"><span class="ru">пока нет</span><span class="en">not yet</span></span></li>
+  </ul>
+</figure>
+ 
+<article class="chapter">
+  <div class="ru"><p>2026 год узнаётся по первым 3 пунктам. 2 последних ещё не наступили.</p></div>
+  <div class="en"><p>2026 is recognisable in the first 3 steps. The last 2 have not yet arrived.</p></div>
+</article>
+ 
+<!-- VIII -->
+<article class="chapter" id="scenario">
+  <div class="chap-head"><span class="chap-no">8</span><h2><span class="ru">Сценарий без сценариста</span><span class="en">A scenario without a screenwriter</span></h2></div>
+  <div class="ru">
+    <p>Сценарий есть. Но это сценарий правил игры, а не плана. Каждый участник видит риск. Никто не может остановиться, пока бегут конкуренты.</p>
+    <p>Глава Citigroup Чак Принс летом 2007 года сказал, что пока играет музыка, надо вставать и танцевать. Через несколько недель музыка кончилась.</p>
+    <p>Отдельные куски этой истории сделаны намеренно. Круговое финансирование спроектировано. Экспортная политика выбрана. Сделки с бумагами совершены. Но общего центра не видно, и для результата он не нужен. Система сама ведёт туда, куда вёл бы сценарист.</p>
+    <p>Хаосом пользуются. Сразу после сбоя Microsoft её служба разведки угроз зафиксировала фишинговую кампанию, которая эксплуатировала отключение. Каждый отказ даёт аргумент за национальные облака и новое регулирование. Злой умысел чаще приходит после сбоя, чем до него.</p>
+    <p>Картина складывается из 5 слоёв, которые давят друг на друга.</p>
+  </div>
+  <div class="en">
+    <p>There is a scenario. But it is a scenario of rules of the game, not of a plan. Every participant sees the risk. Nobody can stop while competitors keep running.</p>
+    <p>In the summer of 2007 Citigroup chief Chuck Prince said that as long as the music is playing you have to get up and dance. A few weeks later the music stopped.</p>
+    <p>Some pieces of this story were made on purpose. Circular financing was designed. Export policy was chosen. The share trades were made. But no common centre is visible, and none is needed for the result. The system itself leads where a screenwriter would.</p>
+    <p>Chaos gets used. Right after the Microsoft outage its threat intelligence team recorded a phishing campaign exploiting the disruption. Every failure becomes an argument for national clouds and new regulation. Malice more often arrives after a failure than before it.</p>
+    <p>The picture consists of 5 layers pressing on one another.</p>
+  </div>
+</article>
+ 
+<figure>
+  <div class="fig-box"><span class="fig-tag"><span class="ru">Схема 12 · 5 слоёв и обратная связь</span><span class="en">Figure 12 · 5 layers and the feedback loop</span></span>
+    <svg viewBox="0 0 960 420" role="img" aria-label="layers">
+      <defs><marker id="arr3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/></marker></defs>
+      <g id="slabs"></g>
+      <path d="M720 340 C 860 320, 880 120, 735 70" fill="none" stroke="var(--accent)" stroke-width="2.5" marker-end="url(#arr3)"/>
+      <path d="M700 60 C 640 50, 600 50, 560 58" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="6 4" marker-end="url(#arr3)"/>
+      <g font-size="12">
+        <text x="830" y="110" class="ru">сложность</text><text x="830" y="110" class="en">complexity</text>
+        <text x="870" y="190" class="ru">последствия</text><text x="870" y="190" class="en">consequences</text>
+        <text x="860" y="270" class="ru">централизация</text><text x="860" y="270" class="en">centralisation</text>
+        <text x="760" y="352" class="ru">новые зависимости</text><text x="760" y="352" class="en">new dependencies</text>
+      </g>
+    </svg>
+  </div>
+  <figcaption><span class="ru">Слои давят снизу вверх. Справа возможная петля, при которой каждый виток усложнения рождает спрос на централизацию, а та добавляет общие зависимости. Это гипотеза, а не измеренный закон.</span><span class="en">The layers press from the bottom up. On the right is a possible loop in which each round of complexity breeds demand for centralisation, which adds shared dependencies. A hypothesis, not a measured law.</span></figcaption>
+</figure>
+ 
+<article class="chapter">
+  <div class="ru">
+    <p>Между слоями возможна положительная обратная связь. Рост сложности усиливает последствия сбоев. Последствия рождают спрос на безопасность и централизацию. Новая централизация создаёт новые общие зависимости.</p>
+    <p>Есть и кандидат на общую причину без автора. Google сообщила об ИИ-агенте, который сам писал и запускал эксплойты без участия человека. Если уязвимости находят быстрее, патчи приходится ставить срочно. Срочные патчи ломают системы. NSANet упала именно так. Эту связь стоит проверить на остальных отказах.</p>
+  </div>
+  <div class="en">
+    <p>Between the layers a positive feedback loop is possible. Growing complexity amplifies the consequences of failures. The consequences create demand for security and centralisation. New centralisation creates new shared dependencies.</p>
+    <p>There is also a candidate for a common cause without an author. Google reported an AI agent that wrote and launched exploits on its own with no human involved. If vulnerabilities are found faster, patches have to be installed in a hurry. Hurried patches break systems. NSANet fell exactly this way. This link is worth testing against the other failures.</p>
+  </div>
+</article>
+ 
+<!-- 3D MAP -->
+<section class="map-wrap" id="map">
+  <div class="map-head">
+    <div>
+      <p class="kicker" style="margin-bottom:8px"><span class="ru">Интерактив · 33 события · 25 связей</span><span class="en">Interactive · 33 events · 25 links</span></p>
+      <h2><span class="ru">Карта процессов в 3D</span><span class="en">The process map in 3D</span></h2>
+    </div>
+    <div class="map-ctrl">
+      <button class="btn" id="mapPlay"><span class="ru">Проиграть хронологию</span><span class="en">Play the timeline</span></button>
+      <button class="btn ghost" id="mapLabelsBtn" aria-pressed="true"><span class="ru">Подписи</span><span class="en">Labels</span></button>
+    </div>
+  </div>
+  <div id="mapBox">
+    <div id="mapCanvas"></div>
+    <div id="mapLabels"></div>
+    <div id="mapDate"></div>
+    <div id="mapLegend">
+      <div><svg width="40" height="8"><line x1="2" y1="4" x2="38" y2="4" stroke="#e7ecf3" stroke-width="2.5"/></svg><span class="ru">подтверждено</span><span class="en">confirmed</span></div>
+      <div><svg width="40" height="8"><line x1="2" y1="4" x2="38" y2="4" stroke="#e7ecf3" stroke-width="2" stroke-dasharray="7 4"/></svg><span class="ru">по сообщениям</span><span class="en">reported</span></div>
+      <div><svg width="40" height="8"><line x1="2" y1="4" x2="38" y2="4" stroke="#94a3b8" stroke-width="1.6" stroke-dasharray="2 4"/></svg><span class="ru">гипотеза эссе</span><span class="en">essay hypothesis</span></div>
+      <div><svg width="40" height="8"><line x1="2" y1="4" x2="38" y2="4" stroke="#e05561" stroke-width="1.6" stroke-dasharray="3 3"/><line x1="16" y1="0" x2="24" y2="8" stroke="#e05561" stroke-width="2"/><line x1="24" y1="0" x2="16" y2="8" stroke="#e05561" stroke-width="2"/></svg><span class="ru">связи нет</span><span class="en">no link</span></div>
+    </div>
+    <section id="mapCard" aria-live="polite"><button class="x" id="mapCardX" aria-label="close">✕</button><div id="mapCardBody"></div></section>
+  </div>
+  <div class="layer-chips" id="layerChips"></div>
+  <figcaption><span class="ru">Время идёт слева направо, осень растянута. Ярусы снизу вверх повторяют 5 слоёв из эссе. Нажмите на узел, чтобы открыть событие, его связи и источник. Пунктирное кольцо означает приблизительную дату.</span><span class="en">Time runs left to right, with autumn stretched out. The tiers from bottom to top repeat the essay's 5 layers. Tap a node to open the event, its links and its source. A dashed ring marks an approximate date.</span></figcaption>
+</section>
+ 
+<!-- IX -->
+<article class="chapter" id="ending">
+  <div class="chap-head"><span class="chap-no">9</span><h2><span class="ru">Открытый финал</span><span class="en">Open ending</span></h2></div>
+  <div class="ru">
+    <p>Возможно, цифровая цивилизация входит в период, когда скорость усложнения инфраструктуры обгоняет скорость её защиты. Это гипотеза, а не закон. Но у неё теперь есть примеры, хронология и измеримые признаки.</p>
+    <p>Вопрос о сценарии в итоге важен меньше, чем вопрос о наследстве. Если стоимость ИИ-индустрии резко упадёт, дата-центры, кабели и электростанции останутся. Останутся данные и полномочия, накопленные за время бума.</p>
+    <p>История подсказывает, кто их унаследует. Тот, у кого после краха останутся деньги. Крупнейшие платформы, государства, кредиторы.</p>
+    <p>Признаки перехода видны заранее.</p>
+  </div>
+  <div class="en">
+    <p>Perhaps digital civilisation is entering a period when the speed at which infrastructure grows more complex outruns the speed of its protection. This is a hypothesis, not a law. But it now has examples, a chronology and measurable signs.</p>
+    <p>In the end the question of the scenario matters less than the question of inheritance. If the value of the AI industry falls sharply, the data centres, cables and power plants will remain. So will the data and powers accumulated during the boom.</p>
+    <p>History suggests who will inherit them. Whoever still has money after the crash. The largest platforms, states, creditors.</p>
+    <p>The signs of transition are visible in advance.</p>
+  </div>
+</article>
+ 
+<figure class="narrow">
+  <div class="watch">
+    <div><b><span class="ru">Срывы финансирования</span><span class="en">Financing falls through</span></b><span class="ru">Как с дата-центром Oracle в Мичигане.</span><span class="en">As with Oracle's data centre in Michigan.</span><br><span class="s seen"><span class="ru">уже видно</span><span class="en">already visible</span></span></div>
+    <div><b><span class="ru">Пересмотр амортизации</span><span class="en">Depreciation revisions</span></b><span class="ru">Сроки службы чипов сокращают в отчётности.</span><span class="en">Chip lifetimes get cut in the accounts.</span><br><span class="s not"><span class="ru">пока нет</span><span class="en">not yet</span></span></div>
+    <div><b><span class="ru">Бухгалтерские скандалы</span><span class="en">Accounting scandals</span></b><span class="ru">Как Enron и WorldCom в 2001 году.</span><span class="en">Like Enron and WorldCom in 2001.</span><br><span class="s not"><span class="ru">пока нет</span><span class="en">not yet</span></span></div>
+    <div><b><span class="ru">Скупка операторов</span><span class="en">Operators bought up</span></b><span class="ru">Гиганты забирают ослабленных игроков.</span><span class="en">Giants absorb weakened players.</span><br><span class="s not"><span class="ru">пока нет</span><span class="en">not yet</span></span></div>
+  </div>
+</figure>
+ 
+<article class="chapter">
+  <p class="pull"><span class="ru">Мы живём в фазе установки. Что будет построено на её обломках и кем, ещё не решено.</span><span class="en">We live in the installation phase. What will be built on its ruins, and by whom, has not yet been decided.</span></p>
+</article>
+ 
+<section class="sources" id="sources">
+  <div class="chap-head"><span class="chap-no">§</span><h2><span class="ru">Источники</span><span class="en">Sources</span></h2></div>
+  <ol id="srcList"></ol>
+</section>
+ 
+</main>
+ 
+<footer>
+  <span class="sig">Archi Eire · АЦХ · ADC 🪶</span>
+  <span><span class="ru">17 ноября 2026 · Дублин</span><span class="en">17 November 2026 · Dublin</span></span>
+<a href="https://www.facebook.com/aivar.drukalskij/posts/pfbid02G2vzhQN8jofrbVbwLFpufNjqHBpJ4j97KsjMQ68iyLZG6d7mQCXAV1CwqKjadF5wl">Facebook · <span class="ru">исходное эссе</span><span class="en">original essay</span></a> · <a href="https://ealoiontoir.weebly.com/">Elantour</a>
+</footer>
+ 
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+"use strict";
+let LANG = "ru";
+const listeners = [];
+function setLang(l) {
+  document.querySelectorAll("video").forEach(v => v.pause());
+  LANG = l === "en" ? "en" : "ru";
+  document.body.classList.toggle("lang-ru", LANG === "ru");
+  document.body.classList.toggle("lang-en", LANG === "en");
+  document.documentElement.lang = LANG;
+  document.title = LANG === "ru" ? "Фаза установки" : "The Installation Phase";
+  document.getElementById("btnRu").setAttribute("aria-pressed", String(LANG === "ru"));
+  document.getElementById("btnEn").setAttribute("aria-pressed", String(LANG === "en"));
+  try { localStorage.setItem("faza-lang", LANG); } catch (e) {}
+  if (location.hash !== "#" + LANG && (location.hash === "" || location.hash === "#ru" || location.hash === "#en")) history.replaceState(null, "", "#" + LANG);
+  listeners.forEach(f => f());
+}
+document.getElementById("btnRu").addEventListener("click", () => setLang("ru"));
+document.getElementById("btnEn").addEventListener("click", () => setLang("en"));
+(function initLang() {
+  let l = new URLSearchParams(location.search).get("lang") || location.hash.replace("#", "");
+  if (l !== "ru" && l !== "en") { try { l = localStorage.getItem("faza-lang") || ""; } catch (e) { l = ""; } }
+  if (l !== "ru" && l !== "en") l = (navigator.language || "ru").toLowerCase().startsWith("ru") ? "ru" : "en";
+  setLang(l);
+})();
+window.addEventListener("hashchange", () => { const l = location.hash.replace("#", ""); if (l === "ru" || l === "en") setLang(l); });
+ 
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (reduceMotion) { const s = document.getElementById("loopSvg"); if (s && s.pauseAnimations) s.pauseAnimations(); }
+ 
+// reading progress
+const prog = document.getElementById("progress");
+window.addEventListener("scroll", () => {
+  const h = document.documentElement.scrollHeight - innerHeight;
+  prog.style.width = (h > 0 ? scrollY / h * 100 : 0) + "%";
+}, { passive: true });
+ 
+// hero: scaffolding being installed, one orchestrated moment
+(function hero() {
+  const c = document.getElementById("heroCanvas"), ctx = c.getContext("2d");
+  let W, H, t0 = performance.now();
+  const ink = () => getComputedStyle(document.documentElement).getPropertyValue("--ink").trim() || "#121a26";
+  const acc = () => getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#a87a16";
+  const beams = [];
+  function build() {
+    const r = c.getBoundingClientRect(); const dpr = Math.min(devicePixelRatio, 2);
+    W = r.width; H = r.height; c.width = W * dpr; c.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    beams.length = 0;
+    const cols = Math.max(5, Math.round(W / 120)), rows = 5, x0 = W * 0.48, x1 = W - 20, y0 = 30, y1 = H - 20;
+    const cw = (x1 - x0) / cols, rh = (y1 - y0) / rows;
+    let k = 0;
+    for (let i = 0; i <= cols; i++) beams.push({ a: [x0 + i * cw, y1], b: [x0 + i * cw, y1 - rh * (rows - (i % 2 ? 1 : 0))], d: k++ * 40 });
+    for (let j = 1; j <= rows; j++) for (let i = 0; i < cols; i++) {
+      const top = y1 - j * rh; if (j === rows && i % 2) continue;
+      beams.push({ a: [x0 + i * cw, top], b: [x0 + (i + 1) * cw, top], d: 300 + (j * cols + i) * 22 });
+      if ((i + j) % 2 === 0) beams.push({ a: [x0 + i * cw, top + rh], b: [x0 + (i + 1) * cw, top], d: 500 + (j * cols + i) * 24, diag: true });
+    }
+  }
+  function draw(now) {
+    const el = reduceMotion ? 1e9 : now - t0;
+    ctx.clearRect(0, 0, W, H);
+    ctx.lineCap = "round";
+    beams.forEach(b => {
+      const u = Math.max(0, Math.min(1, (el - b.d) / 420));
+      if (u <= 0) return;
+      ctx.strokeStyle = b.diag ? acc() : ink(); ctx.globalAlpha = b.diag ? 0.35 : 0.22; ctx.lineWidth = b.diag ? 1 : 1.5;
+      ctx.beginPath(); ctx.moveTo(b.a[0], b.a[1]); ctx.lineTo(b.a[0] + (b.b[0] - b.a[0]) * u, b.a[1] + (b.b[1] - b.a[1]) * u); ctx.stroke();
+    });
+    ctx.globalAlpha = 1;
+    if (el < 6000) requestAnimationFrame(draw);
+  }
+  build(); requestAnimationFrame(draw);
+  addEventListener("resize", () => { build(); draw(performance.now() + 1e9); });
+})();
+ 
+// figure 10: fifty dots
+(function dots() {
+  const s = document.getElementById("dots"); const NS = "http://www.w3.org/2000/svg";
+  for (let i = 0; i < 50; i++) {
+    const c = document.createElementNS(NS, "circle");
+    c.setAttribute("cx", 40 + (i % 25) * 23.5); c.setAttribute("cy", 40 + Math.floor(i / 25) * 40); c.setAttribute("r", 8);
+    c.setAttribute("fill", "var(--muted)"); c.setAttribute("opacity", ".55"); s.appendChild(c);
+  }
+  const mk = (txt, cls) => { const t = document.createElementNS(NS, "text"); t.setAttribute("x", 28); t.setAttribute("y", 140); t.setAttribute("font-size", "12"); t.setAttribute("class", cls); t.textContent = txt; s.appendChild(t); };
+  mk("≈ 50 сделок за биржевой день · 3600+ заявок за первый квартал 2026", "ru");
+  mk("≈ 50 trades per trading day · 3,600+ orders in Q1 2026", "en");
+})();
+ 
+// figure 12: isometric slabs
+(function slabs() {
+  const g = document.getElementById("slabs"); const NS = "http://www.w3.org/2000/svg";
+  const L = [["var(--fin)", "Финансовое давление", "Financial pressure", "долги, обязательства, спешка с окупаемостью", "debt, obligations, haste to pay back"],
+    ["var(--chg)", "Ускорение изменений", "Acceleration of change", "новые сети, обновления, интеграции", "new networks, updates, integrations"],
+    ["var(--frg)", "Накопленная хрупкость", "Accumulated fragility", "отказы резерва, скрытые дефекты, общие зависимости", "backup failures, latent defects, shared dependencies"],
+    ["var(--att)", "Злонамеренное воздействие", "Malicious action", "атаки на цепочки поставки, эксплуатация сбоев", "supply chain attacks, exploiting outages"],
+    ["var(--pol)", "Политические последствия", "Political consequences", "суверенитет, регулирование, контроль", "sovereignty, regulation, control"]];
+  L.forEach((l, i) => {
+    const y = 340 - i * 66;
+    const p = document.createElementNS(NS, "path");
+    p.setAttribute("d", `M120 ${y} L620 ${y} L700 ${y - 34} L200 ${y - 34} Z`);
+    p.setAttribute("fill", l[0]); p.setAttribute("fill-opacity", ".22"); p.setAttribute("stroke", l[0]); p.setAttribute("stroke-width", "2");
+    g.appendChild(p);
+    const no = document.createElementNS(NS, "text"); no.setAttribute("x", 96); no.setAttribute("y", y - 10); no.setAttribute("font-size", "13"); no.setAttribute("text-anchor", "end");
+    no.setAttribute("fill", l[0]); no.style.fill = l[0]; no.textContent = String(i + 1); g.appendChild(no);
+    [["ru", 1, 3], ["en", 2, 4]].forEach(([cls, a, b]) => {
+      const t = document.createElementNS(NS, "text"); t.setAttribute("x", 220); t.setAttribute("y", y - 13); t.setAttribute("font-size", "14");
+      t.setAttribute("font-weight", "600"); t.setAttribute("class", cls); t.textContent = l[a]; g.appendChild(t);
+      const s = document.createElementNS(NS, "text"); s.setAttribute("x", 440); s.setAttribute("y", y - 13); s.setAttribute("font-size", "11");
+      s.setAttribute("class", "m " + cls); s.textContent = l[b]; g.appendChild(s);
+    });
+  });
+})();
+ 
+// ---------------------------------------------------------------- sources
+const S = {
+  nvidiaOfficial: ["NVIDIA, официальное объявление о смене CEO", "NVIDIA, official CEO transition announcement", "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-CEO-Transition/"],
+  fedOfficial: ["ФРС, выступление Боуман 10 ноября", "Federal Reserve, Bowman speech on 10 November", "https://www.federalreserve.gov/newsevents/speech/bowman20261110a.htm"],
+  cloudOfficial: ["Google Cloud, технический отчёт об инциденте", "Google Cloud, incident report", "https://status.cloud.google.com/incidents/Xs2XTHzAVC9YnafnPyzj"],
+  bisOfficial: ["BIS, официальное объявление правила", "BIS, official rule announcement", "https://www.bis.gov/press-release/bis-issues-rule-addressing-remote-access-american-super-intelligence-technology"],
+
+  wf: ["Microsoft 365, сбой из-за сетевых изменений", "Microsoft 365 outage traced to network changes", "https://windowsforum.com/news/microsoft-365-outage-traced-to-network-changes-how-admins-can-verify-recovery.452297/"],
+  twd: ["Microsoft 365, масштаб и 74 страны", "Microsoft 365 outage, scale and 74 countries", "https://theworlddata.com/microsoft-365-outage-statistics/"],
+  aa: ["Сбой Microsoft в Европе и оценка BSI", "Microsoft outage in Europe and the BSI view", "https://aa.com.tr/en/europe/microsoft-outage-disrupts-european-businesses-public-services/4124007"],
+  fwm: ["Фишинг после сбоя Microsoft", "Phishing after the Microsoft outage", "https://fourweekmba.com/ai-microsoft-365-root-cause-latent-bug-behind-36-hour-outage/"],
+  paperjam: ["Уход Хуанга из Nvidia", "Huang leaves Nvidia", "https://en.paperjam.lu/article/jensen-huang-leaves-nvidia-colette-kress-takes-over-on-an-interim-basis"],
+  tc: ["Падение акций Nvidia после отставки", "Nvidia shares fall after the resignation", "https://techcrunch.com/?p=3187751"],
+  faa: ["FAA, вопросы и ответы об остановке вылетов", "FAA, ground stop questions and answers", "https://www.faa.gov/newsroom/nationwide-ground-stop-questions-and-answers"],
+  aero: ["FAA, первая общенациональная остановка с 2023 года", "FAA, first nationwide ground stop since 2023", "https://www.aerotime.aero/articles/faa-nationwide-ground-stop-atc-communications-november-2026/amp"],
+  abc: ["Задержанные и отменённые рейсы 13 ноября", "Delayed and cancelled flights on 13 November", "https://abc3340.com/news/nation-world/gallery/flight-disruptions-persist-as-airlines-recover-from-nationwide-faa-ground-stop-modern-skies-act-airplanes-planes-travelers-passengers-delays-cancellations-departures-airports-air-traffic-control-outage-pilots-congress-funding-duffy-mullin-trump?photo=1"],
+  gn: ["United, сбой 16 ноября", "United, outage on 16 November", "https://ground.news/article/united-airlines-says-it-resolved-a-technology-issue-that-affected-departing-flights_ca42da"],
+  star: ["JPMorgan, программная ошибка", "JPMorgan, software bug", "https://www.thestar.com.my/tech/tech-news/2026/11/17/jpmorgan-says-software-bug-slows-its-transactions"],
+  teiss: ["JPMorgan, жалобы клиентов других банков", "JPMorgan, complaints from other banks' customers", "https://www.teiss.co.uk/news/jpmorgan-says-software-bug-slows-its-transactions-18476"],
+  hns: ["Optimizely, 178 организаций", "Optimizely, 178 organisations", "https://www.helpnetsecurity.com/2026/11/17/optimizely-vulnerability-malicious-javascript/"],
+  thn: ["APT29 и взлом трекера Plerdy", "APT29 and the Plerdy tracker hijack", "https://thehackernews.com/2026/11/apt29-linked-hackers-hijack-web.html"],
+  cnn: ["NSANet, сбой и заявление Джея Клейтона", "NSANet outage and Jay Clayton's statement", "https://www.cnn.com/2026/11/17/politics/highly-classified-national-security-communications-network-goes-down"],
+  ti: ["Google Cloud в Лондоне, последствия", "Google Cloud in London, the impact", "https://tech-insider.org/google-cloud-uk-outage-europe-west2-2026/"],
+  reg: ["Google Cloud в Лондоне, незапустившиеся генераторы", "Google Cloud in London, generators that did not start", "https://www.theregister.com/a/5307739"],
+  nw: ["ThousandEyes в отчётах Network World", "ThousandEyes in Network World reports", "https://www.networkworld.com/article/4113326/2026-network-outage-report-and-internet-health-check.html"],
+  konvoy: ["Загрузка дата-центров по оценке Goldman Sachs", "Data centre utilisation per Goldman Sachs", "https://konvoy.beehiiv.com/p/an-unreliable-future"],
+  azure: ["2 сбоя Azure за 40 часов", "2 Azure outages in 40 hours", "https://tech-insider.org/au/?p=2284"],
+  sg: ["Сбой Apple ID 10 ноября", "Apple ID outage on 10 November", "https://statusgator.com/blog/apple-sign-in-down-worldwide-outage-causes-pain-for-apple-id-users/"],
+  hyper: ["Капитальные затраты 5 компаний на 2026 год", "2026 capital spending by 5 companies", "https://hyper.ai/en/stories/243495b33adb20d879ecfc2fd066269b"],
+  alg1: ["Долговое финансирование капзатрат", "Debt financing of capex", "https://algeriatech.news/?p=22515"],
+  alg2: ["Амортизация чипов", "Chip depreciation", "https://algeriatech.news/?p=21923"],
+  bowman: ["Выступление Мишель Боуман 10 ноября", "Michelle Bowman's speech on 10 November", "https://fourweekmba.com/ai-feds-bowman-ties-a-quarter-of-excess-inflation-to-ai/"],
+  wealth: ["CoreWeave, Nebius и Oracle в октябре", "CoreWeave, Nebius and Oracle in October", "https://www.thewealthadvisor.com/article/coreweave-and-nebius-just-lost-25-wall-street-says-ai-boom-still-intact"],
+  edge: ["Круговое финансирование", "Circular financing", "https://theedgemalaysia.com/node/813085"],
+  ren: ["Anthropic, отчётность за 9 месяцев", "Anthropic, nine-month results", "https://www.renaissancecapital.com/IPO-Center/News/122533/anthropic-discloses-third-quarter-financial-results-ahead-of-multibillion"],
+  net: ["Anthropic, скидки и замедление роста", "Anthropic, discounts and slowing growth", "https://northeasttimes.com/?p=165758"],
+  sell: ["Распродажа акций 5 ноября", "The sell-off on 5 November", "https://yourstory.com/ai-story/ai-stocks-crash-wall-street-trillion-rout"],
+  aiw: ["Меморандум Рубио и версия New York Times", "The Rubio memo and the New York Times account", "https://aiweekly.co/alerts/nyt-rubio-oversaw-classified-spring-memo-warning-trump-officials-of-huangs"],
+  wjla: ["Megaspeed и Алиса Хуанг", "Megaspeed and Alice Huang", "https://wjla.com/news/nation-world/reports-reveal-more-about-when-trump-admin-learned-of-nvidia-ceo-affair-with-suspected-spy-president-donald-trump"],
+  katu: ["Второе предупреждение за 7 месяцев", "The second warning in 7 months", "https://katu.com/news/nation-world/reports-reveal-more-about-when-trump-admin-learned-of-nvidia-ceo-affair-with-suspected-spy-president-donald-trump"],
+  tr: ["Правило BIS об удалённом доступе", "The BIS remote access rule", "https://www.techrepublic.com/article/news-us-ai-chip-cloud-access-restrictions/"],
+  yahoo: ["Правило и отъезд Трампа в Азию", "The rule and Trump's departure for Asia", "https://www.yahoo.com/news/politics/articles/us-issues-rule-protect-advanced-134607323.html"],
+  wsls: ["Сделки Трампа в первом квартале", "Trump's trades in the first quarter", "https://www.wsls.com/business/2026/05/19/trump-discloses-thousands-of-stock-trades-some-in-companies-directly-influenced-by-his-policies/"],
+  bt: ["Сторонние управляющие портфелем", "Third-party portfolio managers", "https://www.businesstoday.in/amp/markets/stocks/story/trump-portfolio-reveals-over-3600-buy-sell-orders-including-nvidia-apple-tesla-stocks-report-532647-2026-05-21"],
+  oracle: ["Срыв финансирования дата-центра Oracle в Мичигане", "Oracle Michigan data centre financing falls through", "https://allmind.ai/news/b7ebf2a0a94858b0be86476a5ffee023cf6a7e26d8eaf62ab7ba258c8332c0c4"],
+  eun: ["Зависимость Европы от американских облаков", "Europe's dependence on American clouds", "https://www.euronews.com/2026/11/13/microsoft-outage-explained-what-went-wrong-and-is-your-data-at-risk"]
+};
+function renderSources() {
+  const ol = document.getElementById("srcList"); ol.innerHTML = "";
+  Object.values(S).forEach(s => {
+    const li = document.createElement("li");
+    li.textContent = (LANG === "ru" ? s[0] : s[1]) + " ";
+    const a = document.createElement("a"); a.href = s[2]; a.target = "_blank"; a.rel = "noopener"; a.textContent = s[2];
+    li.appendChild(document.createElement("br")); li.appendChild(a); ol.appendChild(li);
+  });
+}
+renderSources(); listeners.push(renderSources);
+ 
+// ---------------------------------------------------------------- 3D map
+(function map() {
+  if (typeof THREE === "undefined") return;
+  const LAYERS = [
+    { id: "fin", ru: "Финансовое давление", en: "Financial pressure", color: "#e3b552" },
+    { id: "chg", ru: "Ускорение изменений", en: "Acceleration of change", color: "#4fc3d9" },
+    { id: "frg", ru: "Накопленная хрупкость", en: "Accumulated fragility", color: "#ef7a5a" },
+    { id: "att", ru: "Злонамеренное воздействие", en: "Malicious action", color: "#b195f2" },
+    { id: "pol", ru: "Политические последствия", en: "Political consequences", color: "#7fcf8a" }];
+  const GAP = 2.7;
+  // [id, layer, date|null, x|null, z, weight, approxRu|null, approxEn|null, ru:[label,title,text], en:[label,title,text], sources]
+  const N = [
+    ["capex", "fin", "2026-10-31", null, -3, 1.3, "конец октября, отчёты за третий квартал", "late October, Q3 reports",
+      ["Капзатраты 803–828 млрд $", "Капзатраты на ИИ-стройку", "Amazon, Alphabet, Meta, Microsoft и SpaceX планируют от 803 до 828 миллиардов долларов капитальных затрат на 2026 год. За три квартала потрачено около 556 миллиардов."],
+      ["Capex $803–828bn", "Capital spending on the AI build-out", "Amazon, Alphabet, Meta, Microsoft and SpaceX plan 803 to 828 billion dollars of capex for 2026. About 556 billion was spent in 3 quarters."], ["hyper"]],
+    ["debt", "fin", "2026-11-10", null, -1.2, 1.1, null, null,
+      ["Долг ИИ > 800 млрд $", "Долг, связанный с ИИ", "Мишель Боуман из ФРС сказала, что долг, связанный с ИИ, в этом году превысит 800 миллиардов долларов. Прочие обязательства больше долга более чем втрое."],
+      ["AI debt > $800bn", "AI-related debt", "The Fed's Michelle Bowman said AI-related debt will exceed 800 billion dollars this year. Other obligations are more than 3 times larger."], ["bowman"]],
+    ["chips", "fin", null, -4.6, 1.6, 0.9, "сентябрь–ноябрь, постоянный процесс", "September to November, ongoing",
+      ["Чипы", "Круг. Производитель чипов", "Производитель чипов вкладывает деньги в разработчиков моделей и облачных операторов. Те покупают его же чипы."],
+      ["Chips", "The circle. The chipmaker", "The chipmaker invests in model developers and cloud operators. They buy its chips."], ["edge"]],
+    ["models", "fin", null, -3.3, 3.7, 0.9, "сентябрь–ноябрь, постоянный процесс", "September to November, ongoing",
+      ["Модели", "Круг. Разработчик моделей", "Разработчик получает инвестиции и тратит их на вычисления у облачного оператора."],
+      ["Models", "The circle. The model developer", "The developer receives investment and spends it on computing from a cloud operator."], ["edge"]],
+    ["cloud", "fin", null, -2.0, 1.6, 0.9, "сентябрь–ноябрь, постоянный процесс", "September to November, ongoing",
+      ["Облако", "Круг. Облачный оператор", "Оператор продаёт вычисления разработчику и покупает чипы у производителя. Деньги делают круг."],
+      ["Cloud", "The circle. The cloud operator", "The operator sells computing to the developer and buys chips from the maker. The money goes round."], ["edge"]],
+    ["neo", "fin", "2026-10-16", null, 0.6, 0.9, "октябрь", "October",
+      ["CoreWeave, Nebius −25%", "Операторы теряют четверть", "В октябре акции CoreWeave и Nebius потеряли по 25%. Baird назвала их и Oracle самыми слабыми по свободному денежному потоку."],
+      ["CoreWeave, Nebius −25%", "Operators lose a quarter", "In October CoreWeave and Nebius shares lost 25% each. Baird named them and Oracle the weakest on free cash flow."], ["wealth"]],
+    ["anth", "fin", "2026-11-02", null, 3.6, 1.0, null, null,
+      ["Anthropic: 33,2 млрд выручки", "Отчётность Anthropic перед IPO", "Выручка за 9 месяцев 33,2 миллиарда. Рост в третьем квартале 47% против 144 во втором. Обязательства на вычисления 895,4 миллиарда."],
+      ["Anthropic: $33.2bn revenue", "Anthropic's pre-IPO filing", "9-month revenue of 33.2 billion. Q3 growth of 47% against 144 in Q2. Compute commitments of 895.4 billion."], ["ren", "net"]],
+    ["sell", "fin", "2026-11-05", null, 1.6, 1.2, null, null,
+      ["Распродажа: −2,5 трлн $", "Распродажа акций ИИ", "Распродажа стёрла около 2,5 триллиона долларов капитализации Nasdaq 100."],
+      ["Sell-off: −$2.5tn", "AI stock sell-off", "The sell-off wiped about 2.5 trillion dollars off the Nasdaq 100."], ["sell"]],
+    ["huang", "fin", "2026-11-12", null, -3.8, 1.3, null, null,
+      ["Уход Хуанга, Nvidia −12%", "Хуанг уходит из Nvidia", "Уход без переходного периода. Временным CEO стала Колетт Кресс. Акции упали почти на 12% за утро."],
+      ["Huang out, Nvidia −12%", "Huang leaves Nvidia", "A departure with no transition. Colette Kress became interim CEO. Shares fell almost 12% in a morning."], ["paperjam", "tc"]],
+    ["msup", "chg", "2026-11-07", null, -2.2, 0.9, "раньше 12 ноября, дату Microsoft не назвала", "before 12 November, Microsoft gave no date",
+      ["Апгрейд сети Microsoft", "Расширение сетевой мощности", "Дефект заложен при более раннем расширении сетевой мощности и проявился после следующего изменения сети."],
+      ["Microsoft network upgrade", "Network capacity expansion", "The defect was planted during an earlier capacity expansion and surfaced after the next network change."], ["wf"]],
+    ["l3h", "chg", "2026-11-13", null, 1.0, 0.9, null, null,
+      ["Маршрутизатор L3Harris", "Работы L3Harris на сети FAA", "Сеть залило запросами во время работ с новым маршрутизатором в Эль-Дорадо. FAA ещё расследует окончательную причину."],
+      ["L3Harris router", "L3Harris work on the FAA network", "The network flooded with requests during work on a new router in El Dorado. The FAA is still investigating the final cause."], ["faa"]],
+    ["patch", "chg", "2026-11-17", null, -0.6, 0.9, null, null,
+      ["Патч NSA", "Срочный патч NSA", "Директор нацразведки Джей Клейтон объяснил сбой установкой патча против уязвимостей, найденных месяцем раньше."],
+      ["NSA patch", "An urgent NSA patch", "DNI Jay Clayton attributed the outage to a patch against vulnerabilities found a month earlier."], ["cnn"]],
+    ["aiex", "chg", "2026-11-17", null, 3.2, 1.0, "сообщение около 17 ноября", "reported around 17 November",
+      ["ИИ-агент пишет эксплойты", "ИИ атакует уязвимости сам", "Google сообщила об ИИ-агенте, который сам писал и запускал эксплойты без участия человека."],
+      ["AI agent writes exploits", "AI attacks vulnerabilities on its own", "Google reported an AI agent that wrote and launched exploits with no human involved."], ["hns"]],
+    ["load", "frg", "2026-08-20", null, 0, 1.0, "фон, прогноз на конец 2026 года", "background, forecast for end of 2026",
+      ["Загрузка ДЦ > 95%", "Дата-центры без запаса", "По прогнозу Goldman Sachs, загрузка дата-центров к концу 2026 года превысит 95%."],
+      ["DC utilisation > 95%", "Data centres without reserve", "Goldman Sachs forecasts utilisation above 95% by the end of 2026."], ["konvoy"]],
+    ["azure", "frg", "2026-09-30", null, -2.0, 0.9, null, null,
+      ["Azure: два сбоя за 40 ч", "Azure, 29 сентября – 1 октября", "Два сбоя за 40 часов отключили шлюзы и сервисы ИИ в 18 регионах."],
+      ["Azure: two outages in 40h", "Azure, 29 September to 1 October", "Two outages in 40 hours took gateways and AI services offline in 18 regions."], ["azure"]],
+    ["gcl", "frg", "2026-10-20", null, 2.2, 1.1, null, null,
+      ["Google Cloud, Лондон", "Отказ резерва в Лондоне", "Кабель отключил питание зоны, генераторы не запустились из-за ошибки конфигурации."],
+      ["Google Cloud, London", "Backup failure in London", "A cable cut the zone's power and the generators failed to start because of a configuration error."], ["reg", "ti"]],
+    ["msnet", "frg", "2026-11-03", null, -3.6, 0.8, null, null,
+      ["Сеть Microsoft, 3 ноября", "Сбой сети Microsoft", "Сбой затронул сервисы в США, Канаде, Испании, Швейцарии, Германии, Индии и других странах."],
+      ["Microsoft network, 3 Nov", "Microsoft network outage", "The outage hit services in the US, Canada, Spain, Switzerland, Germany, India and elsewhere."], ["nw"]],
+    ["apple", "frg", "2026-11-10", null, 3.6, 0.8, null, null,
+      ["Apple ID по миру", "Вход в Apple ID не работал", "Около 2 часов не работали вход в Apple ID, iCloud и покупки."],
+      ["Apple ID worldwide", "Apple ID sign-in down", "For about 2 hours Apple ID sign-in, iCloud and purchases failed."], ["sg"]],
+    ["m365", "frg", "2026-11-12", null, -1.6, 1.4, null, null,
+      ["Microsoft 365, 74 страны", "Главный сбой периода", "Сообщалось о нарушениях в 74 странах, прежде всего в почте и зависящих от Exchange функциях. Пик около 130 тысяч жалоб в Downdetector."],
+      ["Microsoft 365, 74 countries", "The biggest outage of the period", "Disruptions were reported in 74 countries, primarily affecting mail and Exchange-dependent features. A peak of about 130 thousand Downdetector reports."], ["twd", "wf"]],
+    ["faa", "frg", "2026-11-13", null, 1.0, 1.3, null, null,
+      ["FAA: стоп всех вылетов", "Остановка всех вылетов", "Первая общенациональная остановка с января 2023 года. Тысячи рейсов задержаны или отменены."],
+      ["FAA: all flights stopped", "Every departure halted", "The first nationwide ground stop since January 2023. Thousands of flights delayed or cancelled."], ["aero", "faa"]],
+    ["united", "frg", "2026-11-16", null, 3.4, 0.9, null, null,
+      ["United: нет данных для взлёта", "United не выпускает самолёты", "Экипажи потеряли данные о весе и центровке. Причина не названа."],
+      ["United: no takeoff data", "United holds its planes", "Crews lost weight and balance data. No cause was given."], ["gn"]],
+    ["jpm", "frg", "2026-11-16", null, -3.1, 1.0, null, null,
+      ["JPMorgan: ошибка серверов", "Программная ошибка JPMorgan", "Ошибка в собственных серверах замедлила транзакции. Признаков кибератаки нет."],
+      ["JPMorgan: server bug", "JPMorgan software error", "An error in its own servers slowed transactions. No sign of a cyberattack."], ["star"]],
+    ["banks", "frg", "2026-11-16", null, -4.7, 0.6, null, null,
+      ["Другие банки", "Эхо по связям", "Жалобы клиентов Bank of America, Wells Fargo и US Bank на переводы через Chase."],
+      ["Other banks", "An echo along the links", "Complaints from customers of Bank of America, Wells Fargo and US Bank about transfers via Chase."], ["teiss"]],
+    ["nsanet", "frg", "2026-11-17", null, -0.4, 1.1, null, null,
+      ["NSANet легла", "Секретная сеть NSA", "Отказала внутренняя секретная сеть Агентства национальной безопасности."],
+      ["NSANet down", "The NSA classified network", "The National Security Agency's internal classified network failed."], ["cnn"]],
+    ["plerdy", "att", "2026-08-30", null, 0.4, 1.0, "27 августа – 3 сентября", "27 August to 3 September",
+      ["APT29 через Plerdy", "Атака через общий сервис", "Группа, связанная с APT29, внедрила код в трекер Plerdy, загружавшийся на тысячах сайтов."],
+      ["APT29 via Plerdy", "An attack through a shared service", "A group linked to APT29 planted code in the Plerdy tracker that loaded on thousands of sites."], ["thn"]],
+    ["poison", "att", "2026-10-15", null, 2.4, 0.8, "обнаружено в середине октября", "found in mid-October",
+      ["Кампания Poisoned Source", "Заражённые сайты", "Sekoia в середине октября обнаружила кампанию заражённых сайтов, к которой относится взлом Plerdy."],
+      ["Poisoned Source campaign", "Poisoned websites", "In mid-October Sekoia found a watering-hole campaign that includes the Plerdy compromise."], ["thn"]],
+    ["phish", "att", "2026-11-14", null, -2.2, 0.9, null, null,
+      ["Фишинг на сбое Microsoft", "Хаосом пользуются", "Microsoft зафиксировала фишинговую кампанию, эксплуатирующую сбой 12 ноября."],
+      ["Phishing on the outage", "Chaos gets used", "Microsoft recorded a phishing campaign exploiting the 12 November outage."], ["fwm"]],
+    ["opt", "att", "2026-11-16", null, 1.2, 1.2, null, null,
+      ["Optimizely: 178 сайтов", "Единственная подтверждённая атака", "Через уязвимость Optimizely вредоносный JavaScript попал на сайты 178 организаций."],
+      ["Optimizely: 178 sites", "The only confirmed attack", "Through an Optimizely vulnerability malicious JavaScript reached the sites of 178 organisations."], ["hns"]],
+    ["trades", "pol", "2026-05-19", null, -2.0, 1.0, null, null,
+      ["Сделки Трампа с Nvidia", "Портфель президента", "Более 3600 заявок за первый квартал, сделки с Nvidia до 6 миллионов долларов."],
+      ["Trump's Nvidia trades", "The president's portfolio", "Over 3,600 orders in Q1, Nvidia trades of up to 6 million dollars."], ["wsls", "bt"]],
+    ["rubio", "pol", "2026-05-12", null, 2.0, 1.0, "май", "May",
+      ["Брифинг Рубио о Хуанге", "Предупреждение на Air Force One", "Рубио сообщил Трампу о связи Хуанга. Это было как минимум второе предупреждение за 7 месяцев."],
+      ["Rubio briefing on Huang", "A warning aboard Air Force One", "Rubio told Trump about Huang's relationship. It was at least the second warning in 7 months."], ["katu", "aiw"]],
+    ["bsi", "pol", "2026-11-13", null, -2.6, 1.0, null, null,
+      ["Германия: удар по бизнесу", "Европа и сбой Microsoft", "BSI ожидало, что затронуто очень большое число немецких компаний."],
+      ["Germany: business hit", "Europe and the Microsoft outage", "The BSI expected a very large number of German companies to be affected."], ["aa"]],
+    ["bis", "pol", "2026-11-16", null, 1.6, 1.1, null, null,
+      ["Правило BIS о доступе", "Контроль над правом вычислять", "Лицензии на чипы для дата-центров, продающих вычисления компаниям из Китая."],
+      ["BIS access rule", "Control over the right to compute", "Licences for chips going to data centres that sell computing to Chinese companies."], ["tr", "yahoo"]],
+    ["sov", "pol", "2026-11-19", null, -0.4, 1.0, "тенденция", "trend",
+      ["Цифровой суверенитет", "Спрос на свои облака", "Каждый крупный сбой усиливает разговор о зависимости Европы и о национальных облаках."],
+      ["Digital sovereignty", "Demand for own clouds", "Every major outage feeds the debate on Europe's dependence and on national clouds."], ["eun"]]
+  ];
+  const LINKS = [
+    ["chips", "models", "fact", "инвестиции", "investment"], ["models", "cloud", "fact", "оплата вычислений", "pays for computing"], ["cloud", "chips", "fact", "покупка чипов", "buys chips"],
+    ["capex", "debt", "fact", "стройку финансируют долгом", "the build-out runs on debt"],
+    ["anth", "capex", "hyp", "обязательства питают стройку", "commitments feed the build-out"],
+    ["neo", "sell", "hyp", "слабые операторы как первые трещины", "weak operators as first cracks"],
+    ["rubio", "huang", "rep", "разведданные о связи Хуанга", "intelligence on Huang's relationship"],
+    ["trades", "rubio", "no", "инсайд не доказан", "insider trading not shown"],
+    ["huang", "bis", "hyp", "скандал сместил баланс", "the scandal shifted the balance"],
+    ["capex", "load", "hyp", "стройка не успевает за спросом", "building lags demand"],
+    ["debt", "msup", "hyp", "спешка ускоряет изменения", "haste speeds up change"],
+    ["load", "m365", "hyp", "работа без запаса", "running without reserve"],
+    ["msup", "m365", "fact", "скрытый дефект", "latent defect"],
+    ["m365", "phish", "fact", "фишинг на сбое", "phishing on the outage"],
+    ["m365", "bsi", "fact", "удар по бизнесу Европы", "hit to European business"],
+    ["l3h", "faa", "rep", "предварительная причина", "preliminary cause"],
+    ["faa", "united", "no", "Reuters: признаков связи нет", "Reuters: no sign of a link"],
+    ["patch", "nsanet", "fact", "сбой при установке патча", "failure while patching"],
+    ["aiex", "patch", "hyp", "быстрые уязвимости, срочные патчи", "faster vulnerabilities, rushed patches"],
+    ["jpm", "banks", "fact", "задержки через зависимости", "delays through dependencies"],
+    ["poison", "plerdy", "fact", "одна кампания", "one campaign"],
+    ["plerdy", "opt", "hyp", "тот же приём", "the same technique"],
+    ["opt", "m365", "no", "технических связей не показано", "no technical link shown"],
+    ["gcl", "sov", "hyp", "аргумент за свои облака", "an argument for own clouds"],
+    ["bsi", "sov", "hyp", "аргумент за свои облака", "an argument for own clouds"]
+  ];
+  const box = document.getElementById("mapBox"), canvasBox = document.getElementById("mapCanvas"), labelsEl = document.getElementById("mapLabels");
+  const li = Object.fromEntries(LAYERS.map((l, i) => [l.id, i]));
+  const MON = { ru: ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"],
+    en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] };
+  const MON_NOM = { ru: ["", "", "", "", "май", "июнь", "июль", "август", "сентябрь", "октябрь"], en: ["", "", "", "", "May", "June", "July", "August", "September", "October"] };
+  const T0 = Date.parse("2026-05-01"), T1 = Date.parse("2026-10-01"), T2 = Date.parse("2026-11-20"), X0 = -11, X1 = -2.5, X2 = 11;
+  const d2x = ms => ms <= T1 ? X0 + (ms - T0) / (T1 - T0) * (X1 - X0) : X1 + (ms - T1) / (T2 - T1) * (X2 - X1);
+  const x2d = x => x <= X1 ? T0 + (x - X0) / (X1 - X0) * (T1 - T0) : T1 + (x - X1) / (X2 - X1) * (T2 - T1);
+  const fmt = ms => { const d = new Date(ms); return LANG === "ru" ? d.getUTCDate() + " " + MON.ru[d.getUTCMonth()] : d.getUTCDate() + " " + MON.en[d.getUTCMonth()]; };
+ 
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.setClearColor(0x0d1117, 1);
+  canvasBox.appendChild(renderer.domElement);
+  const scene = new THREE.Scene(); scene.fog = new THREE.Fog(0x0d1117, 32, 64);
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 200);
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true; controls.dampingFactor = 0.08; controls.target.set(-0.5, 5.2, 0); controls.minDistance = 8; controls.maxDistance = 60;
+  controls.enableZoom = true;
+  const narrow = () => box.clientWidth < 760;
+  camera.position.set(narrow() ? 4 : 7, narrow() ? 15 : 12.5, narrow() ? 38 : 27);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+  const key = new THREE.DirectionalLight(0xffffff, 0.8); key.position.set(-6, 14, 10); scene.add(key);
+ 
+  const groups = {};
+  LAYERS.forEach((L, i) => {
+    const g = new THREE.Group(), y = i * GAP;
+    const pl = new THREE.Mesh(new THREE.PlaneGeometry(23.5, 11), new THREE.MeshBasicMaterial({ color: L.color, transparent: true, opacity: 0.055, side: THREE.DoubleSide, depthWrite: false }));
+    pl.rotation.x = -Math.PI / 2; pl.position.y = y - 0.02; g.add(pl);
+    const ed = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(23.5, 11)), new THREE.LineBasicMaterial({ color: L.color, transparent: true, opacity: 0.35 }));
+    ed.rotation.x = -Math.PI / 2; ed.position.y = y - 0.02; g.add(ed);
+    const gr = new THREE.GridHelper(22, 22, L.color, L.color); gr.material.transparent = true; gr.material.opacity = 0.07; gr.scale.set(1, 1, 0.5); gr.position.y = y - 0.03; g.add(gr);
+    scene.add(g); groups[L.id] = { g, on: true };
+  });
+  const ticks = ["2026-05-01", "2026-06-01", "2026-07-01", "2026-08-01", "2026-09-01", "2026-10-01", "2026-10-15", "2026-11-01", "2026-11-10", "2026-11-17"];
+  const tm = new THREE.LineBasicMaterial({ color: 0x94a3b8, transparent: true, opacity: 0.18 });
+  ticks.forEach(ds => { const x = d2x(Date.parse(ds)); scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(x, -0.03, -5.5), new THREE.Vector3(x, 4 * GAP, -5.5)]), tm)); });
+ 
+  const nodes = {}, list = [];
+  const sg = new THREE.SphereGeometry(1, 32, 20), rg = new THREE.TorusGeometry(1.55, 0.05, 8, 48);
+  N.forEach(a => {
+    const n = { id: a[0], l: a[1], ms: a[2] ? Date.parse(a[2]) : x2d(a[3]), w: a[5], approx: a[6] ? { ru: a[6], en: a[7] } : null, ru: a[8], en: a[9], src: a[10], hasDate: !!a[2], links: [] };
+    const col = LAYERS[li[n.l]].color;
+    n.pos = new THREE.Vector3(a[3] !== null ? a[3] : d2x(n.ms) + (n.id === "banks" ? 0.45 : 0), li[n.l] * GAP + 0.38, a[4]);
+    n.r = 0.2 + 0.17 * n.w;
+    n.mesh = new THREE.Mesh(sg, new THREE.MeshStandardMaterial({ color: col, emissive: col, emissiveIntensity: 0.35, roughness: 0.45 }));
+    n.mesh.scale.setScalar(n.r); n.mesh.position.copy(n.pos); n.mesh.userData.id = n.id; scene.add(n.mesh);
+    n.stem = new THREE.Line(new THREE.BufferGeometry().setFromPoints([n.pos.clone().setY(n.pos.y - 0.38), n.pos.clone().setY(n.pos.y - n.r)]), new THREE.LineBasicMaterial({ color: col, transparent: true, opacity: 0.45 }));
+    scene.add(n.stem);
+    if (n.approx) { n.ring = new THREE.Mesh(rg, new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.55 })); n.ring.scale.setScalar(n.r); n.ring.position.copy(n.pos); n.ring.rotation.x = Math.PI / 2; scene.add(n.ring); }
+    const el = document.createElement("div"); el.className = "lbl"; el.tabIndex = 0; el.setAttribute("role", "button");
+    el.addEventListener("click", () => select(n.id)); el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(n.id); } });
+    labelsEl.appendChild(el); n.el = el;
+    nodes[n.id] = n; list.push(n);
+  });
+  const links = [];
+  LINKS.forEach(([a, b, kind, lr, le]) => {
+    const A = nodes[a], B = nodes[b];
+    const mid = A.pos.clone().add(B.pos).multiplyScalar(0.5); mid.y += 0.8 + A.pos.distanceTo(B.pos) * 0.12;
+    const curve = new THREE.QuadraticBezierCurve3(A.pos, mid, B.pos);
+    const geo = new THREE.BufferGeometry().setFromPoints(curve.getPoints(48));
+    let mat;
+    if (kind === "fact") mat = new THREE.LineBasicMaterial({ color: 0xe7ecf3, transparent: true, opacity: 0.8 });
+    else if (kind === "rep") mat = new THREE.LineDashedMaterial({ color: 0xe7ecf3, dashSize: 0.35, gapSize: 0.2, transparent: true, opacity: 0.7 });
+    else if (kind === "hyp") mat = new THREE.LineDashedMaterial({ color: 0x94a3b8, dashSize: 0.1, gapSize: 0.22, transparent: true, opacity: 0.75 });
+    else mat = new THREE.LineDashedMaterial({ color: 0xe05561, dashSize: 0.15, gapSize: 0.15, transparent: true, opacity: 0.8 });
+    const line = new THREE.Line(geo, mat); if (kind !== "fact") line.computeLineDistances(); scene.add(line);
+    const o = { a: A, b: B, kind, lab: { ru: lr, en: le }, curve, line, pulses: [], cross: null };
+    if (kind === "no") {
+      const c = curve.getPoint(0.5);
+      const x = new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-.22, -.22, 0), new THREE.Vector3(.22, .22, 0), new THREE.Vector3(-.22, .22, 0), new THREE.Vector3(.22, -.22, 0)]), new THREE.LineBasicMaterial({ color: 0xe05561 }));
+      x.position.copy(c); scene.add(x); o.cross = x;
+    } else {
+      const cnt = kind === "fact" ? 3 : 2;
+      for (let k = 0; k < cnt; k++) { const p = new THREE.Mesh(new THREE.SphereGeometry(kind === "fact" ? 0.075 : 0.055, 10, 8), new THREE.MeshBasicMaterial({ color: kind === "fact" ? 0xffffff : 0xb8c4d4, transparent: true, opacity: .95 })); p.userData.ph = k / cnt; scene.add(p); o.pulses.push(p); }
+    }
+    links.push(o); A.links.push(o); B.links.push(o);
+  });
+  const layerEls = LAYERS.map((L, i) => { const el = document.createElement("div"); el.className = "layerlbl"; el.style.color = L.color; labelsEl.appendChild(el); return { el, L, pos: new THREE.Vector3(-11.6, i * GAP + 0.15, 5.4) }; });
+  const tickEls = ticks.map(ds => { const el = document.createElement("div"); el.className = "tick"; labelsEl.appendChild(el); return { el, ds, pos: new THREE.Vector3(d2x(Date.parse(ds)), -0.1, 5.7) }; });
+ 
+  let cutoff = T2, selected = null, showLabels = true;
+  const vis = n => groups[n.l].on && n.ms <= cutoff + 1;
+  function applyVis() {
+    list.forEach(n => { const v = vis(n); n.mesh.visible = v; n.stem.visible = v; if (n.ring) n.ring.visible = v; });
+    links.forEach(o => { const v = vis(o.a) && vis(o.b); o.line.visible = v; o.pulses.forEach(p => p.visible = v); if (o.cross) o.cross.visible = v; });
+    LAYERS.forEach(L => groups[L.id].g.visible = groups[L.id].on);
+  }
+  const KT = { fact: { ru: "подтверждено", en: "confirmed" }, rep: { ru: "по сообщениям", en: "reported" }, hyp: { ru: "гипотеза", en: "hypothesis" }, no: { ru: "связи нет", en: "no link" } };
+  const KC = { fact: "#e7ecf3", rep: "#c9d3df", hyp: "#94a3b8", no: "#e05561" };
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  let ORDER = [];
+  const sortOrder = () => { ORDER = list.slice().sort((a, b) => (b === selected) - (a === selected) || b.w - a.w); };
+  function select(id) {
+    selected = id ? nodes[id] : null; sortOrder();
+    const card = document.getElementById("mapCard");
+    list.forEach(n => {
+      const on = selected && (n === selected || selected.links.some(o => o.a === n || o.b === n));
+      n.el.classList.toggle("sel", n === selected); n.el.classList.toggle("dim", !!selected && !on);
+      n.mesh.material.emissiveIntensity = n === selected ? 0.9 : (selected && !on ? 0.12 : 0.35);
+    });
+    links.forEach(o => { const on = !selected || o.a === selected || o.b === selected; o.line.material.opacity = on ? (o.kind === "fact" ? .85 : .75) : .12; o.pulses.forEach(p => p.material.opacity = on ? .95 : .15); });
+    if (!selected) { card.classList.remove("open"); return; }
+    const n = selected, L = LAYERS[li[n.l]], T = n[LANG];
+    const when = n.approx ? (n.hasDate ? "≈ " + fmt(n.ms) + " 2026, " + n.approx[LANG] : n.approx[LANG]) : fmt(n.ms) + " 2026";
+    const lk = n.links.map(o => { const ot = o.a === n ? o.b : o.a; return `<li><span style="color:${KC[o.kind]}">●</span> ${o.a === n ? "→" : "←"} <button data-go="${ot.id}">${esc(ot[LANG][0])}</button><span class="k">${KT[o.kind][LANG]}: ${esc(o.lab[LANG])}</span></li>`; }).join("");
+    const src = n.src.map(k => `<div><a href="${S[k][2]}" target="_blank" rel="noopener">${esc(LANG === "ru" ? S[k][0] : S[k][1])}</a></div>`).join("");
+    document.getElementById("mapCardBody").innerHTML = `<div style="color:${L.color};font-size:11px;text-transform:uppercase;letter-spacing:.08em">${esc(L[LANG])}</div>
+      <h3>${esc(T[1])}</h3><div class="when">${esc(when)}</div><p>${esc(T[2])}</p>${lk ? "<ul>" + lk + "</ul>" : ""}${src}`;
+    card.classList.add("open");
+    card.querySelectorAll("[data-go]").forEach(b => b.addEventListener("click", () => select(b.dataset.go)));
+  }
+  document.getElementById("mapCardX").addEventListener("click", () => select(null));
+  function relabel() {
+    list.forEach(n => { n.el.textContent = n[LANG][0]; n.lw = 0; });
+    layerEls.forEach(o => o.el.textContent = o.L[LANG]);
+    tickEls.forEach(o => { const ms = Date.parse(o.ds), d = new Date(ms); o.el.textContent = (o.ds.endsWith("-01") && d.getUTCMonth() < 10) ? MON_NOM[LANG][d.getUTCMonth()] : fmt(ms); });
+    chips.forEach(c => c.b.innerHTML = `<i style="background:${c.L.color}"></i>${esc(c.L[LANG])}`);
+    if (selected) select(selected.id);
+    dateTxt();
+  }
+  const chipsEl = document.getElementById("layerChips"), chips = [];
+  LAYERS.forEach(L => {
+    const b = document.createElement("button"); b.className = "lchip"; b.setAttribute("aria-pressed", "true");
+    b.addEventListener("click", () => { groups[L.id].on = !groups[L.id].on; b.setAttribute("aria-pressed", String(groups[L.id].on)); applyVis(); });
+    chipsEl.appendChild(b); chips.push({ b, L });
+  });
+  const dateEl = document.getElementById("mapDate");
+  const dateTxt = () => { dateEl.textContent = cutoff >= T2 ? (LANG === "ru" ? "все события · май–ноябрь 2026" : "all events · May–November 2026") : fmt(cutoff) + " 2026"; };
+  const sweep = new THREE.Mesh(new THREE.PlaneGeometry(11, 4 * GAP + 1.4), new THREE.MeshBasicMaterial({ color: 0xe3b552, transparent: true, opacity: 0.06, side: THREE.DoubleSide, depthWrite: false }));
+  sweep.rotation.y = Math.PI / 2; sweep.position.y = 2 * GAP; sweep.visible = false; scene.add(sweep);
+  let playing = false, playStart = 0;
+  const playBtn = document.getElementById("mapPlay");
+  function setCut(v) { const x = X0 + v * (X2 - X0); cutoff = x2d(x); sweep.position.x = x; sweep.visible = v < 1; applyVis(); dateTxt(); }
+  playBtn.addEventListener("click", () => { if (playing) { playing = false; setCut(1); return; } playing = true; playStart = performance.now(); setCut(0); });
+  document.getElementById("mapLabelsBtn").addEventListener("click", e => { showLabels = !showLabels; e.currentTarget.setAttribute("aria-pressed", String(showLabels)); });
+ 
+  const ray = new THREE.Raycaster(), mouse = new THREE.Vector2(); let down = null;
+  const setMouse = e => { const r = renderer.domElement.getBoundingClientRect(); mouse.set((e.clientX - r.left) / r.width * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1); };
+  renderer.domElement.addEventListener("pointerdown", e => down = [e.clientX, e.clientY]);
+  renderer.domElement.addEventListener("pointerup", e => {
+    if (!down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 6) return;
+    setMouse(e); ray.setFromCamera(mouse, camera);
+    const h = ray.intersectObjects(list.filter(n => n.mesh.visible).map(n => n.mesh)); select(h.length ? h[0].object.userData.id : null);
+  });
+  function resize() { const w = box.clientWidth, h = box.clientHeight; renderer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+  addEventListener("resize", resize); resize();
+  const v3 = new THREE.Vector3();
+  const proj = p => { v3.copy(p).project(camera); return { x: (v3.x * .5 + .5) * box.clientWidth, y: (-v3.y * .5 + .5) * box.clientHeight, behind: v3.z > 1 }; };
+  let inView = true;
+  if ("IntersectionObserver" in window) new IntersectionObserver(es => es.forEach(e => inView = e.isIntersecting)).observe(box);
+  const clock = new THREE.Clock();
+  function frame() {
+    requestAnimationFrame(frame);
+    if (!inView) return;
+    const t = clock.getElapsedTime();
+    if (playing) { const v = Math.min(1, (performance.now() - playStart) / 14000); setCut(v); if (v >= 1) playing = false; }
+    links.forEach(o => { const sp = o.kind === "fact" ? .22 : .12; o.pulses.forEach(p => p.position.copy(o.curve.getPoint(reduceMotion ? p.userData.ph : (t * sp + p.userData.ph) % 1))); });
+    if (!reduceMotion) list.forEach(n => { if (n.ring) n.ring.rotation.z = t * .6; });
+    controls.update(); renderer.render(scene, camera);
+    const placed = [];
+    const linked = n => selected && (n === selected || selected.links.some(o => o.a === n || o.b === n));
+    ORDER.forEach(n => {
+      const forced = n.mesh.visible && linked(n), v = (showLabels && n.mesh.visible) || forced;
+      if (!v) { n.el.style.display = "none"; return; }
+      const p = proj(n.pos.clone().setY(n.pos.y + n.r)); if (p.behind) { n.el.style.display = "none"; return; }
+      if (!n.lw) { n.el.style.display = "block"; n.lw = n.el.offsetWidth || 120; n.lh = n.el.offsetHeight || 20; }
+      const r = [p.x - n.lw / 2, p.y - n.lh * 1.35, p.x + n.lw / 2, p.y - n.lh * .35];
+      if (!forced && placed.some(q => r[0] < q[2] + 4 && r[2] + 4 > q[0] && r[1] < q[3] + 2 && r[3] + 2 > q[1])) { n.el.style.display = "none"; return; }
+      placed.push(r); n.el.style.display = "block"; n.el.style.left = p.x + "px"; n.el.style.top = p.y + "px";
+    });
+    layerEls.forEach(o => { const p = proj(o.pos); o.el.style.display = groups[o.L.id].on && !p.behind ? "block" : "none"; o.el.style.left = p.x + "px"; o.el.style.top = p.y + "px"; });
+    tickEls.forEach(o => { const p = proj(o.pos); o.el.style.display = p.behind ? "none" : "block"; o.el.style.left = p.x + "px"; o.el.style.top = p.y + "px"; });
+  }
+  sortOrder(); relabel(); applyVis(); listeners.push(relabel); frame();
+})();
+</script>
+</body>
+</html>
+ 
