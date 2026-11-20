@@ -120,7 +120,7 @@ figcaption b{color:var(--gold);font-weight:500;white-space:nowrap}
 </header>
 
 <nav class="scroll" aria-label="Sections">
-  <a href="#why">Why a room</a><a href="#principle">The principle</a><a href="#score">How it was scored</a><a href="#volume">What it needs</a><a href="#parallel">Your door</a><a href="#honest">What I do not claim</a>
+  <a href="#why">Why a room</a><a href="#principle">The principle</a><a href="#score">How it was scored</a><a href="#enter">Through the slit</a><a href="#volume">What it needs</a><a href="#parallel">Your door</a><a href="#honest">What I do not claim</a>
 </nav>
 
 <section class="band" id="why">
@@ -165,7 +165,43 @@ figcaption b{color:var(--gold);font-weight:500;white-space:nowrap}
   </div>
 </section>
 
-<section class="band alt" id="volume">
+<style>
+.btn{font:500 15px Inter,sans-serif;min-height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--gold);background:var(--gold);color:#0b0f1e;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:focus-visible,.sl input:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.btn:disabled{opacity:.5;cursor:default}
+.sl{display:grid;grid-template-columns:7.5em minmax(0,1fr) 3.2em;gap:10px;align-items:center;padding:5px 0}
+.sl label{font:500 14px Inter,sans-serif}
+.sl output{font:500 14px Inter,sans-serif;color:var(--gold);text-align:right;white-space:nowrap}
+.sl input{width:100%;accent-color:#d2ad55;height:28px}
+</style>
+<section class="band alt" id="enter">
+  <div class="in">
+    <h2>Through the slit</h2>
+    <p>Think of light passing through slits in a wall. Each path goes through the opening that matches its own pattern and lands where similar paths have already gathered. Nobody is turned back and nothing is missing: every pattern has its own room. Set the eight modules for a path, real or imagined, and send the traveller through. When the coefficient reaches 1.70, the traveller arrives in the Room of 1.7%. Wherever they land, the people already there recognise the newcomer at once.</p>
+    <div class="cols" style="align-items:start">
+      <div>
+        <div id="sliders"></div>
+        <div style="display:flex;align-items:baseline;gap:14px;margin:18px 0 10px;flex-wrap:wrap">
+          <span class="lab">Coefficient</span>
+          <span id="coef" style="font:600 clamp(34px,5vw,48px)/1 Cinzel,serif;color:var(--gold)">1.40</span>
+          <span id="pts" class="lab">70 / 100 points</span>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button type="button" class="btn" id="walk">Send the traveller</button>
+          <button type="button" class="btn ghost" data-preset="curious">A curious reader</button>
+          <button type="button" class="btn ghost" data-preset="long">A long path</button>
+        </div>
+      </div>
+      <div>
+        <div class="fig" style="min-height:380px;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#090c1a"><svg id="scene" viewBox="0 0 600 380" preserveAspectRatio="xMidYMid meet" role="img" aria-label="A traveller, a wall with five slits, and five gatherings of people beyond it"></svg></div>
+        <p id="msg" class="note" aria-live="polite" style="font-size:16px;min-height:3em">The traveller is ready. Beyond the wall, five gatherings wait.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="volume">
   <div class="in cols">
     <div>
       <h2>What it needs: an archive of time</h2>
@@ -179,7 +215,7 @@ figcaption b{color:var(--gold);font-weight:500;white-space:nowrap}
   </div>
 </section>
 
-<section class="band" id="parallel">
+<section class="band alt" id="parallel">
   <div class="in">
     <h2>Your door</h2>
     <p>Reading your work after 19 November, I found that you describe a project built on the same principle.</p>
@@ -195,7 +231,7 @@ figcaption b{color:var(--gold);font-weight:500;white-space:nowrap}
   </div>
 </section>
 
-<section class="band alt" id="honest">
+<section class="band" id="honest">
   <div class="in cols">
     <div>
       <h2>What I do not claim</h2>
@@ -243,6 +279,55 @@ const cmp=[
  ["Status","A concept and a scoring model","A research project you hope will come to fruition"]
 ];
 document.getElementById('cmp').innerHTML=cmp.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('');
+
+
+const M=[["Chronos",20],["Metanoia",20],["Imaginatio",15],["Aletheia",10],["Kenosis",10],["Technognosis",5],["Synlogos",10],["Sophia",10]];
+const P={curious:[8,6,7,5,6,2,4,5],long:[19,17,14,9,9,5,8,9]};
+const start=[15,13,11,7,7,3,7,7];
+const box=document.getElementById('sliders');
+box.innerHTML=M.map((m,i)=>`<div class="sl"><label for="m${i}">${m[0]}</label><input id="m${i}" type="range" min="0" max="${m[1]}" step="1" value="${start[i]}"><output id="o${i}">${start[i]}/${m[1]}</output></div>`).join('');
+const ins=M.map((m,i)=>document.getElementById('m'+i));
+const coefEl=document.getElementById('coef'),ptsEl=document.getElementById('pts'),msg=document.getElementById('msg'),walk=document.getElementById('walk');
+const total=()=>ins.reduce((a,x)=>a+ +x.value,0);
+const upd=()=>{ins.forEach((x,i)=>document.getElementById('o'+i).textContent=x.value+'/'+M[i][1]);const t=total();coefEl.textContent=(t*0.02).toFixed(2);ptsEl.textContent=t+' / 100 points';};
+ins.forEach(x=>x.addEventListener('input',()=>{upd();reset();}));
+document.querySelectorAll('[data-preset]').forEach(b=>b.addEventListener('click',()=>{P[b.dataset.preset].forEach((v,i)=>ins[i].value=v);upd();reset();}));
+const sc=document.getElementById('scene');
+const hr=i=>{const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x)};
+// five rooms; the Room of 1.7% sits in the centre, the others around it, not above or below in rank
+const R=[{y:300,lo:0,hi:1.0},{y:245,lo:1.0,hi:1.4},{y:135,lo:1.4,hi:1.7},{y:190,lo:1.7,hi:1.85,name:'1.7'},{y:80,lo:1.85,hi:2.01}];
+const WX=250,RX=480,SX=70,SY=190;
+const people=R.map((r,k)=>Array.from({length:6},(_,j)=>{const a=j/6*Math.PI*2+k;return{x:RX+Math.cos(a)*24+(hr(k*9+j)-.5)*6,y:r.y+Math.sin(a)*16}}));
+const arcs=R.map(r=>[22,44,66,88].map((rad,i)=>`<path d="M${WX+rad*Math.cos(-.9)} ${r.y+rad*Math.sin(-.9)} A${rad} ${rad} 0 0 1 ${WX+rad*Math.cos(.9)} ${r.y+rad*Math.sin(.9)}" fill="none" stroke="#d2ad55" stroke-opacity="${(.12-i*.025).toFixed(3)}"/>`).join('')).join('');
+const wall=(()=>{let d='',prev=20;[...R].sort((a,b)=>a.y-b.y).forEach(r=>{d+=`<rect x="${WX-4}" y="${prev}" width="8" height="${r.y-9-prev}" fill="#2b3358"/>`;prev=r.y+9;});return d+`<rect x="${WX-4}" y="${prev}" width="8" height="${360-prev}" fill="#2b3358"/>`;})();
+const base=`<rect width="600" height="380" fill="#090c1a"/>
+<defs><radialGradient id="rg"><stop offset="0" stop-color="#d2ad55" stop-opacity=".9"/><stop offset="1" stop-color="#d2ad55" stop-opacity="0"/></radialGradient></defs>
+${R.map((r,k)=>`<rect x="${WX+6}" y="${r.y-26}" width="${600-WX-6}" height="52" fill="#d2ad55" opacity="${(.025+hr(k)*.02).toFixed(3)}"/>`).join('')}
+<g>${arcs}</g>${wall}
+${R.map((r,k)=>`<circle id="g${k}" cx="${RX}" cy="${r.y}" r="48" fill="url(#rg)" opacity=".03"/>`).join('')}
+<g id="links"></g>
+${people.map((g,k)=>`<g id="p${k}">${g.map(p=>`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="5" fill="#ece5d3" opacity=".5"/>`).join('')}</g>`).join('')}
+<text x="${RX+44}" y="${R[3].y+5}" fill="#d2ad55" font-family="Cinzel,serif" font-size="15">1.7</text>
+<circle cx="${SX}" cy="${SY}" r="22" fill="none" stroke="#e2774a" stroke-opacity=".25"/>
+<circle id="tr" cx="${SX}" cy="${SY}" r="7" fill="#e2774a"/>`;
+let anim=null;
+const reset=()=>{if(anim)cancelAnimationFrame(anim);anim=null;sc.innerHTML=base;walk.disabled=false;msg.textContent='The traveller is ready. Beyond the wall, five gatherings wait.';};
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const lerp=(a,b,t)=>a+(b-a)*t;
+const send=()=>{
+ const c=total()*0.02,k=R.findIndex(r=>c>=r.lo&&c<r.hi),r=R[k],tr=sc.querySelector('#tr');
+ const pts=[[SX,SY],[WX,r.y],[RX,r.y]];walk.disabled=true;msg.textContent='The traveller moves towards the wall…';
+ let t0=null;const dur=reduce?1:3600;
+ const step=ts=>{if(!t0)t0=ts;const p=Math.min(1,(ts-t0)/dur);const i=p<.5?0:1,lt=p<.5?p/.5:(p-.5)/.5;
+  const x=lerp(pts[i][0],pts[i+1][0],lt),y=lerp(pts[i][1],pts[i+1][1],lt);tr.setAttribute('cx',x);tr.setAttribute('cy',y);
+  if(p>.55){const q=Math.min(1,(p-.55)/.45);sc.querySelector('#g'+k).setAttribute('opacity',(.03+.5*q).toFixed(2));
+   sc.querySelectorAll('#p'+k+' circle').forEach(e=>e.setAttribute('opacity',(.5+.5*q).toFixed(2)));
+   sc.querySelector('#links').innerHTML=people[k].map(o=>`<line x1="${o.x}" y1="${o.y}" x2="${x}" y2="${y}" stroke="#d2ad55" stroke-opacity="${(.6*q).toFixed(2)}"/>`).join('');}
+  if(p<1){anim=requestAnimationFrame(step);}else{anim=null;walk.disabled=false;
+   msg.textContent=r.name?'Through the opening that matches its pattern, the traveller arrived in the Room of 1.7%. The people inside turned at once: they already know who has come in. Nothing needs explaining.':'Through the opening that matches its pattern, the traveller arrived where similar paths had already gathered. The people there recognised the newcomer at once. Every pattern has its own room.';}
+ };anim=requestAnimationFrame(step);};
+walk.addEventListener('click',()=>{reset();send();});
+upd();reset();
 
 const s=document.getElementById('room');
 const draw=()=>{const W=s.clientWidth,H=s.clientHeight;if(!W||!H)return;
