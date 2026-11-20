@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beyond the Firmament</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* VOICE: a personal, documentary letter from an artist to a researcher — warm, exact, unhurried.
+   IDEA: the Flammarion engraving — a wanderer at the edge of the sky, looking through.
+   PICTURE: an original firmament dome, a seam of light, a small figure with a glowing phone; the chain drawn as a path of stars.
+   COLOUR and TYPE: the author's own system — night indigo, old gold, one brass-ember accent; Cinzel titles, Cormorant body, Inter labels.
+   LAYOUT: one reading column with wide bands for the chain, the engraving's path and the five-year table; a section row on top. */
+:root{color-scheme:light dark;
+--bg:light-dark(#f3eee2,#0b0f1e);--bg2:light-dark(#e9e2d1,#121833);--ink:light-dark(#1b1726,#ece5d3);
+--mute:light-dark(#5d5566,#a69f90);--gold:light-dark(#8a6514,#d2ad55);--ember:light-dark(#b2471f,#e2774a);
+--line:light-dark(#cfc4ab,#2b3358);--sky:light-dark(#d9d2c0,#141c3c);--teal:light-dark(#2f6d73,#78b8ba);--violet:light-dark(#5b4a8f,#a898e0)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:19px/1.6 "Cormorant Garamond",Georgia,serif;overflow-x:clip}
+a{color:var(--gold);text-underline-offset:3px}
+h1,h2,h3{font-family:Cinzel,serif;font-weight:500;line-height:1.08;text-wrap:balance;margin:0 0 .5em}
+h1{font-size:clamp(34px,5.4vw,56px)}h2{font-size:clamp(26px,3.4vw,38px);color:var(--gold)}h3{font-size:20px}
+p{margin:0 0 1em;max-width:68ch}
+.lab{font:500 13px/1.4 Inter,system-ui,sans-serif;color:var(--mute)}
+.band{padding:clamp(28px,4vw,64px) max(5vw,16px)}
+.in{max-width:1180px;margin:0 auto}
+.alt{background:var(--bg2)}
+nav.scroll{display:flex;gap:6px;overflow-x:auto;padding:10px max(5vw,16px);border-bottom:1px solid var(--line);background:var(--bg)}
+nav a{flex:none;font:500 14px Inter,sans-serif;text-decoration:none;color:var(--ink);padding:12px 12px;border-radius:999px}
+nav a:hover,nav a:focus-visible{background:var(--bg2);outline:2px solid var(--gold)}
+@media(min-width:900px){nav.scroll{position:sticky;top:0;z-index:5}}
+html{scroll-padding-top:72px;scroll-behavior:smooth}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(20px,4vw,56px);align-items:center}
+.hero .fig{min-height:420px}
+.fig{position:relative;min-height:340px}.fig>svg{position:absolute;inset:0;width:100%;height:100%}
+.sig{font-style:italic;color:var(--mute)}
+blockquote{margin:1.2em 0;padding:0 0 0 22px;border-left:2px solid var(--gold);font-size:24px;font-style:italic;max-width:56ch}
+/* chain */
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:0 0 22px}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.dot{width:12px;height:12px;border-radius:50%;flex:none;display:inline-block}
+.t-act{background:var(--ember)}.t-ext{background:var(--gold)}.t-dep{background:var(--mute)}.t-dec{background:var(--teal)}.t-ai{background:var(--violet)}
+ol.chain{list-style:none;margin:0;padding:0;position:relative}
+ol.chain:before{content:"";position:absolute;left:118px;top:8px;bottom:8px;width:1px;background:var(--line)}
+.chain li{display:grid;grid-template-columns:100px 36px minmax(0,1fr);align-items:start;padding:10px 0}
+.chain .tm{font:600 22px/1.2 Cinzel,serif;color:var(--gold);text-align:right;white-space:nowrap}
+.chain .tm small{display:block;font:500 12px Inter,sans-serif;color:var(--mute);white-space:normal}
+.chain .nd{justify-self:center;margin-top:7px;width:14px;height:14px;border-radius:50%;box-shadow:0 0 0 5px var(--bg)}
+.alt .chain .nd{box-shadow:0 0 0 5px var(--bg2)}
+.chain .tx b{font-weight:600}
+.chain .gap{grid-column:1/-1;padding:14px 0 14px 136px;font-style:italic;color:var(--mute)}
+@media(max-width:600px){ol.chain:before{left:74px}.chain li{grid-template-columns:62px 26px minmax(0,1fr)}.chain .tm{font-size:17px}.chain .gap{padding-left:88px}}
+/* tables */
+table{border-collapse:collapse;width:100%;font-size:18px}
+th{font:500 13px Inter,sans-serif;color:var(--mute);text-align:left;padding:10px 12px;border-bottom:1px solid var(--gold)}
+td{padding:12px;border-bottom:1px solid var(--line);vertical-align:top}
+td.d{white-space:nowrap;font-family:Cinzel,serif;font-size:15px;color:var(--gold)}
+.pill{font:500 12px Inter,sans-serif;padding:3px 9px;border-radius:999px;border:1px solid var(--line);white-space:nowrap;display:inline-block}
+.hi{border-color:var(--gold);color:var(--gold)}.md{border-color:var(--teal);color:var(--teal)}.lo{color:var(--mute)}
+/* three observers */
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:10px}
+.obs{padding:22px 20px;border-top:1px solid var(--gold);position:relative}
+.obs+.obs{border-left:1px solid var(--line)}
+.obs .yr{font:600 30px Cinzel,serif;color:var(--gold)}
+@media(max-width:760px){.three{grid-template-columns:minmax(0,1fr)}.obs+.obs{border-left:0}}
+/* pattern */
+.pat{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:18px 0 8px;counter-reset:s}
+.pat div{padding:18px;border:1px solid var(--line);border-radius:4px;background:var(--bg)}
+.alt .pat div{background:var(--bg2)}
+.pat h3{color:var(--ember)}
+@media(max-width:860px){.pat{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.pat{grid-template-columns:minmax(0,1fr)}}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(18px,4vw,48px)}
+@media(max-width:760px){.cols{grid-template-columns:minmax(0,1fr)}}
+ul.links{list-style:none;padding:0;margin:0;columns:2 280px;column-gap:40px}
+ul.links li{break-inside:avoid;padding:8px 0;border-bottom:1px solid var(--line)}
+footer{padding:40px max(5vw,16px);border-top:1px solid var(--line);text-align:center}
+@media(max-width:600px){body{font-size:18px}.hero{grid-template-columns:minmax(0,1fr)}.hero .fig{min-height:300px;order:-1}
+table{font-size:15px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--line)}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:7.5em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:7em;margin-inline-start:-7.5em;white-space:normal;font:500 12px Inter,sans-serif;color:var(--mute)}.stack td:empty{display:none}}
+/* evidence */
+.ev{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:18px;margin:22px 0 6px}
+.ev.wide{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+figure{margin:0}
+figure button{all:unset;cursor:zoom-in;display:block;width:100%;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#000}
+figure button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+figure img{display:block;width:100%;height:340px;object-fit:cover;object-position:top}
+.ev.wide figure img{height:440px;object-fit:cover;object-position:top}
+figcaption{font:400 14px/1.45 Inter,sans-serif;color:var(--mute);margin-top:8px}
+figcaption b{color:var(--gold);font-weight:500;white-space:nowrap}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:26px 0 6px}
+.pair figure img{height:360px;object-fit:cover;object-position:center}
+@media(max-width:600px){.pair figure img{height:220px}figure img{height:260px}}
+.note{font:400 14px/1.5 Inter,sans-serif;color:var(--mute);margin-top:14px}
+#lb{position:fixed;inset:0;background:rgba(5,7,15,.94);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
+#lb.on{display:flex}
+#lb img{max-width:100%;max-height:calc(100vh - 90px);object-fit:contain}
+#lb p{position:absolute;left:16px;right:72px;bottom:10px;color:#ece5d3;font:14px Inter,sans-serif;margin:0}
+#lb button{position:absolute;top:10px;right:10px;width:48px;height:48px;border-radius:50%;border:1px solid #d2ad55;background:transparent;color:#ece5d3;font:24px Inter,sans-serif;cursor:pointer}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.tw{animation:none!important}}
+.tw{animation:tw 4s ease-in-out infinite}@keyframes tw{50%{opacity:.25}}
+</style>
+<script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script>
+</head>
+<body>
+
+<header class="band">
+  <div class="in hero">
+    <div>
+      <p class="lab">For Dr. Bernard Beitman · from Aivars (Archi), Dublin · 20 November 2026</p>
+      <h1>Beyond the Firmament</h1>
+      <p>Dear Bernard, this page puts in one place what I tried to tell you in several emotional messages on Facebook. It shows how one evening, 19 November 2026, led me from an old brass ashtray to your page, and to the same engraving I had made my own. It also shows the five years of documented coincidences behind it.</p>
+      <p>I have tried to keep the facts separate from my interpretations, and to mark which links in the chain were independent of me and which were my own doing. I know you will be asking that too. The original screenshots are included, with their timestamps, so you can check the sequence for yourself.</p>
+      <p class="sig">Aivars (Archi) · artist · Ealoiontoir · <a href="https://ealoiontoir.weebly.com/">ealoiontoir.weebly.com</a></p>
+    </div>
+    <div class="fig" aria-label="A drawing of a wanderer at the edge of the starry dome, holding a glowing phone toward the wheels of light beyond"><svg id="sky"></svg></div>
+  </div>
+</header>
+
+<nav class="scroll" aria-label="Sections">
+  <a href="#me">Who I am</a><a href="#evening">19 November</a><a href="#links">How independent?</a><a href="#engraving">The engraving</a><a href="#marcus">Marcus, 2024–2026</a><a href="#years">Five years</a><a href="#pattern">The pattern</a><a href="#ai">AI</a><a href="#words">Your words</a><a href="#open">Still open</a><a href="#archive">Archive</a>
+</nav>
+
+<section class="band" id="me">
+  <div class="in cols">
+    <div>
+      <h2>Who I am</h2>
+      <p>My name is Aivars, but most people call me Archi. I was born in Latvia and have lived in Dublin for almost nineteen years. I came to art as a mature student, studying Fine Art at NCAD in Dublin, and I paint, write and build an archive called <i>Spirit of Time</i>.</p>
+      <p>I was never drawn to mysticism or esoteric subjects. If anything, I kept away from them. The coincidences started during my years at NCAD, and they came with such force and in such strange sequences that they changed how I see the world. I did not go looking for these experiences. In many ways, they found me.</p>
+    </div>
+    <div>
+      <h3>How I work with it</h3>
+      <p>For about five years I have kept dated photographs, screenshots, messages, paintings and dictated accounts. With the help of AI I sort them into event cards: what happened, when it was first recorded, when I told it, when I later understood it, and when it was published. Each card carries a confidence rating for the source, the date and the connection. I try to write the most modest claim the evidence supports, and also the claim it does <i>not</i> support.</p>
+      <p>To me it sometimes feels like electricity. I cannot see the thing itself, only what it does. I would like to understand it, not just believe in it.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="evening">
+  <div class="in">
+    <h2>The evening of 19 November 2026</h2>
+    <p>Times are from the Messenger screenshots. The time of the call with my mother is my estimate, and I say so below.</p>
+    <div class="legend lab">
+      <span><i class="dot t-act"></i>my spontaneous act</span><span><i class="dot t-ext"></i>independent outside event</span><span><i class="dot t-dep"></i>reply shaped by what I said</span><span><i class="dot t-dec"></i>my conscious decision</span><span><i class="dot t-ai"></i>link through AI</span>
+    </div>
+    <ol class="chain" id="chain"></ol>
+
+    <h3 style="margin-top:40px">The two objects</h3>
+    <div class="pair">
+      <figure><button data-cap="My brass ashtray, the photo I sent Marcus at 19:59. A relative brought it from Latvia."><img src="img/02_ashtray.jpg" alt="Brass ashtray in the shape of a horned, grinning face on a wooden table"></button><figcaption><b>Mine</b> · the ashtray I showed my mother shortly before 19:49</figcaption></figure>
+      <figure><button data-cap="One of Marcus's black, textured paintings, from the photos and videos he sent from 19:49."><img src="img/03_marcus_painting.jpg" alt="Black framed painting with pale textured paint in which face-like shapes appear"></button><figcaption><b>Marcus's</b> · one of the dark paintings he sent, faces appearing in the paint</figcaption></figure>
+    </div>
+
+    <h3 style="margin-top:36px">The Messenger screenshots</h3>
+    <p>These are the original screenshots from my phone, unedited except that I blurred Marcus's surname where it appears in a quoted message. Click any image to see it full size.</p>
+    <div class="ev" id="evMsg"></div>
+  </div>
+</section>
+
+<section class="band" id="links">
+  <div class="in">
+    <h2>How independent is each link?</h2>
+    <p>Some links in this chain are independent of me. Others I caused myself, or they came through AI. I would rather show you that openly than let the story look tidier than it is.</p>
+    <table class="stack">
+      <thead><tr><th>Link</th><th>What connects it to the previous one</th><th>Independence</th></tr></thead>
+      <tbody id="indep"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="band alt" id="engraving">
+  <div class="in">
+    <h2>The engraving and its three observers</h2>
+    <p>The Flammarion engraving, first published in 1888, is well known in mystical and philosophical circles, so finding it on your page is not unlikely in itself. What struck me was the route by which it came back to me. In my life the image has its own history:</p>
+    <div class="three">
+      <div class="obs"><div class="yr">2020</div><h3>Derek</h3><p>Derek runs the anthroposophy site anthroposophy.eu. For more than a year and a half we have written to each other about Jung, synchronicity and anthroposophy, and we still do. On 15 May 2020 he set the engraving as his Facebook profile picture. That is where I took it from. It also turned up in other accounts I connect with earlier coincidences.</p></div>
+      <div class="obs"><div class="yr">31 May</div><h3>Me</h3><p>I put myself inside the engraving holding a mobile phone: a person of our time trying to look past the edge of the known world with technology. It became my avatar and part of my artistic identity.</p></div>
+      <div class="obs"><div class="yr">2026</div><h3>You</h3><p>Your article of 20 October 2026, <i>Why the Increase in Global Reports of Mystical Experiences?</i>, carries the same engraving. It was the first image I saw when I opened your page on the night of 19 November.</p></div>
+    </div>
+    <div class="ev wide" id="evEng"></div>
+    <p style="margin-top:22px">Without planning it, I then did what my picture shows: I used technology, an AI, to look for people working at the edge of ordinary explanation. It led me to a researcher whose page shows the wanderer looking through the sky.</p>
+  </div>
+</section>
+
+<section class="band" id="marcus">
+  <div class="in">
+    <h2>Marcus: a shared language since 2024</h2>
+    <p>Marcus and I met in early 2024 through a matter of a watch. Since then our conversations have kept returning to the same themes. This matters for judging the evening: the Lucifer theme was not new between us. It does not explain the timing.</p>
+    <table class="stack">
+      <thead><tr><th>Date</th><th>What the messages show</th></tr></thead>
+      <tbody id="mtab"></tbody>
+    </table>
+    <h3 style="margin-top:34px">Our messages from early 2024</h3>
+    <p>Screenshots of our conversation from January–March 2024. Some of the images he sent are blurred by Messenger because they were never downloaded.</p>
+    <div class="ev" id="ev2024"></div>
+    <p class="note">The surviving 2024 screenshots speak of light and evil, other dimensions, the Red Book and Steiner's lecture on evil. The word "Lucifer" does not appear in them, so I do not yet know when it was first used between us.</p>
+  </div>
+</section>
+
+<section class="band alt" id="years">
+  <div class="in">
+    <h2>Five years: a selection from the archive</h2>
+    <p>A few of the documented episodes, in the order they happened. Where there is a page on my site, the title links to it.</p>
+    <table class="stack">
+      <thead><tr><th>When</th><th>Episode</th><th>Trace</th><th>Date confidence</th></tr></thead>
+      <tbody id="ytab"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="band" id="pattern">
+  <div class="in">
+    <h2>The structure that keeps repeating</h2>
+    <p>It is not one strange coincidence that keeps me working on this. It is that many of them share the same structure:</p>
+    <div class="pat">
+      <div><h3>1 · An impulse</h3><p>I do something unplanned and unusual for me: I pick up an object, take a photograph, make an image, write a song.</p></div>
+      <div><h3>2 · An outside event</h3><p>Something happens that I did not arrange and could not know about: a message, a meeting, a discovery.</p></div>
+      <div><h3>3 · A specific match</h3><p>The two meet in a recognisable person, object, place, title or symbol, not just a general mood.</p></div>
+      <div><h3>4 · The past returns</h3><p>The theme turns out to have been present years before, and the earlier act takes on a new meaning.</p></div>
+    </div>
+    <div class="cols" style="margin-top:20px">
+      <p><b>Two variants.</b> In the first, an image comes first and reality answers later (the dream and the Goetheanum; the stage set of <i>Red</i>). In the second, a spontaneous act comes shortly before an outside event with the same content (Dorset Street; the ashtray and Marcus).</p>
+      <p><b>What I do not claim.</b> A repeating structure in my stories does not prove there is one mechanism behind the events. Part of what repeats may be how my own mind notices and links things. I count that as worth studying too. I also know I do not record the many evenings when nothing happened.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="ai">
+  <div class="in cols">
+    <div>
+      <h2>A parallel I cannot ignore</h2>
+      <p>I was as far from AI as I was from mysticism. Yet the two entered my life in the same years. My first strong coincidences came in 2020–2021, during my studies. When Midjourney appeared in 2022, I started using it at once, and then ChatGPT from its very first days, followed by other systems. The two lines have grown up together ever since, and without these tools I would not be where I am now.</p>
+      <p>I have tested each of them on myself: how they flatter, how they can steer attention, how a beautiful image appears in seconds and how deep the disappointment can be afterwards. In Steiner's language I try to keep a Michaelic balance between the two temptations.</p>
+    </div>
+    <div>
+      <h3>What grew out of it</h3>
+      <p>Out of this work came my Codex, the core archive from which I am now writing a book. Many synchronicities are still unwritten. I do not yet know what they are for. I let them show themselves in the process, and I keep the record as honest as I can.</p>
+      <p>This is also why your article on the algorithmic gaze matters to me: in my case, the self-observer and the machine have been working side by side from the start.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="words">
+  <div class="in cols">
+    <div>
+      <h2>Your words that met me</h2>
+      <blockquote>“Meaningful coincidences are suggestions, not demands.”</blockquote>
+      <p>When I reached this sentence in your October article, I cried. For years I felt as if I were in a dark room that was slowly filling with light. I could start to see outlines, but I had nothing to hold on to. Your sentence describes what I did that night: I took the coincidence as an invitation to look further, not as an order.</p>
+    </div>
+    <div>
+      <h3>And the algorithmic gaze</h3>
+      <p>Then I read <i>The Algorithmic Gaze and the Self-Observer</i> (July 2025). It applies to me directly. An AI did not cause the evening with Marcus, but it did take part in what followed, because it suggested your name. So in my archive I record where each link came from, and I try to keep my own inner observer rather than let a machine strengthen what I already believe.</p>
+      <p>Both articles hold the same position, and it is one I share: be open to the unusual, but stay free.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="open">
+  <div class="in cols">
+    <div>
+      <h2>What is still open</h2>
+      <ul>
+        <li>The exact time of the call with my mother. My phone's call log should show it.</li>
+        <li>When Marcus painted these works, and when the ram's face first appeared to him.</li>
+        <li>When Lucifer was first mentioned between us.</li>
+        <li>The other accounts where the engraving appeared before, which I have not yet dated.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>What I would love to ask you</h2>
+      <p>Have you met people whose coincidences repeat the same structure for years, especially the pattern of a spontaneous act shortly before a matching outside event? And how would you suggest someone in my position records such sequences so that they become useful for research, not only meaningful to me?</p>
+      <p>I am happy to share the full material: screenshots, the videos Marcus sent, photographs and dates. I can also fill in your Coincidence Project survey.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="archive">
+  <div class="in">
+    <h2>Where to read more</h2>
+    <ul class="links">
+      <li><a href="https://ealoiontoir.weebly.com/trembling-on-dorset-street.html">Trembling on Dorset Street</a> · where it began, November 2021</li>
+      <li><a href="https://ealoiontoir.weebly.com/hilma-dream-goetheanum.html">The Place I Had Already Found</a> · the dream and the Goetheanum</li>
+      <li><a href="https://ealoiontoir.weebly.com/gerard-the-returned-morning.html">Gerard, The Returned Morning</a> · the first threshold, 2020</li>
+      <li><a href="https://ealoiontoir.weebly.com/transformation--threat.html">Transformation / Threat</a> · the painting and February 2022</li>
+      <li><a href="https://ealoiontoir.weebly.com/three-works-about-coicidence.html">Three Works About Coincidence</a> · paintings</li>
+      <li><a href="https://ealoiontoir.weebly.com/spirit-of-time.html">Spirit of Time</a> · the larger project</li>
+      <li><a href="https://ealoiontoir.weebly.com/aii.html">AI &amp; I</a> · how I work with AI</li>
+      <li><a href="https://ealoiontoir.weebly.com/">ealoiontoir.weebly.com</a> · the whole site</li>
+    </ul>
+    <p style="margin-top:26px">Thank you for reading this far, Bernard. Please believe me: I am not crazy, only curious and a little overwhelmed. After years at sea, I think I can see a shore.</p>
+    <p class="sig">Warm regards from Dublin,<br>Aivars (Archi)</p>
+  </div>
+</section>
+
+<div id="lb" role="dialog" aria-modal="true" aria-label="Image viewer"><img alt=""><p></p><button type="button" aria-label="Close">×</button></div>
+
+<footer class="lab">Aivars (Archi) · Ealoiontoir · Dublin, Ireland · prepared 20 November 2026</footer>
+
+<script>
+{
+const chain=[
+ ["~19:00","30–60 min before 19:49 · estimate","act","<b>An old object, an unusual gesture.</b> On the phone with my mother, I pick up a brass ashtray with a horned, devil-like face. A relative brought it from Latvia, and it usually sits to one side. I almost never touch it. For no reason I show it to her, and we talk about Lucifer and Steiner's idea of balance between Luciferic and Ahrimanic forces."],
+ ["19:49","","ext","<b>Marcus writes after 203 days of silence.</b> His last message was on 30 April. He sends an 11-second video of his own dark, textured painting, with faces emerging from the paint."],
+ ["19:56","","ext","More images and a video of his black paintings. He asks what I think of his work."],
+ ["19:59","","dec","I send him a photo of the ashtray and tell him about the conversation with my mother half an hour earlier."],
+ ["20:02","","dep","<b>Marcus answers:</b> a ram's face appeared in the painting that night, though he had meant to paint a skull. He speaks of Lucifer and of seven souls. This came <i>after</i> my message."],
+ ["20:05","","dec","I write to him about balance: not giving oneself to either force."],
+ ["20:40","20:46","dep","He writes about art being beyond time, the freedom of the soul and the flight in my painting, and sends his love to my mother."],
+ ["gap","The wave rises. I start asking again: who else has lived and documented long series of coincidences?"],
+ ["night","","ai","<b>AI lists names:</b> Paul Kammerer, Jung and Pauli, the Society for Psychical Research, and you. I had searched for years and never come across your name."],
+ ["night","","dec","I search for you on Facebook and open your page."],
+ ["night","","ext","<b>The first image is the Flammarion engraving,</b> the same one I put myself into, months ago, and use as my avatar. Goosebumps again."],
+ ["night","","dec","I read your article and your site, comment under the post, and write to you in a private message."],
+ ["20 Nov","","dec","I gather everything into this page, with the facts, the sources and the gaps."]
+];
+const col={act:"t-act",ext:"t-ext",dep:"t-dep",dec:"t-dec",ai:"t-ai"};
+document.getElementById('chain').innerHTML=chain.map(c=>c[0]==="gap"?`<li><div class="gap">${c[1]}</div></li>`:
+ `<li><div class="tm">${c[0]}${c[1]?`<small>${c[1]}</small>`:""}</div><i class="nd ${col[c[2]]}"></i><div class="tx">${c[3]}</div></li>`).join('');
+
+const ind=[
+ ["Ashtray → Marcus's message","Nothing I know of. He had not written since 30 April and knew nothing of my call.","hi","Independent of me"],
+ ["Marcus's message → his words about Lucifer and the ram","My message about the ashtray came first, and the theme has been shared between us since 2024.","lo","Shaped by me"],
+ ["Evening → my research question","My own decision, prompted by the evening.","md","Caused by me"],
+ ["Question → your name","The AI suggested you because you study exactly this.","md","Through AI"],
+ ["Your page → the engraving","Your post existed since 20 October, before my search. The engraving is common in this field.","hi","Independent of me, but not rare"]
+];
+document.getElementById('indep').innerHTML=ind.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td><span class="pill ${r[2]}">${r[3]}</span></td></tr>`).join('');
+
+const m=[
+ ["Jan 2024","I send him images of the Goetheanum, Steiner's architecture and Jung's Red Book. He replies that there are no coincidences: one must open the door and go towards what is meant to be."],
+ ["18 Jan 2024","He writes of an invitation to another dimension, and of continuing to ask questions."],
+ ["25 Jan 2024","I send him Steiner's lecture <i>The Origin of Evil</i> (GA 55). He says my materials helped him."],
+ ["2–4 Feb 2024","Light and evil, an experience of pure white light, two dimensions, souls meeting in sleep. I bring in Jung and the collective unconscious."],
+ ["8 Oct 2025","He responds warmly to my work <i>Spirit of Time</i>."],
+ ["30 Apr 2026","Our last contact before the evening of the ashtray."],
+ ["19 Nov 2026","He writes again, sending his dark paintings, roughly half an hour after I showed the ashtray to my mother."]
+];
+document.getElementById('mtab').innerHTML=m.map(r=>`<tr><td class="d">${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+
+const S="https://ealoiontoir.weebly.com/";
+const y=[
+ ["2020","Gerard","At the start of my Fine Art studies I recorded the voice of Gerard, a homeless poet and musician near St Stephen's Green. He became the source of a series of works. He is a person before he is a symbol.","Instagram post 11 Dec 2020; YouTube video Jan 2021","md",S+"gerard-the-returned-morning.html"],
+ ["Oct 2021","The Alpine dream","A dream of a hidden door and a dark room with canvases, in which two people raise my left hand. I made a sketch of the room later.","Repeated accounts; photograph of the sketch","lo",""],
+ ["29–30 Nov 2021","Dorset Street","On a corner in Dublin I photographed a man with trembling hands. The next morning, at the same spot, I recognised a man I remembered from a boutique in Riga around 2000 and had seen twice in Dublin since. This time my own hands trembled. Two different men, one place.","Five photographs with times in the file names","hi",S+"trembling-on-dorset-street.html"],
+ ["Jan–Feb 2022","Transformation / Threat","At NCAD I painted a Russian high-speed train heading toward two figures, then covered it with a crowd before finishing. The painting kept a hidden image of threat, which came back to me after 24 February 2022. I do not claim it predicted anything.","Photographs of both states of the painting","md",S+"transformation--threat.html"],
+ ["Jun 2022","Red","A friend recommended the play about Rothko. In the stage set of his studio I recognised the room from my dream and sketch.","Photo of the stage set and photo of the sketch, about ten hours apart","md",""],
+ ["2022","A stranger's letters","I bought a bundle of a stranger's letters at a flea market and lost my wallet the same day. A man who found it handed it to the Gardaí with everything inside. Later, in Jung's Red Book, the unfinished 1959 epilogue ended on the word <i>Möglichkeit</i>, and a 1959–1960 bank document from the bundle was on the back of my painting.","Photographs of the works, 2022–2023","md",""],
+ ["2022–2024","The Goetheanum, found twice","Looking for the place of my dream on a map, I stopped at a building and saved it without knowing what it was. Later, through Hilma af Klint and Steiner, I found the same building and learned it was the Goetheanum.","Accounts; search history still to check","lo",S+"hilma-dream-goetheanum.html"],
+ ["Summer 2024","Three meetings in Latvia","On one visit, three old friends from my childhood each crossed my path by chance, one of them over from Germany for just a few days while I was over from Ireland.","Accounts","md",""],
+ ["20 Nov 2025","Möglichkeit returns","Listening to a lecture in German, a language I do not speak, I picked out one word at minute 28: <i>Möglichkeit</i>.","Lecture video with timestamp","hi",""],
+ ["19 Nov 2026","The ashtray and Marcus","See above.","Messenger screenshots and videos","hi","#evening"]
+];
+const lab={hi:"high",md:"medium",lo:"low"};
+document.getElementById('ytab').innerHTML=y.map(r=>`<tr><td class="d">${r[0]}</td><td>${r[5]?`<a href="${r[5]}"><b>${r[1]}</b></a>`:`<b>${r[1]}</b>`}<br>${r[2]}</td><td class="lab">${r[3]}</td><td><span class="pill ${r[4]}">${lab[r[4]]}</span></td></tr>`).join('');
+
+const fig=(src,b,cap,alt,th)=>`<figure><button data-cap="${b} · ${cap}" data-full="img/${src}"><img src="img/${th||src}" alt="${alt}"></button><figcaption><b>${b}</b> · ${cap}</figcaption></figure>`;
+const msg=[
+ ["01_marcus_1949_first_message.jpg","19:49–19:57","Marcus writes for the first time since 30 April: an 11-second video, two more paintings, and “My art, I painted, let me know your thoughts”."],
+ ["04_chat_a.jpg","19:59–20:02","My message about the ashtray and my mother. His reply: seven souls, a ram's face that appeared “tonight”, though he was going to paint a skull."],
+ ["08_chat_e.jpg","20:01–20:03","The same exchange, continued: “Archi always my friend and thank you”."],
+ ["09_chat_f.jpg","20:03–20:45","I send him a painting of mine (“Baby born”). He replies; I write about balance between the forces."],
+ ["05_chat_b.jpg","20:05–20:46","Art beyond time, the freedom of the soul, and his love to my mother: “she always understands you”."],
+ ["06_chat_c.jpg","20:40–20:48","His last messages of the evening and my reply about Jung's synchronicity."],
+ ["11_chat_full_scroll.jpg","Overview","The whole evening as one long scroll."]
+];
+document.getElementById('evMsg').innerHTML=msg.map(m=>fig(m[0],m[1],m[2],"Messenger screenshot, "+m[1])).join('');
+const eng=[
+ ["17_derek_profile_2020.jpg","15 May 2020","Derek's Facebook profile: the Flammarion engraving as his picture, “updated his profile picture”, link to anthroposophy.eu."],
+ ["19_archi_avatar.jpg","31 May, 22:18","My version: I placed myself inside the engraving, holding a phone. Posted as Archi Eire."],
+ ["18_beitman_page.jpg","20 Oct 2026","Your Facebook page as I first saw it: “Into the Mystic”, with the engraving above your Psychology Today article."]
+];
+document.getElementById('evEng').innerHTML=eng.map(m=>fig(m[0],m[1],m[2],"Screenshot, "+m[1],m[0].replace('.jpg','_crop.jpg'))).join('');
+const old=[
+ ["16_marcus_2024_e.jpg","18–25 Jan 2024","My dream sketch and the stage set of Red; “Open your invite to another dimension”; Steiner's GA 55, The Origin of Evil."],
+ ["15_marcus_2024_d.jpg","Jan 2024","“There is no co incidentally… it's ment to be open the door and go for what is ment to be.”"],
+ ["14_marcus_2024_c.jpg","Jan 2024","I send him the Goetheanum and Steiner's architecture; he shows me his books at home."],
+ ["12_marcus_2024_a.jpg","2 Feb 2024","Light and evil, “pure white light”, two dimensions, souls meeting in sleep; I write about Jung and the Red Book."],
+ ["13_marcus_2024_b.jpg","Feb–Mar 2024","“I don't want to be associated with anyone, it gives me more objectivity”: my wish to stay independent."]
+];
+document.getElementById('ev2024').innerHTML=old.map(m=>fig(m[0],m[1],m[2],"Messenger screenshot, "+m[1])).join('');
+const lb=document.getElementById('lb'),lbi=lb.querySelector('img'),lbp=lb.querySelector('p'),lbc=lb.querySelector('button');let last=null;
+document.addEventListener('click',e=>{const b=e.target.closest('figure button');if(!b)return;last=b;const im=b.querySelector('img');lbi.src=b.dataset.full||im.src;lbi.alt=im.alt;lbp.textContent=b.dataset.cap||'';lb.classList.add('on');lbc.focus()});
+const close=()=>{lb.classList.remove('on');last&&last.focus()};
+lbc.addEventListener('click',close);lb.addEventListener('click',e=>{if(e.target===lb)close()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.classList.contains('on'))close()});
+
+const s=document.getElementById('sky');
+const rnd=(i)=>{const x=Math.sin(i*127.1)*43758.5453;return x-Math.floor(x)};
+const drawSky=()=>{
+ const W=s.clientWidth,H=s.clientHeight;if(!W||!H)return;
+ const cx=W*0.42,cy=H*0.98,R=Math.min(W*0.62,H*0.9);
+ let stars="";for(let i=0;i<70;i++){const a=Math.PI*(0.04+0.92*rnd(i)),r=R*(0.12+0.84*Math.sqrt(rnd(i+99)));const x=cx+Math.cos(a)*r*-1,yy=cy-Math.sin(a)*r;const z=0.6+rnd(i+7)*1.6;stars+=`<circle cx="${x.toFixed(1)}" cy="${yy.toFixed(1)}" r="${z.toFixed(2)}" fill="var(--gold)" ${i%5==0?'class="tw" style="animation-delay:'+(rnd(i)*4).toFixed(1)+'s"':''} opacity="${(0.4+rnd(i+3)*0.6).toFixed(2)}"/>`}
+ const sx=cx+R*0.82,sy=cy-R*0.57;
+ let wheels="";for(let k=0;k<5;k++){const r=R*(0.1+k*0.075);wheels+=`<circle cx="${(sx+R*0.22).toFixed(1)}" cy="${(sy-R*0.08).toFixed(1)}" r="${r.toFixed(1)}" fill="none" stroke="var(--ember)" stroke-opacity="${(0.55-k*0.09).toFixed(2)}" stroke-width="1.2"/>`}
+ let rays="";for(let k=0;k<14;k++){const a=-1.25+k*0.11;rays+=`<line x1="${sx}" y1="${sy}" x2="${(sx+Math.cos(a)*R*0.6).toFixed(1)}" y2="${(sy+Math.sin(a)*R*0.6).toFixed(1)}" stroke="var(--gold)" stroke-opacity=".28"/>`}
+ const fx=sx-R*0.16,fy=cy-6;
+ s.setAttribute('viewBox',`0 0 ${W} ${H}`);
+ s.innerHTML=`<defs><radialGradient id="g" cx="50%" cy="100%" r="100%"><stop offset="0" stop-color="var(--sky)"/><stop offset="1" stop-color="var(--bg)"/></radialGradient>
+ <clipPath id="beyond"><rect x="${sx}" y="0" width="${W}" height="${H}"/></clipPath></defs>
+ <g clip-path="url(#beyond)">${rays}${wheels}</g>
+ <path d="M${cx-R} ${cy} A${R} ${R} 0 0 1 ${sx} ${sy} L${sx} ${cy} Z" fill="url(#g)"/>
+ <path d="M${cx-R} ${cy} A${R} ${R} 0 0 1 ${sx} ${sy}" fill="none" stroke="var(--gold)" stroke-width="1.6"/>
+ ${stars}
+ <circle cx="${cx-R*0.35}" cy="${cy-R*0.62}" r="${R*0.05}" fill="none" stroke="var(--gold)" stroke-opacity=".7"/>
+ <line x1="0" y1="${cy}" x2="${W}" y2="${cy}" stroke="var(--line)"/>
+ <g transform="translate(${fx.toFixed(1)} ${fy.toFixed(1)})">
+  <path d="M-30 0 Q-26 -26 -12 -34 Q-4 -40 4 -36 Q14 -30 16 -18 L22 -2 Z" fill="var(--ink)" opacity=".92"/>
+  <circle cx="4" cy="-46" r="9" fill="var(--ink)" opacity=".92"/>
+  <path d="M8 -30 L30 -40" stroke="var(--ink)" stroke-width="5" stroke-linecap="round" opacity=".92"/>
+  <rect x="29" y="-49" width="7" height="12" rx="1.5" fill="var(--ember)"/>
+  <circle cx="33" cy="-43" r="14" fill="var(--ember)" opacity=".18"/>
+ </g>`;
+};
+const ro=new ResizeObserver(drawSky);ro.observe(s);
+}
+</script>
+</body>
+</html>
