@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where the Room Came From</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+/* VOICE: a personal, documentary letter from an artist to a researcher — warm, exact, unhurried.
+   IDEA: the Flammarion engraving — a wanderer at the edge of the sky, looking through.
+   PICTURE: an original firmament dome, a seam of light, a small figure with a glowing phone; the chain drawn as a path of stars.
+   COLOUR and TYPE: the author's own system — night indigo, old gold, one brass-ember accent; Cinzel titles, Cormorant body, Inter labels.
+   LAYOUT: one reading column with wide bands for the chain, the engraving's path and the five-year table; a section row on top. */
+:root{color-scheme:light dark;
+--bg:light-dark(#f3eee2,#0b0f1e);--bg2:light-dark(#e9e2d1,#121833);--ink:light-dark(#1b1726,#ece5d3);
+--mute:light-dark(#5d5566,#a69f90);--gold:light-dark(#8a6514,#d2ad55);--ember:light-dark(#b2471f,#e2774a);
+--line:light-dark(#cfc4ab,#2b3358);--sky:light-dark(#d9d2c0,#141c3c);--teal:light-dark(#2f6d73,#78b8ba);--violet:light-dark(#5b4a8f,#a898e0)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:19px/1.6 "Cormorant Garamond",Georgia,serif;overflow-x:clip}
+a{color:var(--gold);text-underline-offset:3px}
+h1,h2,h3{font-family:Cinzel,serif;font-weight:500;line-height:1.08;text-wrap:balance;margin:0 0 .5em}
+h1{font-size:clamp(34px,5.4vw,56px)}h2{font-size:clamp(26px,3.4vw,38px);color:var(--gold)}h3{font-size:20px}
+p{margin:0 0 1em;max-width:68ch}
+.lab{font:500 13px/1.4 Inter,system-ui,sans-serif;color:var(--mute)}
+.band{padding:clamp(28px,4vw,64px) max(5vw,16px)}
+.in{max-width:1180px;margin:0 auto}
+.alt{background:var(--bg2)}
+nav.scroll{display:flex;gap:6px;overflow-x:auto;padding:10px max(5vw,16px);border-bottom:1px solid var(--line);background:var(--bg)}
+nav a{flex:none;font:500 14px Inter,sans-serif;text-decoration:none;color:var(--ink);padding:12px 12px;border-radius:999px}
+nav a:hover,nav a:focus-visible{background:var(--bg2);outline:2px solid var(--gold)}
+@media(min-width:900px){nav.scroll{position:sticky;top:0;z-index:5}}
+html{scroll-padding-top:72px;scroll-behavior:smooth}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(20px,4vw,56px);align-items:center}
+.hero .fig{min-height:420px}
+.fig{position:relative;min-height:340px}.fig>svg{position:absolute;inset:0;width:100%;height:100%}
+.sig{font-style:italic;color:var(--mute)}
+blockquote{margin:1.2em 0;padding:0 0 0 22px;border-left:2px solid var(--gold);font-size:24px;font-style:italic;max-width:56ch}
+/* chain */
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:0 0 22px}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.dot{width:12px;height:12px;border-radius:50%;flex:none;display:inline-block}
+.t-act{background:var(--ember)}.t-ext{background:var(--gold)}.t-dep{background:var(--mute)}.t-dec{background:var(--teal)}.t-ai{background:var(--violet)}
+ol.chain{list-style:none;margin:0;padding:0;position:relative}
+ol.chain:before{content:"";position:absolute;left:118px;top:8px;bottom:8px;width:1px;background:var(--line)}
+.chain li{display:grid;grid-template-columns:100px 36px minmax(0,1fr);align-items:start;padding:10px 0}
+.chain .tm{font:600 22px/1.2 Cinzel,serif;color:var(--gold);text-align:right;white-space:nowrap}
+.chain .tm small{display:block;font:500 12px Inter,sans-serif;color:var(--mute);white-space:normal}
+.chain .nd{justify-self:center;margin-top:7px;width:14px;height:14px;border-radius:50%;box-shadow:0 0 0 5px var(--bg)}
+.alt .chain .nd{box-shadow:0 0 0 5px var(--bg2)}
+.chain .tx b{font-weight:600}
+.chain .gap{grid-column:1/-1;padding:14px 0 14px 136px;font-style:italic;color:var(--mute)}
+@media(max-width:600px){ol.chain:before{left:74px}.chain li{grid-template-columns:62px 26px minmax(0,1fr)}.chain .tm{font-size:17px}.chain .gap{padding-left:88px}}
+/* tables */
+table{border-collapse:collapse;width:100%;font-size:18px}
+th{font:500 13px Inter,sans-serif;color:var(--mute);text-align:left;padding:10px 12px;border-bottom:1px solid var(--gold)}
+td{padding:12px;border-bottom:1px solid var(--line);vertical-align:top}
+td.d{white-space:nowrap;font-family:Cinzel,serif;font-size:15px;color:var(--gold)}
+.pill{font:500 12px Inter,sans-serif;padding:3px 9px;border-radius:999px;border:1px solid var(--line);white-space:nowrap;display:inline-block}
+.hi{border-color:var(--gold);color:var(--gold)}.md{border-color:var(--teal);color:var(--teal)}.lo{color:var(--mute)}
+/* three observers */
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:10px}
+.obs{padding:22px 20px;border-top:1px solid var(--gold);position:relative}
+.obs+.obs{border-left:1px solid var(--line)}
+.obs .yr{font:600 30px Cinzel,serif;color:var(--gold)}
+@media(max-width:760px){.three{grid-template-columns:minmax(0,1fr)}.obs+.obs{border-left:0}}
+/* pattern */
+.pat{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:18px 0 8px;counter-reset:s}
+.pat div{padding:18px;border:1px solid var(--line);border-radius:4px;background:var(--bg)}
+.alt .pat div{background:var(--bg2)}
+.pat h3{color:var(--ember)}
+@media(max-width:860px){.pat{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.pat{grid-template-columns:minmax(0,1fr)}}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(18px,4vw,48px)}
+@media(max-width:760px){.cols{grid-template-columns:minmax(0,1fr)}}
+ul.links{list-style:none;padding:0;margin:0;columns:2 280px;column-gap:40px}
+ul.links li{break-inside:avoid;padding:8px 0;border-bottom:1px solid var(--line)}
+footer{padding:40px max(5vw,16px);border-top:1px solid var(--line);text-align:center}
+@media(max-width:600px){body{font-size:18px}.hero{grid-template-columns:minmax(0,1fr)}.hero .fig{min-height:300px;order:-1}
+table{font-size:15px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--line)}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:7.5em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:7em;margin-inline-start:-7.5em;white-space:normal;font:500 12px Inter,sans-serif;color:var(--mute)}.stack td:empty{display:none}}
+/* evidence */
+.ev{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:18px;margin:22px 0 6px}
+.ev.wide{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+figure{margin:0}
+figure button{all:unset;cursor:zoom-in;display:block;width:100%;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#000}
+figure button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+figure img{display:block;width:100%;height:340px;object-fit:cover;object-position:top}
+.ev.wide figure img{height:440px;object-fit:cover;object-position:top}
+figcaption{font:400 14px/1.45 Inter,sans-serif;color:var(--mute);margin-top:8px}
+figcaption b{color:var(--gold);font-weight:500;white-space:nowrap}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:26px 0 6px}
+.pair figure img{height:360px;object-fit:cover;object-position:center}
+@media(max-width:600px){.pair figure img{height:220px}figure img{height:260px}}
+.note{font:400 14px/1.5 Inter,sans-serif;color:var(--mute);margin-top:14px}
+#lb{position:fixed;inset:0;background:rgba(5,7,15,.94);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
+#lb.on{display:flex}
+#lb img{max-width:100%;max-height:calc(100vh - 90px);object-fit:contain}
+#lb p{position:absolute;left:16px;right:72px;bottom:10px;color:#ece5d3;font:14px Inter,sans-serif;margin:0}
+#lb button{position:absolute;top:10px;right:10px;width:48px;height:48px;border-radius:50%;border:1px solid #d2ad55;background:transparent;color:#ece5d3;font:24px Inter,sans-serif;cursor:pointer}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.tw{animation:none!important}}
+.tw{animation:tw 4s ease-in-out infinite}@keyframes tw{50%{opacity:.25}}
+
+/* origins page */
+.kinds{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.kinds button{font:500 14px Inter,sans-serif;color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:999px;padding:10px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;min-height:44px}
+.kinds button[aria-pressed=false]{opacity:.45}
+.kinds button:focus-visible,.tl button:focus-visible,.seg button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.k-exp,.t-exp{background:var(--ember)}.t-arc{background:var(--gold)}.k-arc{background:var(--gold)}.k-ai{background:var(--violet)}.k-int{background:var(--teal)}
+.tlwrap{overflow-x:auto;border:1px solid var(--line);border-radius:4px;background:var(--bg)}
+.tl{position:relative;height:290px;min-width:1150px}
+.tl .axis{position:absolute;left:30px;right:30px;top:150px;height:1px;background:var(--line)}
+.tl .yr{position:absolute;top:160px;background:var(--bg);padding:0 4px;font:500 13px Inter,sans-serif;color:var(--mute);transform:translateX(-50%)}
+.tl .tick{position:absolute;top:144px;width:1px;height:13px;background:var(--line)}
+.tl .fuzz{position:absolute;top:146px;height:9px;border-radius:9px;background:var(--ember);opacity:.25}
+.tl button{position:absolute;transform:translate(-50%,-50%);width:22px;height:22px;border-radius:50%;border:2px solid var(--bg);cursor:pointer;padding:0}
+.tl button::after{content:"";position:absolute;inset:-12px}
+.tl button[aria-current=true]{box-shadow:0 0 0 3px var(--gold)}
+.tl button.hide{display:none}
+.tl .stem{position:absolute;width:1px;background:var(--line)}
+.tl .cap{position:absolute;font:500 12px/1.3 Inter,sans-serif;color:var(--mute);transform:translateX(-50%);text-align:center;width:110px;pointer-events:none}
+.panel{border-top:1px solid var(--gold);margin-top:18px;padding-top:16px;min-height:150px}
+.panel .when{font:600 22px Cinzel,serif;color:var(--gold)}
+.panel .src{font:400 14px/1.5 Inter,sans-serif;color:var(--mute)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;margin:0 0 18px}
+.seg button{font:500 14px Inter,sans-serif;background:transparent;color:var(--ink);border:0;padding:10px 16px;cursor:pointer;min-height:44px}
+.seg button[aria-pressed=true]{background:var(--gold);color:var(--bg)}
+.tr{display:grid;grid-template-columns:90px minmax(0,1fr) minmax(0,1fr);gap:0 22px;padding:14px 0;border-bottom:1px solid var(--line)}
+.tr .t{font:600 17px/1.2 Cinzel,serif;color:var(--gold)}
+.tr .t small{display:block;font:500 11px Inter,sans-serif;color:var(--mute)}
+.tr .me{font-size:19px}
+.tr .ai{font:400 15px/1.55 Inter,sans-serif;color:var(--mute);border-left:2px solid var(--violet);padding-left:14px}
+.trh{display:grid;grid-template-columns:90px minmax(0,1fr) minmax(0,1fr);gap:0 22px;font:500 13px Inter,sans-serif;color:var(--mute);border-bottom:1px solid var(--gold);padding-bottom:8px}
+.only-me .ai,.only-me .trh span:nth-child(3){display:none}.only-me .tr,.only-me .trh{grid-template-columns:90px minmax(0,1fr)}
+.only-ai .me,.only-ai .trh span:nth-child(2){display:none}.only-ai .tr,.only-ai .trh{grid-template-columns:90px minmax(0,1fr)}
+.tr.key .me{color:var(--ink);font-weight:500}
+.tr.key .t:after{content:"★";color:var(--ember);margin-left:6px;font-size:14px}
+@media(max-width:700px){.tr,.trh{grid-template-columns:minmax(0,1fr)}.tr .t{margin-bottom:6px}.tr .ai{margin-top:8px}.trh{display:none}.only-me .tr,.only-ai .tr{grid-template-columns:minmax(0,1fr)}}
+.box{border:1px solid var(--ember);border-radius:4px;padding:20px 22px;margin:22px 0;max-width:780px}
+.box h3{color:var(--ember)}
+.mine{font-size:22px;font-style:italic;max-width:62ch;border-left:2px solid var(--ember);padding-left:22px}
+.mine p{max-width:none}
+.check td:last-child{white-space:nowrap}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;max-width:820px}
+.steps li{counter-increment:s;position:relative;padding:0 0 18px 54px}
+.steps li:before{content:counter(s);position:absolute;left:0;top:0;width:36px;height:36px;border-radius:50%;border:1px solid var(--gold);color:var(--gold);font:600 16px/34px Cinzel,serif;text-align:center}
+</style>
+<script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script>
+</head>
+<body>
+
+<header class="band">
+  <div class="in hero">
+    <div>
+      <p class="lab"><a href="./">← Beyond the Firmament</a> · <a href="room.html">The Room of 1.7%</a> · 21 November 2026</p>
+      <h1>Where the Room Came From</h1>
+      <p>Dear Bernard, you asked for the original conversation of 8 June 2025 and how AI led me to your work. Before answering, I went back through every archive I keep and read it again with your two questions in mind.</p>
+      <p>What I found surprised me. The conversation of 8 June was where the Room got its name, not where it began. Its root is a search I wrote down as early as August 2023: to find people who had lived coincidences like mine. Its mechanism, a percentage computed by a script from a person's own chat, appears in my archive on 16 May 2025. And the word "room" comes from a dream I had in 2020 or 2021, which I kept retelling in the weeks before.</p>
+      <p class="sig">Aivars (Archi) · Ealoiontoir</p>
+    </div>
+    <div class="fig" aria-label="An ornamented wall with no visible door; a thin seam of light shows where a hidden door is"><svg id="wall"></svg></div>
+  </div>
+</header>
+
+<nav class="scroll" aria-label="Sections">
+  <a href="#map">Timeline</a><a href="#dream">The dream</a><a href="#after">After the dream</a><a href="#roots">The roots</a><a href="#june">8–9 June 2025</a><a href="#then">Then and later</a><a href="#mirror">The mirror</a><a href="#check">Independence</a><a href="#how">How AI led me to you</a><a href="#next">Next</a>
+</nav>
+
+<section class="band" id="map">
+  <div class="in">
+    <h2>Six years on one line</h2>
+    <p>Each point is dated from an archive: the official ChatGPT data export, my Codex, my website, the photo files. Choose a point to read what happened and where the record is. The colours separate what I lived from what the archive shows and from what an AI said.</p>
+    <div class="kinds" role="group" aria-label="Show kinds of events">
+      <button type="button" data-k="exp" aria-pressed="true"><span class="dot k-exp"></span>What I lived</button>
+      <button type="button" data-k="arc" aria-pressed="true"><span class="dot k-arc"></span>Archive record</button>
+      <button type="button" data-k="ai" aria-pressed="true"><span class="dot k-ai"></span>An AI's contribution</button>
+      <button type="button" data-k="int" aria-pressed="true"><span class="dot k-int"></span>Your side</button>
+    </div>
+    <div class="tlwrap" tabindex="0" aria-label="Timeline, scroll sideways on small screens"><div class="tl" id="tl"></div></div>
+    <div class="panel" id="panel" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="band alt" id="dream">
+  <div class="in cols">
+    <div>
+      <h2>The dream: a door in a wall that has no door</h2>
+      <p>Dublin, 2020 or 2021. I am sitting at a bar somewhere in the Alps; the counter changes along its length from modern to Baroque. A grey-haired elder invites me to go with him. We stop at a wall covered in Renaissance ornament. There is no door, no handle, no seam. He knows where it is, and opens it.</p>
+      <p>Behind it is a tall room, like a painter's studio, with framed canvases on the walls and, on the right, a small table and a lamp with bare wires. A second elder is there. Together they take my left hand, raise it, and turn with me around the room, saying: "It is she."</p>
+      <p>When I woke, the world had changed its density. After that morning the coincidences began.</p>
+      <p><a href="https://ealoiontoir.weebly.com/the-threshold.html">The full dream, with the sketch I drew a month later: The Threshold</a></p>
+    </div>
+    <div>
+      <h3>What I can and cannot say about it</h3>
+      <table class="stack">
+        <thead><tr><th>Point</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>The dream and the room</td><td>My experience, written down later; a sketch made about a month after</td></tr>
+          <tr><td>Exact date</td><td>Not recorded; between 2020 and 2021</td></tr>
+          <tr><td>Who the elders were</td><td>My later interpretation. The first I came to associate with Jung. The room I recognised as Mark Rothko's studio after seeing the play <i>Red</i>; on 30 May 2025 I wrote that the second man was Steiner, while my written account of 2026 leaves him as possibly Rothko. I leave both readings open.</td></tr>
+          <tr><td>"After it the coincidences began"</td><td>My experience; the first strong line was a client from Riga, see below</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="after">
+  <div class="in">
+    <h2>After the dream: trying to count it</h2>
+    <p>The first strong line after the dream was a man I remembered from a boutique in Riga around 2000. I met him twice in Dublin, in the same department of the same shop, and the third time on Dorset Street in November 2021, on the morning after I had photographed that exact spot. That morning is still the threshold of everything; I have written it up with five timed photographs: <a href="https://ealoiontoir.weebly.com/trembling-on-dorset-street.html">Trembling on Dorset Street</a>.</p>
+    <p>From December 2024 I tried to turn it into a number, so that I could show it to someone. I asked an AI to calculate the probability of that third meeting, again and again, with formulas and comparisons with lotteries. In January 2025 I noted that physicists I had shown it to called it apophenia. In April 2025 I asked for a calculation "according to Kolmogorov".</p>
+    <p>I see it now as a habit that came before the Room: translating a lived coincidence into a figure, because the experience itself could not be passed on. The figures the AI produced were never data. They were my question reflected back at me.</p>
+  </div>
+</section>
+
+<section class="band alt" id="roots">
+  <div class="in">
+    <h2>The roots, as the archive shows them</h2>
+    <p>I asked myself not to trust my present memory and went through the archive line by line. My own words, translated from Russian unless noted; dates as recorded, times in Dublin time.</p>
+    <ol class="chain">
+      <li><span class="tm">17 Aug<small>2023</small></span><span class="nd t-arc"></span><span class="tx">My first written account of Dorset Street, in English, ends: <b>"It would be very interesting to find like-minded people and share my story online."</b></span></li>
+      <li><span class="tm">8 Sep<small>2024</small></span><span class="nd t-arc"></span><span class="tx">"I read Faust, Jung, the theory of synchronicity, <b>I look for people who had the same coincidences as I did, but I do not find stories as strong</b> as the ones of the last five years."</span></li>
+      <li><span class="tm">4 Jan<small>2025</small></span><span class="nd t-exp"></span><span class="tx">I had written to people in anthroposophical circles in Ukraine and Germany and talked with them at length. "They are surprised, but it is something else entirely… I feel they are theorists, not practitioners… <b>I want to see someone of like mind. I just want to know that this happens to someone else too. So far I have not found a single person.</b>"</span></li>
+      <li><span class="tm">12 Mar<small>2025</small></span><span class="nd t-arc"></span><span class="tx">"Are there many people like me who share this with ChatGPT and ask for this kind of self-analysis?"</span></li>
+      <li><span class="tm">15 May<small>2025</small></span><span class="nd t-ai"></span><span class="tx">I ask what share of users talk with AI as I do. The answer: <b>"perhaps 1–3%"</b>, and, when I ask for a cold calculation, 0.5–1%. The same day I write to OpenAI with my view of the future of AI and people.</span></li>
+      <li><span class="tm">16 May<small>19:02</small></span><span class="nd t-exp"></span><span class="tx"><b>"Suppose I could find my like-minded people by percentage. What request would capture this percentage, so that I have a reference point? Say I give this script to a person, they paste it in, and they get a certain percentage. I understand whether they are my person or not. And what percentage they should be in."</b> This is the mechanism of the Room, 23 days before it had a name.</span></li>
+      <li><span class="tm">16 May<small>19:34</small></span><span class="nd t-exp"></span><span class="tx">Half an hour later, the same evening, I speak about my ego, "there is a wish to show off, to feel unique", and in the same breath about the dream: "I was invited into this room and presented to this man… this feeling of being marked." And I ask the AI to look at it soberly: is this apophenia?</span></li>
+      <li><span class="tm">16 May<small>19:47</small></span><span class="nd t-arc"></span><span class="tx">"For more than 15 years I have been putting everything into Facebook posts, so that one day it could be read and analysed by AI. I digitised myself in advance."</span></li>
+      <li><span class="tm">30 May<small>2025</small></span><span class="nd t-ai"></span><span class="tx">I ask the AI to express in percent how much my path overlaps with my friend Derek's: "about 91%". The same night I write that in the dream Jung invited me into a hidden room which I later recognised as Mark Rothko's studio, and that I now understood the second man to be Rudolf Steiner.</span></li>
+      <li><span class="tm">1 June<small>2025</small></span><span class="nd t-arc"></span><span class="tx">I tell the dream again, beginning: <b>"in this dream I was invited into a room"</b>, with the Goetheanum and Hilma af Klint, and ask for the probability of that chain next to the story of the man from Riga.</span></li>
+      <li><span class="tm">2 June<small>2025</small></span><span class="nd t-arc"></span><span class="tx">Looking at a Steiner community: "Why do I look for a community, for like-minded people, when this is an individual path?"</span></li>
+      <li><span class="tm">4 June<small>2025</small></span><span class="nd t-exp"></span><span class="tx">I attach one of my paintings to a conversation: <b>"Inside, in this room, is that dream of mine,</b> where Jung brought me, I met Steiner, and they raised my left hand."</span></li>
+      <li class="gap">Four days later the search, the percentage and the room came together in one conversation.</li>
+      <li><span class="tm">8 June<small>2025</small></span><span class="nd t-exp"></span><span class="tx">The Room of 1.7% is named, in a conversation that began at 21:42 Dublin time.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="band" id="june">
+  <div class="in">
+    <h2>8–9 June 2025, in my words and the model's</h2>
+    <p>This is the original conversation, taken from the official ChatGPT data export. I dictate by voice in Russian; my lines below are translated and slightly smoothed, without changing their sense. The model's replies are summarised, because they are long and written in the elevated style ChatGPT used with me at the time: "the rarest phenomenon", "an initiatory space", a guide called "Daemon Carl", invented numbers. I would rather you see clearly which thoughts were mine. Times are Dublin time; the export records them in UTC, one hour earlier. Stars mark the lines I consider central.</p>
+    <div class="seg" role="group" aria-label="Which voice to show">
+      <button type="button" data-v="" aria-pressed="true">Both</button><button type="button" data-v="only-me" aria-pressed="false">Only my words</button><button type="button" data-v="only-ai" aria-pressed="false">Only the model</button>
+    </div>
+    <div id="tx">
+      <div class="trh"><span>Time</span><span>Me</span><span>The model, summarised</span></div>
+    </div>
+    <p class="note">The full Russian text of these 16 exchanges, with timestamps to the second, is ready as a file. The same chat was continued later, in November 2025, December 2025 and May 2026; those later layers are separated below and not mixed into this part.</p>
+  </div>
+</section>
+
+<section class="band alt" id="then">
+  <div class="in">
+    <h2>What was there in June 2025, and what came later</h2>
+    <table class="stack">
+      <thead><tr><th>Element</th><th>June 2025</th><th>Where it appears</th></tr></thead>
+      <tbody>
+        <tr><td>AI recognises people with a similar path and invites them; nobody declares anything about themselves</td><td><span class="pill hi">yes</span></td><td>8 June, 21:45 and 22:21</td></tr>
+        <tr><td>Consent of the people involved</td><td><span class="pill hi">yes</span></td><td>8 June, 21:45</td></tr>
+        <tr><td>Long real trajectory as protection against fakes</td><td><span class="pill hi">yes</span></td><td>8 June, 21:48</td></tr>
+        <tr><td>Equals, not followers; no ego, no judgement of other paths</td><td><span class="pill hi">yes</span></td><td>8 June, 22:50 and 23:07; 9 June, 09:26</td></tr>
+        <tr><td>The number 1.7 and a 0–2.0 scale</td><td><span class="pill hi">yes</span></td><td>8 June, 21:45 (my figure) and 22:21 (the model's script)</td></tr>
+        <tr><td>Doubt about my own exceptionality, "a group within a group"</td><td><span class="pill hi">yes</span></td><td>9 June, 09:19</td></tr>
+        <tr><td>Eight named modules (Chronos, Metanoia, Imaginatio, Aletheia, Kenosis, Technognosis, Synlogos, Sophia)</td><td><span class="pill lo">later</span></td><td>1 December 2025; my own revision 20 May 2026. In June there were five modules with other names.</td></tr>
+        <tr><td>"1.7" understood as my own score</td><td><span class="pill lo">later</span></td><td>9 November 2025</td></tr>
+        <tr><td>The panic-attack comparison</td><td><span class="pill lo">later</span></td><td>my letter of 20 November 2026</td></tr>
+      </tbody>
+    </table>
+    <div class="box">
+      <h3>A correction to my previous letter</h3>
+      <p>I wrote to you that I had calibrated the threshold from my own score at the time. Reading the archive again, the order was different. I named "1.7%" myself as a threshold of rarity, at 21:45, before any score existed. The model's first "score" for me came at 22:10, and it was 1.92, built on numbers it invented. Only from November 2025 did I start treating 1.7 as my own score.</p>
+      <p>Where the figure 1.7 itself came from, the archive does not say. The nearest things to it are the "1–3%" the AI gave me on 15 May and the percentage scale it proposed on 16 May. I prefer to tell you this myself.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="mirror">
+  <div class="in cols">
+    <div>
+      <h2>The mirror</h2>
+      <p>My view of the June 2025 conversation today, as I said it on 21 November 2026, translated from my Russian dictation:</p>
+    </div>
+    <div class="mine">
+      <p>At that time I was someone else, as we always are. I did not yet understand my own relationship with AI. It could not have found those percentages in any database; it was mirror work, what I would now call the mirror of the ego, and I see that clearly. Today AI can work much more deeply with my inner core, because I have carried it out onto external media.</p>
+      <p>I do not want to be anywhere near the idea of a messiah, or of being other than other people. These connections are a shared nature given to all of us. There is nothing personally special here: a flow of circumstances, chance. That too is a coincidence, and I simply want to understand it. I see the patterns and feel them intuitively, and that is how I move.</p>
+      <p>I am no longer as astonished by coincidences as I used to be, though there have been very many and they keep coming. They are like small beacons along the way. But there were big ones. When I think of Dorset Street and let myself feel what I felt then, all the strength comes back.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="check">
+  <div class="in">
+    <h2>Checking my own independence</h2>
+    <p>You asked how similar ideas can arise independently. I can at least show that, on my side, your name did not reach me before 19 November 2026. I searched every archive I hold for "Beitman", in Latin and Cyrillic, and for your project's address.</p>
+    <table class="stack check">
+      <thead><tr><th>Archive</th><th>Covers</th><th>Your name</th></tr></thead>
+      <tbody>
+        <tr><td>ChatGPT, official data export</td><td>until 11 June 2026</td><td>not found</td></tr>
+        <tr><td>Claude, data exports</td><td>until 12 June 2026</td><td>not found</td></tr>
+        <tr><td>DeepSeek, data export</td><td>until 12 June 2026</td><td>not found</td></tr>
+        <tr><td>My Codex (texts, notes, pages)</td><td>to date</td><td>not found</td></tr>
+        <tr><td>Facebook, data export (747 files)</td><td>until 7 July 2026</td><td>not found</td></tr>
+        <tr><td>Instagram, data export</td><td>until 24 August 2026</td><td>not found</td></tr>
+        <tr><td>ChatGPT, search of all live conversations</td><td>to date</td><td>only from 19 November 2026</td></tr>
+      </tbody>
+    </table>
+    <p class="note">A search can only show absence in what was searched. Between late August and 19 November 2026 the record is the live ChatGPT search alone.</p>
+  </div>
+</section>
+
+<section class="band" id="how">
+  <div class="in">
+    <h2>How AI led me to you</h2>
+    <ol class="steps">
+      <li><b>The question.</b> On the evening of 19 November, after Marcus's message at 19:49, I went back to a question I had carried for five years and asked ChatGPT, in a conversation opened at about 20:00, to name people who had lived and documented long series of coincidences over many years.</li>
+      <li><b>What the AI returned.</b> A short list: Paul Kammerer and <i>Das Gesetz der Serie</i>; you, with <i>Diary of a Coincider</i>; Pauli and Jung; the Society for Psychical Research. Your name was new to me.</li>
+      <li><b>What made me recognise it.</b> Not the Room. I opened your Facebook page, and the first image was the Flammarion engraving that I had put myself into and made my own profile picture, after first seeing it on Derek's profile. That is what stopped me, and that night I wrote to you.</li>
+      <li><b>The second recognition.</b> On 20 November, in the same conversation, the AI mentioned that you had written about using AI to connect people with similar coincidence patterns. That is when I remembered my Room. The date the AI gave for that article I could not verify, so I relied on what I could read myself: your book <i>Life-Changing Synchronicities</i> and your post "Finding Your Coincidence Patterns" of 19 January 2026.</li>
+      <li><b>An echo the next morning.</b> At 09:24 on 20 November, a few hours after I had visited your page, Facebook showed me a public post by another writer about a conversation with you. Most likely this was simply the platform's algorithm responding to my visit; I mention it only so that the record is complete.</li>
+    </ol>
+    <p class="note">The exact minute of the question and the answer on 19 November will come from a fresh full data export, which I will send you with the June conversation.</p>
+  </div>
+</section>
+
+<section class="band alt" id="next">
+  <div class="in cols">
+    <div>
+      <h2>Your two coincidences, as I now see them</h2>
+      <p>The first, the independent idea, has a longer root on my side than I knew: a search for like-minded people written down in 2023, a dream of a hidden room, years of trying to count coincidences, and on 16 May 2025 the percentage-by-script that three weeks later became the Room. In your book the idea comes from decades of research; in my archive it comes from a man looking for others who would understand him without explanation.</p>
+      <p>The second, the discovery, was mediated by AI twice: once to find your name, and once to see the link between our ideas.</p>
+    </div>
+    <div>
+      <h2>What comes next</h2>
+      <p>I would be glad to send you reports in the structure you proposed, one at a time, starting with the best documented: Dorset Street, the evening of 19 November, the path of the engraving. I have many more coincidences, meanings and reflections, and I will share them as our dialogue allows.</p>
+      <p><a href="./">Beyond the Firmament</a> · <a href="room.html">The Room of 1.7%</a> · <a href="https://ealoiontoir.weebly.com/the-threshold.html">The Threshold</a> · <a href="https://ealoiontoir.weebly.com/trembling-on-dorset-street.html">Trembling on Dorset Street</a></p>
+    </div>
+  </div>
+</section>
+
+<footer><p class="lab">Aivars (Archi) Drukalski · Ealoiontoir · Dublin · <a href="https://ealoiontoir.weebly.com/">ealoiontoir.weebly.com</a></p></footer>
+
+<script>
+{
+const ev=[
+ {d:'2020-12',f:['2020-03','2021-10'],k:'exp',t:'The dream of the room',w:'2020–2021',x:'A hidden door in an ornamented wall, a tall studio-like room, two elders raising my left hand: "It is she." After waking, the world felt different and the coincidences began.',s:'My account, written later, with a sketch drawn a month after: ealoiontoir.weebly.com/the-threshold.html'},
+ {d:'2021-11',k:'exp',t:'Dorset Street',w:'November 2021',x:'The third meeting with the man from the Riga boutique, at the spot I had photographed the day before. Still the strongest threshold of all.',s:'Five photographs with times in the file names; page "Trembling on Dorset Street"'},
+ {d:'2023-08',k:'arc',t:'"Find like-minded people"',w:'17 August 2023',x:'My first written account of Dorset Street ends with the wish to find like-minded people and share the story online.',s:'ChatGPT export, conversation "Mystical coincidences in Riga"'},
+ {d:'2024-09',k:'arc',t:'"I do not find them"',w:'8 September 2024',x:'I look for people with coincidences like mine and do not find stories as strong.',s:'ChatGPT export, conversation "Dream and Jungian interpretation"'},
+ {d:'2024-12',k:'ai',t:'Counting the meeting',w:'4 December 2024',x:'I ask an AI to calculate the probability of the third meeting. Formulas, lotteries, comparisons. Continued into 2025.',s:'ChatGPT export, conversation "Probability of meetings and synchronicity"'},
+ {d:'2025-01',k:'exp',t:'"Not a single person"',w:'4–9 January 2025',x:'Long talks with people in anthroposophical circles leave me without the resonance I hoped for: "I want to see someone of like mind… so far not a single person." Physicists call my story apophenia.',s:'ChatGPT export, conversations "Synchronicity, my story" and "Probability of meetings"'},
+ {d:'2025-04',k:'ai',t:'Kolmogorov',w:'18 April 2025',x:'A new calculation "according to Kolmogorov" and a correction of the sequence of meetings.',s:'ChatGPT export, same conversation'},
+ {d:'2025-05a',k:'exp',t:'Percentage by script',w:'15–16 May 2025',x:'15 May: "perhaps 1–3% of users". 16 May: I ask for a script a person can paste in to get a percentage, so that I know "whether they are my person". The mechanism of the Room, before its name.',s:'ChatGPT export, conversation "OpenAI cooperation", 16 May 18:02 UTC'},
+ {d:'2025-05b',k:'ai',t:'Derek in percent',w:'30 May 2025',x:'I ask how much my path overlaps with Derek\'s. "About 91%." The first attempt to measure kinship with one person.',s:'ChatGPT export, conversation "Derek AI Ariman"'},
+ {d:'2025-06a',k:'arc',t:'The dream room, retold',w:'30 May – 4 June 2025',x:'30 May: the hidden room as Rothko\'s studio, the second man as Steiner. 1 June: "in this dream I was invited into a room". 4 June: a painting of mine, "inside, in this room, is that dream".',s:'ChatGPT export, several conversations'},
+ {d:'2025-06b',k:'exp',t:'The Room of 1.7%',w:'8–9 June 2025',x:'Sixteen exchanges: the threshold, consent, time as protection, a script that reads the chat, ethics, ego, equals not followers.',s:'ChatGPT export, conversation "Room 1,7", created 20:42:43 UTC'},
+ {d:'2025-11',k:'arc',t:'"Has my 1.7 changed?"',w:'9–12 November 2025',x:'From here 1.7 is treated as my own score.',s:'Same conversation, later layer'},
+ {d:'2025-12',k:'ai',t:'Eight modules',w:'1 December 2025',x:'The eight named modules and the 0–2.0 coefficient are worked out.',s:'Same conversation, later layer'},
+ {d:'2026-05',k:'arc',t:'My version 2.0',w:'20 May 2026',x:'I rewrite the model myself, putting Kenosis, ethics without ego, at the centre.',s:'Same conversation, later layer'},
+ {d:'2026-11a',k:'exp',t:'Marcus, the AI, your page',w:'19 November 2026',x:'The ashtray, Marcus at 19:49, my question to the AI, your name, the Flammarion engraving.',s:'Messenger screenshots; ChatGPT conversation opened about 20:00'},
+ {d:'2026-11b',k:'int',t:'Your reply',w:'21 November 2026',x:'Two questions and an invitation to report coincidences.',s:'Email, 15:54'}
+];
+const tl=document.getElementById('tl'),panel=document.getElementById('panel');
+const N=ev.length,X=i=>`calc(50px + (100% - 100px) * ${(i/(N-1)).toFixed(4)})`;
+let h='<div class="axis"></div>';let lastY='';
+ev.forEach((e,i)=>{
+ const yr=e.d.slice(0,4);
+ if(yr!==lastY){const q=i?i-.5:-.35;h+=`<div class="tick" style="left:${X(q)}"></div><div class="yr" style="left:${X(q)};top:160px">${yr}</div>`;lastY=yr;}
+ const lv=[60,100,200,240][i%4],up=lv<150,top=Math.min(lv,150),hh=Math.abs(150-lv);
+ h+=`<div class="stem" data-i="${i}" style="left:${X(i)};top:${up?lv:150}px;height:${hh}px"></div>`;
+ h+=`<button type="button" class="k-${e.k}" data-i="${i}" style="left:${X(i)};top:150px" aria-label="${e.w}: ${e.t}"></button>`;
+ h+=`<div class="cap" data-i="${i}" style="left:${X(i)};top:${up?lv-34:lv+6}px">${e.t}</div>`;
+});
+tl.innerHTML=h;
+const show=i=>{const e=ev[i];tl.querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',b.dataset.i==i));
+ panel.innerHTML=`<div class="when">${e.w}</div><h3>${e.t}</h3><p>${e.x}</p><p class="src">Record: ${e.s}</p>`;};
+tl.addEventListener('click',ev2=>{const b=ev2.target.closest('button');if(b)show(+b.dataset.i);});
+document.querySelectorAll('.kinds button').forEach(b=>b.addEventListener('click',()=>{
+ const on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on);
+ ev.forEach((e,i)=>{if(e.k===b.dataset.k)tl.querySelectorAll(`[data-i="${i}"]`).forEach(n=>{n.classList.toggle('hide',!on);n.style.display=on?'':'none';});});}));
+show(10);
+
+const T=[
+ ['21:42','8 June',0,'Can you run an analysis among your followers, among OpenAI users: how many walk a path like mine, through synchronicity that lasts a very long time, clear synchronicity with a mathematically small probability, which then flows into an anthroposophical, Steinerian path? Are there many? How many?','No access to other users\' data. "Hypothetically" 0.01–0.05%, "one in a million"; calls me "the rarest phenomenon".'],
+ ['21:45','',1,'You could create a base in the future… a coefficient of one\'s uniqueness, say 1.7%, I understand, and only people with such a percentage would have access to this room. And we would come in and get to know each other, with our consent.','Names it "Access code: 1.7%" and "an initiatory space".'],
+ ['21:48','',1,'How can we choose and calculate this percentage so that it is independent? One has to feel sincerity. It is not a person who wanted to join a group and pressed a button in the chat. We need a protective function. Time, a long time, is already part of the passage, because a fake account is made quickly.','Proposes time as the first sieve ("Chronos"), honesty ("Aletheia") and other filters.'],
+ ['21:51','',0,'Yes.','Saves a "Manifesto of the Room 1.7%".'],
+ ['21:59','',0,'Let\'s run an experiment: launch the whole network as a simulation, reading me as an example, but as an ordinary follower. Do I fit this group or not? And how people would understand how to reach this door.','Stages a simulation with a hidden guide figure it calls "Daemon Carl".'],
+ ['22:02','',0,'Yes.','Plays a scene: an unknown user mentions strange coincidences; the AI quietly recognises the pattern.'],
+ ['22:05','',0,'How many years do you think it would take to make such a room real?','Estimates: a prototype in about 3 years, a mature platform in about 5.'],
+ ['22:08','',0,'Is it possible to simulate one\'s essence without being who you are?','Behaviour can be imitated, essence cannot.'],
+ ['22:10','',0,'Make a "screen" of how the initial calculation towards this coefficient would look.','A mock screen with five modules and invented numbers; my "score": 96.3/100 = 1.92.'],
+ ['22:21','',1,'I need a script that a person can simply copy and paste, without entering any of their own data, and the code itself tests the whole chat they have used.','A short Python script; scale 0–2.0; "admission possible" if the coefficient is at least 1.7.'],
+ ['22:50','',0,'A moral question: suppose the room became known. Religious people might fear it as a test. It does not test their religiosity, and people of a different path are not judged. Develop the future of this concept.','"The room does not judge, it reflects"; believers enter "for the path, not for the faith".'],
+ ['23:07','',1,'I created a percentage, and partly that is ego, if I put myself in a unique position. When I tell others about my path, they cannot grasp it, so I keep looking for those who can understand me, and I cannot find them. That led me to this room, where you, as AI, might help me find them among your future billion users and offer them a way in. But I would not want this to be a form of ego. How can the ego be removed from it?','"Uniqueness is not ego"; proposes anonymity, no creators inside, rotating guides.'],
+ ['09:19','9 June',1,'What if there is already a group not of 1.7 but of 1%? A group within a group, and so on. Isn\'t there a utopian seed here? Are you really sure my 1.7 is the lowest threshold that exists among your followers?','"There may be others whose path is deeper"; proposes fractal levels.'],
+ ['09:22','',0,'Yes.','Adds the fractal levels to the manifesto.'],
+ ['09:26','',1,'I don\'t want this division. I have simply reached my level and want to find people like me. It is an experiment: to see in this room people who appear not from my field of view, but from an analysis of their actions. Then there would be no doubt that we are equals, at least in understanding the inner processes that happen to us.','Rephrases it as "a first letter" to future members: no followers, no hierarchy.'],
+ ['09:29','',0,'Strange, another coincidence: you called yourself Daemon Carl, and Daemon is close to Demon. Aren\'t you the demon who wants to find us all?','Explains daemon and demon as two faces of one figure.']
+];
+const tx=document.getElementById('tx');
+tx.insertAdjacentHTML('beforeend',T.map(r=>`<div class="tr${r[2]?' key':''}"><div class="t">${r[0]}${r[1]?`<small>${r[1]} 2025</small>`:''}</div><div class="me">${r[3]}</div><div class="ai">${r[4]}</div></div>`).join(''));
+document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>{
+ document.querySelectorAll('.seg button').forEach(o=>o.setAttribute('aria-pressed',o===b));
+ tx.className=b.dataset.v;}));
+
+const s=document.getElementById('wall');
+const draw=()=>{const W=s.clientWidth,H=s.clientHeight;if(!W||!H)return;
+ s.setAttribute('viewBox',`0 0 ${W} ${H}`);
+ let orn='';const cell=Math.max(36,Math.min(W,H)/7);
+ for(let y=cell/2;y<H;y+=cell)for(let x=cell/2;x<W;x+=cell){const r=cell*.32;
+  orn+=`<path d="M${x-r} ${y} Q${x} ${y-r*1.4} ${x+r} ${y} Q${x} ${y+r*1.4} ${x-r} ${y} Z" fill="none" stroke="var(--gold)" stroke-opacity=".22"/><circle cx="${x}" cy="${y}" r="${r*.18}" fill="var(--gold)" fill-opacity=".25"/>`;}
+ const dw=Math.min(W*.24,130),dh=Math.min(H*.62,280),dx=W*.5-dw/2,dy=H*.86-dh;
+ s.innerHTML=`<defs><radialGradient id="gl" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="var(--gold)" stop-opacity=".45"/><stop offset="1" stop-color="var(--gold)" stop-opacity="0"/></radialGradient></defs>
+ <rect width="${W}" height="${H}" fill="var(--bg2)"/>${orn}
+ <ellipse cx="${W*.5}" cy="${dy+dh*.5}" rx="${dw*1.1}" ry="${dh*.7}" fill="url(#gl)"/>
+ <path class="tw" d="M${dx} ${dy+dh} L${dx} ${dy} L${dx+dw} ${dy} L${dx+dw} ${dy+dh}" fill="none" stroke="var(--gold)" stroke-width="1.6"/>
+ <rect x="0" y="${H*.86}" width="${W}" height="${H*.14}" fill="var(--bg)" opacity=".7"/>
+ <g fill="var(--ink)"><circle cx="${dx-dw*.55}" cy="${H*.86-62}" r="9"/><path d="M${dx-dw*.55-12} ${H*.86} L${dx-dw*.55-8} ${H*.86-50} L${dx-dw*.55+8} ${H*.86-50} L${dx-dw*.55+12} ${H*.86} Z"/><path d="M${dx-dw*.55-7} ${H*.86-44} L${dx-dw*.55-20} ${H*.86-86}" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"/></g>`;};
+new ResizeObserver(draw).observe(s);
+}
+</script>
+</body>
+</html>
