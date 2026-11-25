@@ -2,7 +2,7 @@
 (function(){
   var s=document.currentScript,base="https://ealoiontoir.github.io/philosophical-essays/synchronicity-serendipity/";
   var host=document.createElement("div");host.id="sxs-host";
-  host.style.cssText="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;background:#070a17;min-height:100vh";
+  host.style.cssText="width:100%;position:relative;background:#070a17;min-height:100vh;overflow:hidden";
   s.parentNode.insertBefore(host,s);
   var v=Math.floor(Date.now()/600000);
   fetch(base+"weebly_embed.html?v="+v).then(function(r){return r.text()}).then(function(h){
