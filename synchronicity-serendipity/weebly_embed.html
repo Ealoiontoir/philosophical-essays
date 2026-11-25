@@ -1,0 +1,396 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+#sxs{--bg:#070a17;--bg2:#0d1328;--bg3:#141b36;--ink:#ece6d6;--ink2:#b9b3a6;--mute:#8a8778;--line:rgba(216,180,106,.22);--gold:#d8b46a;--ember:#e0875b;--violet:#9d92f0;--teal:#45c3a6;--amber:#e3a447;
+ background:var(--bg);color:var(--ink);font:400 19px/1.6 "Cormorant Garamond",Georgia,serif;position:relative;overflow:hidden;-webkit-font-smoothing:antialiased}
+#sxs *{box-sizing:border-box}
+#sxs a{color:var(--gold)}
+#sxs h1,#sxs h2,#sxs h3{font-family:Cinzel,serif;font-weight:500;letter-spacing:.02em;margin:0 0 .5em;color:var(--ink)}
+#sxs .sans{font-family:Inter,system-ui,sans-serif}
+#sxs button{font:500 14px Inter,system-ui,sans-serif;color:var(--ink);background:rgba(13,19,40,.72);border:1px solid var(--line);border-radius:999px;padding:10px 16px;cursor:pointer;min-height:44px;backdrop-filter:blur(6px)}
+#sxs button:hover{border-color:var(--gold)}
+#sxs button:focus-visible,#sxs a:focus-visible,#sxs canvas:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+#sxs button[aria-pressed=true]{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+/* stage */
+#sxs .stage{position:relative;height:100vh;min-height:620px;max-height:980px}
+#sxs canvas#sx-cv{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#sxs canvas#sx-cv.drag{cursor:grabbing}
+#sxs .hero{position:absolute;left:0;right:0;top:0;padding:38px 24px 0;text-align:center;pointer-events:none;transition:opacity .8s}
+#sxs .hero .kick{font:500 12px Inter,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--mute)}
+#sxs .hero h1{font-size:clamp(34px,6vw,64px);margin:.25em 0 .15em;text-shadow:0 0 40px rgba(216,180,106,.25)}
+#sxs .hero p{max-width:640px;margin:0 auto;color:var(--ink2);font-size:clamp(17px,2.2vw,21px)}
+#sxs .stage.engaged .hero{opacity:.0}
+#sxs .ctrl{position:absolute;left:0;right:0;bottom:18px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:0 12px}
+#sxs .chips{position:absolute;left:14px;top:14px;display:flex;flex-wrap:wrap;gap:6px;max-width:46%;opacity:0;transition:opacity .6s}
+#sxs .stage.engaged .chips{opacity:1}
+#sxs .chips button{font-size:12px;padding:7px 11px;min-height:36px}
+#sxs .chips .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
+#sxs .tip{position:absolute;pointer-events:none;font:500 13px Inter,sans-serif;background:rgba(7,10,23,.88);border:1px solid var(--line);padding:6px 10px;border-radius:6px;color:var(--ink);transform:translate(-50%,-140%);white-space:nowrap;display:none}
+#sxs .tl{position:absolute;left:50%;transform:translateX(-50%);bottom:78px;width:min(900px,92%);height:34px;display:none}
+#sxs .stage.journey .tl{display:block}
+#sxs .tl .bar{position:absolute;left:0;right:0;top:16px;height:1px;background:var(--line)}
+#sxs .tl .fill{position:absolute;left:0;top:16px;height:1px;background:var(--gold);transition:width .8s}
+#sxs .tl button{position:absolute;top:8px;width:16px;height:16px;min-height:0;padding:0;border-radius:50%;transform:translateX(-50%)}
+#sxs .tl button.on{background:var(--gold)}
+#sxs .tl span{position:absolute;top:-8px;font:500 11px Inter,sans-serif;color:var(--mute);transform:translateX(-50%)}
+#sxs .hint{position:absolute;right:16px;top:16px;font:500 12px Inter,sans-serif;color:var(--mute);text-align:right;max-width:240px;opacity:0;transition:opacity .6s}
+#sxs .stage.engaged .hint{opacity:1}
+/* drawer */
+#sxs .drawer{position:fixed;top:0;right:0;height:100%;width:min(520px,100%);background:linear-gradient(180deg,rgba(13,19,40,.97),rgba(7,10,23,.98));border-left:1px solid var(--line);z-index:9999;transform:translateX(105%);transition:transform .55s cubic-bezier(.2,.8,.2,1);overflow-y:auto;padding:28px 28px 60px;box-shadow:-20px 0 60px rgba(0,0,0,.5)}
+#sxs .drawer.open{transform:none}
+#sxs .drawer .top{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:14px}
+#sxs .drawer .when{font:600 13px Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+#sxs .drawer h2{font-size:28px;line-height:1.2}
+#sxs .pills{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 14px}
+#sxs .pill{font:500 12px Inter,sans-serif;border:1px solid var(--line);border-radius:999px;padding:4px 10px;color:var(--ink2)}
+#sxs .pill.o-dream{border-color:var(--violet);color:var(--violet)}#sxs .pill.o-inner{border-color:var(--amber);color:var(--amber)}#sxs .pill.o-outside{border-color:var(--teal);color:var(--teal)}
+#sxs .gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin:14px 0}
+#sxs .gal figure{margin:0}
+#sxs .gal img{width:100%;height:170px;object-fit:cover;border-radius:4px;border:1px solid var(--line);cursor:zoom-in;display:block;background:var(--bg3)}
+#sxs .gal figcaption{font:400 12px/1.4 Inter,sans-serif;color:var(--mute);margin-top:4px}
+#sxs .steps{list-style:none;margin:16px 0;padding:0;position:relative}
+#sxs .steps:before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:1px;background:var(--line)}
+#sxs .steps li{position:relative;padding:0 0 12px 28px;font:400 15px/1.5 Inter,sans-serif;color:var(--ink2)}
+#sxs .steps li:before{content:"";position:absolute;left:2px;top:6px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:1px solid var(--gold)}
+#sxs .steps li.lit:before{background:var(--gold)}
+#sxs .note{font:400 14px/1.55 Inter,sans-serif;color:var(--mute);border-left:2px solid var(--ember);padding:2px 0 2px 12px;margin:14px 0}
+#sxs .rel{font:500 13px Inter,sans-serif;color:var(--mute);margin-top:18px}
+#sxs .rel button{font-size:12px;padding:6px 10px;min-height:34px;margin:4px 4px 0 0}
+#sxs .nav2{display:flex;gap:8px;margin-top:22px}
+/* lightbox */
+#sxs .lb{position:fixed;inset:0;background:rgba(3,5,12,.94);z-index:10000;display:none;align-items:center;justify-content:center;flex-direction:column;padding:20px}
+#sxs .lb.open{display:flex}
+#sxs .lb img{max-width:94vw;max-height:84vh;border:1px solid var(--line)}
+#sxs .lb p{font:400 14px Inter,sans-serif;color:var(--ink2);margin-top:10px;text-align:center}
+/* sections */
+#sxs .sec{max-width:1080px;margin:0 auto;padding:72px 24px}
+#sxs .sec.narrow{max-width:760px}
+#sxs .sec h2{font-size:clamp(26px,3.6vw,38px)}
+#sxs .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin:26px 0}
+#sxs .stats div{background:var(--bg2);padding:18px}
+#sxs .stats b{display:block;font:500 34px Cinzel,serif;color:var(--gold)}
+#sxs .stats span{font:400 13px/1.4 Inter,sans-serif;color:var(--ink2)}
+#sxs .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;margin-top:26px}
+#sxs .card{background:var(--bg2);border:1px solid var(--line);border-radius:6px;overflow:hidden;cursor:pointer;text-align:left;padding:0;display:flex;flex-direction:column;transition:transform .35s,border-color .35s;color:var(--ink);font:inherit;min-height:0}
+#sxs .card:hover{transform:translateY(-4px);border-color:var(--gold)}
+#sxs .card .ph{height:150px;background:radial-gradient(circle at 50% 60%,rgba(216,180,106,.25),transparent 60%),var(--bg3);background-size:cover;background-position:center;position:relative}
+#sxs .card .ph i{position:absolute;left:12px;top:12px;width:12px;height:12px;border-radius:50%;box-shadow:0 0 14px currentColor}
+#sxs .card .bd{padding:14px 16px 16px}
+#sxs .card .d{font:600 11px Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+#sxs .card h3{font:500 20px/1.25 "Cormorant Garamond",serif;margin:6px 0 6px;letter-spacing:0}
+#sxs .card p{font:400 13px/1.5 Inter,sans-serif;color:var(--ink2);margin:0}
+#sxs .types{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:22px}
+#sxs .types div{border:1px solid var(--line);border-radius:6px;padding:18px;background:var(--bg2)}
+#sxs .types h3{font-size:17px}
+#sxs .types p{font:400 14px/1.55 Inter,sans-serif;color:var(--ink2);margin:0}
+#sxs .legend{display:flex;flex-wrap:wrap;gap:16px;font:400 13px Inter,sans-serif;color:var(--ink2);margin-top:12px}
+#sxs .legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+#sxs .priv{font:400 14px/1.6 Inter,sans-serif;color:var(--ink2)}
+#sxs footer{border-top:1px solid var(--line);padding:30px 24px 50px;text-align:center;font:400 13px Inter,sans-serif;color:var(--mute)}
+@media(max-width:700px){#sxs .chips{max-width:none;right:10px;left:10px;top:12px;justify-content:center}#sxs .hint{display:none}#sxs .tl{bottom:120px}#sxs .stage.journey .chips{display:none}
+ #sxs .drawer{top:auto;bottom:0;height:64%;width:100%;transform:translateY(105%);border-left:0;border-top:1px solid var(--line);border-radius:14px 14px 0 0}#sxs .drawer.open{transform:none}}
+@media(prefers-reduced-motion:reduce){#sxs .drawer,#sxs .card{transition:none}}
+</style>
+
+<div id="sxs">
+ <section class="stage" id="sx-stage" aria-label="Interactive field of coincidences">
+  <canvas id="sx-cv" tabindex="0" aria-label="A rotating field of coincidence chains. Use the buttons below or the list of stories further down to read each one."></canvas>
+  <div class="hero">
+   <div class="kick">Spirit of Time · Codex · Dublin · 2019 to 2026</div>
+   <h1>Synchronicity &amp; Serendipity</h1>
+   <p>Twenty-one documented chains of coincidence, drawn as one moving field. Dreams, paintings, a street corner in Dublin and the people through whom the chains passed. Time winds outwards from the centre.</p>
+  </div>
+  <div class="chips" id="sx-chips" role="group" aria-label="Filter by type"></div>
+  <div class="hint">Drag to turn the field · scroll to zoom · click a star to read its story</div>
+  <div class="tip" id="sx-tip"></div>
+  <div class="tl" id="sx-tl" aria-hidden="true"><div class="bar"></div><div class="fill" id="sx-fill"></div></div>
+  <div class="ctrl">
+   <button type="button" id="sx-enter">Enter the field</button>
+   <button type="button" id="sx-play" aria-pressed="false">▶ Play the journey</button>
+   <button type="button" id="sx-reset">Reset view</button>
+  </div>
+ </section>
+
+ <section class="sec">
+  <h2>One field, many chains</h2>
+  <p>Each star is one chain: several coincidences joined by one meaning within a short span of time. Its colour shows where the chain began, in a dream, in a waking image or thought, or in an event outside. Its size and the small moons around it show how many linked coincidences it holds. The diamonds are images that keep returning, the squares are places, the circles are people and mediators. Golden threads mark a direct continuation, where one chain leads straight into the next.</p>
+  <div class="legend"><span><i style="background:var(--violet)"></i>Began in a dream or half-sleep</span><span><i style="background:var(--amber)"></i>Began as a waking image or thought</span><span><i style="background:var(--teal)"></i>Began as an outside event</span></div>
+  <div class="stats" id="sx-stats"></div>
+ </section>
+
+ <section class="sec" id="sx-stories">
+  <h2>The stories</h2>
+  <p>In order of time. Each opens with its documents and images.</p>
+  <div class="cards" id="sx-cards"></div>
+ </section>
+
+ <section class="sec">
+  <h2>The words used here</h2>
+  <p>The types follow the psychiatrist and coincidence researcher Bernard Beitman, Connecting with Coincidence (2016), Meaningful Coincidences (2022) and Life-Changing Synchronicities (2025). One chain often carries several types at once.</p>
+  <div class="types" id="sx-types"></div>
+ </section>
+
+ <section class="sec narrow">
+  <h2>Sequilism</h2>
+  <p>Sequilism is the working term for what the field shows as a whole. Unlike events arrange themselves over time into one sequence of meaning. Each new link continues the meaning of the one before, though it comes from another part of life: a dream, a painting, a street, a book, a person. From inside it is experienced as being led. It differs from seriality, which rests on the repetition of the same thing, a name or a number, and from a single synchronicity, which joins one inner state to one outer event. Sequilism describes the chain of such moments and how one leads to the next.</p>
+  <h2 style="margin-top:44px">What the field does not prove</h2>
+  <p>The field counts what was remembered and written down. It cannot show the days when nothing happened, or images that led nowhere. Several links passed through people who share the same interests, or through AI systems that answer what they are asked; they are marked as mediated, because they are less independent than the rest. The strongest links are those where my own part was smallest: the man from Riga standing on the spot photographed the day before, a death on Warhol's date, the duck on the roof. A log of misses, kept from now on, is the only honest answer to the question of selection.</p>
+  <h2 style="margin-top:44px">Privacy</h2>
+  <p class="priv">Private people appear by first name only, and some only by their relation to me. There are no photographs of private people's faces: the images are my own paintings, drawings and objects, film stills made with AI, and public pages. Health, faith and other sensitive details of other people are left out. Scholars, artists and public figures are named in full where their public work is part of the story. If you appear here and would like something changed or removed, write to me and I will do it.</p>
+ </section>
+
+ <footer>Aivars (Archi) Drukalski · Ealoiontoir · Dublin · <a href="https://ealoiontoir.weebly.com/">ealoiontoir.weebly.com</a> · <a href="https://ealoiontoir.github.io/philosophical-essays/">All essays</a></footer>
+
+ <aside class="drawer" id="sx-drawer" aria-label="Story" aria-hidden="true">
+  <div class="top"><span class="when" id="sx-when"></span><button type="button" id="sx-close" aria-label="Close story">Close ✕</button></div>
+  <div id="sx-body" aria-live="polite"></div>
+  <div class="nav2"><button type="button" id="sx-prev">← Earlier</button><button type="button" id="sx-next">Later →</button></div>
+ </aside>
+ <div class="lb" id="sx-lb" role="dialog" aria-label="Image"><img alt="" id="sx-lbimg"><p id="sx-lbcap"></p><button type="button" id="sx-lbclose">Close ✕</button></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+const IMG="https://ealoiontoir.github.io/philosophical-essays/synchronicity-serendipity/img/";
+const ESS="https://ealoiontoir.github.io/philosophical-essays/";
+const WEB="https://ealoiontoir.weebly.com/";
+const ORIGIN={dream:{label:"Dream or half-sleep",c:"#9d92f0"},inner:{label:"Waking image or thought",c:"#e3a447"},outside:{label:"Outside event",c:"#45c3a6"}};
+const TYPES={
+ sync:{label:"Synchronicity",def:"An inner state, an image, a thought or a dream, meets an outer event that matches it in meaning, with no visible cause between them."},
+ sern:{label:"Serendipity",def:"Something needed or useful is found by chance, usually while looking for something else, or not looking at all."},
+ ser:{label:"Seriality",def:"The same name, number, person or image returns again and again in different settings. Paul Kammerer's term, which Jung built on."},
+ emp:{label:"Empathic resonance",def:"My own term for feeling from inside what a stranger is carrying. It is close to Beitman's simulpathity, but not the same: simulpathity is the simultaneous distress of someone close, usually at a distance."}
+};
+const HUBS=[
+ {id:"dorset",kind:"place",label:"Dorset St × Blessington St",text:"A street corner in north Dublin. Photographed on 29 November 2021 before anything had happened there. The next morning the man from Riga stood on the same spot. The man who returned the wallet lives about 300 metres away. The elephant painting is set on this crossing."},
+ {id:"crossing",kind:"carrier",label:"The crossing",text:"A threshold motif that keeps returning: the Dorset Street corner, the elephant at the crossroads, the old friend stepping onto the road in front of the car in Latvia."},
+ {id:"flammarion",kind:"carrier",label:"Flammarion engraving",text:"The wanderer at the edge of the sky (first published 1888). Derek's profile picture since May 2020. It returned in an esoteric group at the end of the Böhme week in October 2025 and among the readers of the Ur-Phänomen circle in November 2025. On 31 May 2026 I put myself inside it, holding a phone, and made it my avatar. On 19 November 2026 it was the first image on Bernard Beitman's page. It is a common image in such circles, and I note that myself."},
+ {id:"redbook",kind:"carrier",label:"The Red Book · 1959",text:"Jung's Red Book and the year 1959: the epilogue page and the word 'possibility', the prayer book from Helen's papers of the same years, a bank slip behind a canvas with 1959 crossed out. Later the Red Book returns with Arvo Pärt and with the fish painting."},
+ {id:"room",kind:"carrier",label:"The hidden room",text:"The room of canvases behind a secret door in the dream of October 2021, Rothko's studio on stage in RED, and the Goetheanum found on a map while looking for the place of the dream."},
+ {id:"elephant",kind:"carrier",label:"The elephant",text:"The improbable thing in the room. A painting of an elephant at the crossing, a panic sketch in which elephants appeared, and the founder of The Elephant in the Room writing under it."},
+ {id:"canvas",kind:"carrier",label:"The canvas first",text:"A painting or drawing comes before the outer event and later becomes its frame."},
+ {id:"dreamc",kind:"carrier",label:"Dream as compass",text:"A dream or half-sleep starts the chain. The outer world answers weeks or months later, often at a place the dream did not name."},
+ {id:"world",kind:"carrier",label:"World thresholds",text:"Collective events that land on a private image: the pandemic and closed borders, a death on Warhol's date, the invasion of Ukraine two days later."},
+ {id:"derek",kind:"person",label:"Derek",text:"My long-time correspondent on Jung, synchronicity and anthroposophy. Links that passed through him are marked as mediated, since we read in the same tradition."},
+ {id:"ai",kind:"person",label:"AI dialogue",text:"Links that came through ChatGPT and other systems. An AI answers what it is asked, so these links are counted as mediated and less independent."},
+ {id:"john",kind:"person",label:"John",text:"A man from the park where I walk the dog every morning. We have met about four times in several years, always by chance."},
+ {id:"park",kind:"place",label:"The park",text:"The daily dog walk: the pull-up bars where John first spoke to me, and the spot where I found a rune and later met Tomasz."},
+ {id:"beitman",kind:"person",label:"Bernard Beitman",text:"Psychiatrist and coincidence researcher. Two separate chains arrive at his page in November 2026."}
+];
+const E=[
+ {id:"e1",title:"Barbed wire and the closed world",date:"2019 to 2020",t:2019.85,types:["sync"],mult:2,origin:"inner",place:0,body:0,med:"",hubs:["canvas","world"],
+  text:["In my first half-year at NCAD, where I arrived as a mature student, I kept drawing barbed wire without knowing why or where I would use it. One of my first projects was a globe wrapped in it, a sign of the defences people build around themselves.","About half a year later COVID-19 arrived and borders closed across the world, as if the drawings had sketched it in advance."],
+  steps:["Half a year of drawing barbed wire, without a reason","The globe wrapped in wire","2020: the pandemic, borders close"],imgs:[]},
+ {id:"e2",title:"Gerard in St Stephen's Green",date:"Autumn 2020",t:2020.8,types:["emp","sync"],mult:2,origin:"outside",place:0,body:1,med:"",hubs:[],
+  text:["A college project asked us to make portraits of people without homes and people living with addiction. I resisted it. Then, during the lockdown, I went to St Stephen's Green and met Gerard under a tree, an older man who introduced himself as a poet and musician. He agreed to be photographed and filmed and read me a short poem.","It was only afterwards, walking away towards Grafton Street, that I began to cry. It felt as if someone else's pain had come in and stayed, as if a thick skin had broken. I could not explain it then and cannot now. After Gerard the whole chain of coincidences began, and he became for me the figure of the sage who opened the way."],
+  steps:["Inner resistance to the project","Meeting Gerard, the poem, the portrait","Tears on the way home, felt from inside"],
+  imgs:[["gerard-figure.jpg","Cardboard figure made after Gerard"]],
+  link:[WEB+"gerard-the-returned-morning.html","Gerard: the returned morning"]},
+ {id:"e3",title:"The hidden door, the Goetheanum and Steiner",date:"October 2021 to 2022",t:2021.8,types:["sync","sern"],mult:5,origin:"dream",place:0,body:1,med:"my curator",hubs:["room","dreamc"],
+  text:["In a dream I sit at a bar somewhere in the Alps; the counter changes along its length from modern to Baroque. A grey-haired elder invites me to follow him. In a wall covered in Renaissance ornament there is no door, but he knows where it is and opens it. Behind it is a tall dark room with framed canvases, a small table and a lamp with bare wires. A second elder is there. Together they raise my left hand and turn with me around the room, saying: 'It is she.' When I woke, the world had changed its density.","About half a year later I saw RED, about Mark Rothko, and its studio was the room of the dream. My curator pointed me to Hilma af Klint, and from her the path led to Jung. Looking on a map for the place of the dream, I moved from Jung's house towards the Alps and within ten minutes found the Goetheanum, not knowing what it was. Hilma's link to Steiner I learned only later."],
+  steps:["October 2021: the dream of the hidden door","About half a year later: RED, the room again","The curator points to Hilma af Klint","Hilma leads to Jung","On the map: the Goetheanum, then Steiner"],
+  note:"In RED there are two figures; in the dream there were three. The mismatch suggests memory did not adjust the dream to fit the play. Who the elders were is my later reading: the first I came to associate with Jung, the second at different times with Rothko and with Steiner.",
+  imgs:[["hidden-door.jpg","The Hidden Door, painting after the dream"],["dream-sketch.jpg","Sketchbook drawing of the dream"]],
+  link:[WEB+"the-threshold.html","The Threshold: the dream in full"]},
+ {id:"e4",title:"The man from Riga and Dorset Street",date:"About 1996 to 30 November 2021",t:2021.92,types:["ser","sync","emp"],mult:5,origin:"outside",place:1,body:1,med:"",hubs:["dorset","crossing","dreamc"],
+  text:["About twenty-five years ago a man used to come into the boutique in Riga where I worked. He was never a friend and hardly a customer: five or six visits in eight years, always looking slowly, never buying, with a face that stayed in memory. A year or two before I started college I saw him in Dublin, in the basement menswear of Brown Thomas, behaving exactly the same way. A year later, with my daughter, I met him there again.","On the morning of 29 November 2021, driving to college, I stopped at the corner of Dorset Street and Blessington Street and, for no reason I could name, photographed a stranger sitting on the steps whose hands were shaking. I felt from inside how heavy it was for him. It was my only photograph that day.","The next morning, at about 10:25, on exactly that spot, stood the man from Riga, in the same kind of clothes, with a Brown Thomas bag, moving like a lag in a computer game. Goosebumps went through my whole body and my own hands trembled. I photographed him too. Later a former colleague from the Riga boutique looked at the photograph and recognised him."],
+  steps:["Riga: five or six visits in eight years","Dublin, Brown Thomas menswear: the first meeting","A year later: the same department again","October 2021: the dream of the hidden door","29 Nov, 10:39: the photograph of a stranger at the corner","30 Nov, about 10:25: the man from Riga on the same spot","A former colleague in Riga recognises him"],
+  note:"Two different men on two mornings: a stranger on 29 November, the man from Riga on 30 November. The times come from the photo files. No photograph of either man is shown here.",
+  imgs:[["dorset-poster.jpg","Still from the film, made with AI"],["work-1.jpg","Work I, from Three Works about Coincidence, oil"]],
+  link:[WEB+"trembling-on-dorset-street.html","Trembling on Dorset Street: the film and the essay"]},
+ {id:"e5",title:"Helen's papers and the returned wallet",date:"2022",t:2022.2,types:["sern","ser"],mult:3,origin:"outside",place:1,body:1,med:"",hubs:["dorset","redbook"],
+  text:["At a car-boot market outside Dublin I bought a bundle of papers that had belonged to a woman named Helen: letters, Aer Lingus tickets, bank statements and a prayer book, dated 1954 to 1959. I even drove to her old address; she had lived there fifty years before.","The same day I lost my wallet with several hundred euro in it. The Garda called: a man had handed it in. I met him near the Mater Hospital to thank him, a modest man named Osman, who did not want a reward. Only later did I realise that he lives about 300 metres round the corner from the spot of the Dorset Street photograph."],
+  steps:["Car-boot market: Helen's papers, 1954 to 1959","The wallet lost the same day","Osman hands it in to the Garda","Osman lives 300 m from the photo spot"],
+  note:"The sum is 700 euro in one of my accounts and 800 in another."},
+ {id:"e6",title:"Transformation / Threat: Drella, 22 February and the train",date:"January to February 2022",t:2022.1,types:["sync","ser"],mult:4,origin:"inner",place:0,body:1,med:"",hubs:["canvas","world"],
+  text:["For a project on Andy Warhol I picked two of my daughter's dolls for a painting, Draculaura and a Cinderella-like girl. Only while working did I learn that Warhol's nickname was Drella, made of exactly those two names.","I finished the painting around 20 February. On 22 February my stepfather died, on the date of Warhol's death. Under the final layer I had painted a Sapsan train rushing at the girls, taken from a Russian travel site, and I had painted it over with a feeling of a wave of blood. On 24 February the invasion of Ukraine began."],
+  steps:["Two dolls: Draculaura and Cinderella, Drella","22 February: a death on Warhol's date","The train painted over; 24 February","22.2.22 as a number series"],
+  imgs:[["transformation.jpg","Transformation / Threat, oil, 110 × 110 cm"],["sapsan-layer.jpg","The hidden first layer with the train"]],
+  link:[WEB+"transformation--threat.html","Transformation / Threat"]},
+ {id:"e7",title:"Rothko arriving from three sides",date:"2021 to 2022",t:2022.35,types:["ser","sync"],mult:3,origin:"dream",place:0,body:1,med:"my curator, a colleague",hubs:["room"],
+  text:["Rothko kept arriving from different sides. In my first year my curator spoke about him. Then the former colleague from Riga, the one who recognised the man in the photograph, told me, out of nowhere, to watch RED, the play about Rothko. Rothko did not much interest me, though he was born in Dvinsk, about fifty kilometres from my own birthplace in Latvia.","When I watched it, the set of Rothko's studio was the dark room of my dream."],
+  steps:["The curator speaks of Rothko","The Riga colleague suggests RED","RED: the studio like the dream room"]},
+ {id:"e8",title:"The yellow duck on the roof",date:"2022",t:2022.55,types:["sern"],mult:2,origin:"inner",place:0,body:0,med:"my daughter",hubs:["canvas"],
+  text:["Painting Clontarf by the sea for my mother, I wanted a huge yellow duck leaping into the water behind the houses. For two or three months I could not find the image to paint it from.","Taking out the rubbish with my daughter, she pointed at the grated roof below. A small yellow duck lay there, exactly the one I had been looking for. Nothing lay on that roof before or after."],
+  steps:["The duck I could see but not find","My daughter spots it on the roof"]},
+ {id:"e9",title:"The African dream, Gibraltar, the studio partner",date:"2022 to 2023",t:2022.85,types:["sync"],mult:3,origin:"dream",place:0,body:1,med:"",hubs:["dreamc"],
+  text:["In a vivid summer dream I flew across the world in a friend's plane and landed in Africa: the warm wind, children running, the smell of the savannah. I forgot it.","That winter I insisted on climbing the Rock of Gibraltar to see Africa across the strait. Back at NCAD for my last half-year I was given a new studio partner, a Nigerian painter whose whole work was about Africa."],
+  steps:["Summer: the dream of landing in Africa","Winter: from Gibraltar I look at Africa","A Nigerian painter becomes my studio partner"]},
+ {id:"e10",title:"The red painting, the Red Book and 1959",date:"2022 to 2023",t:2022.7,types:["sync","ser"],mult:3,origin:"inner",place:0,body:0,med:"",hubs:["redbook","canvas"],
+  text:["Letters from Helen's papers went onto one of my red paintings. Leafing through my facsimile of Jung's Red Book, I came to the epilogue written on a single page for 1959 and, on the next page, the word Möglichkeit, possibility, the same years as her papers.","Later, turning one of my canvases over, I found a bank document with 1959 crossed out and replaced by 1960."],
+  steps:["Helen's letters on the red painting","The Red Book epilogue: 1959 and 'possibility'","Behind a canvas: 1959 changed to 1960"]},
+ {id:"e11",title:"The elephant at the crossing",date:"April to June 2023",t:2023.35,types:["sync","sern"],mult:3,origin:"dream",place:1,body:0,med:"",hubs:["elephant","dorset","crossing","canvas","dreamc"],
+  text:["On 16 April 2023 I planned a painting of an elephant standing on the Dorset Street crossing, as my measure of the improbable: meeting two such coincidences on one corner felt as unlikely as meeting an elephant there.","Earlier that year, falling asleep, I had seen in half-sleep what a panic attack looks like and drew it quickly in charcoal, smoke-like forms. I saw no elephants while drawing. Later I saw that the sketch was made of elephants. In June 2023, after my graduate show, Brent Pope, founder of the Irish mental-health platform The Elephant in the Room, whose symbol is a painted elephant, wrote under the sketch that this work was central to what he was trying to do. We agreed our paths had crossed. The meeting never happened."],
+  steps:["16 April 2023: the elephant at the crossing, planned","The half-sleep panic sketch; the elephants seen later","June 2023: Brent Pope comments"],
+  note:"The 2023 caption says the sketch was made on waking. My memory is of the evening, with the elephants seen the next morning.",
+  imgs:[["elephant-at-the-crossing.jpg","The elephant at the crossing, painting"],["panic-attack.jpg","Panic attack, charcoal, later titled Elephant"]],
+  link:[ESS+"the-elephant-at-the-crossing/","The Elephant at the Crossing"]},
+ {id:"e12",title:"Werner on the crossing, Latvia",date:"Summer 2024",t:2024.55,types:["ser"],mult:3,origin:"outside",place:0,body:0,med:"",hubs:["crossing"],
+  text:["On the first or second day of a family trip to Latvia, a friend I had not spoken to for three years stepped onto the crossing five metres in front of our car. I did not get out. I watched him walk slowly away, as if seeing off my former life.","Two more strong coincidences followed on the same trip."],
+  steps:["Werner on the crossing, five metres away","A second coincidence on the trip","A third coincidence on the trip"]},
+ {id:"e13",title:"The man at the pull-up bars",date:"February 2025",t:2025.1,types:["ser"],mult:3,origin:"outside",place:1,body:0,med:"",hubs:["john","park"],
+  text:["Walking the dog, I did some unusual eastern arm swings at the park's pull-up bars. A man, John, came over to ask about them: they reminded him of the school where he once learned eastern martial arts.","Later we met by chance at the Chinese New Year celebration in the city centre, on the very spot where his old school had been."],
+  steps:["Eastern movements at the pull-up bars","John asks; his old school","Chinese New Year: met again on that spot"]},
+ {id:"e15",title:"The Room of 1.7% and the road to Beitman",date:"June 2025 to November 2026",t:2025.44,types:["sern","sync"],mult:3,origin:"inner",place:0,body:1,med:"AI",hubs:["ai","beitman"],
+  text:["For years I had looked for people who had lived coincidences like mine and found none. On 16 May 2025 I asked an AI whether a script could compute a percentage from a person's own chat, so that I could recognise who was 'my person'. On 8 June 2025 this became the Room of 1.7%, a room for people with a similar inner path, found by their long real trajectory and invited only with their consent.","In November 2026 an AI answer to a question about people who had documented long series of coincidences named Bernard Beitman, who had been working on AI matching of coincidence patterns. In his October article I read that meaningful coincidences are suggestions, not demands, and I cried."],
+  steps:["16 May 2025: a percentage computed by a script","8 June 2025: the Room of 1.7%","November 2026: the AI names Beitman","The sentence about suggestions, not demands"],
+  note:"Beitman's own signature dates Life-Changing Synchronicities to May 2025, about a month before the Room conversation, so I do not claim to have had the idea first. Some retail listings give July 2025.",
+  link:[ESS+"beyond-the-firmament/origins.html","Where the Room came from"]},
+ {id:"e16",title:"Arvo Pärt and paragraph 137",date:"September 2025",t:2025.72,types:["ser","sync"],mult:3,origin:"inner",place:0,body:1,med:"",hubs:["redbook","ai"],
+  text:["Deep in Jung's Red Book, the name of Arvo Pärt rose from memory. I came upon a post about Pärt that already named Jung just as I was about to write about the two of them, and left my text under it in a strong numinous state.","The next morning my wife told me that the coming days in Ireland were dedicated to Pärt. Dublin was sold out, so we drove three hours to Cork for the concert on 27 September. From then on 'paragraph 137' became my code with AI for an open, uncensored reading in the spirit of synchronicity."],
+  steps:["The Red Book and the name Pärt","A post on Pärt that already names Jung","Next morning: days of Pärt in Ireland, the drive to Cork"]},
+ {id:"e17",title:"The Böhme week",date:"3 to 12 October 2025",t:2025.77,types:["ser","sync"],mult:5,origin:"inner",place:0,body:1,med:"Derek",hubs:["derek","flammarion"],
+  text:["Five links in nine days. Jacob Böhme appeared in a text by Derek. The philosopher Yevgeny Golovin came up in our talk. Looking for an old blues song I landed on Golovin and found an essay on Böhme in his bibliography.","That evening I learned that Böhme was a shoemaker; I once worked with shoes myself and have kept an old pair for thirty years. That night a hashtag led me to a group with Derek's engraving, the Flammarion wanderer, at the top."],
+  steps:["3 Oct: Böhme in Derek's text","7 Oct: Golovin in conversation","11 Oct: a blues search, Golovin's essay on Böhme","Böhme the shoemaker; my own thirty-year-old shoes","12 Oct, night: the Flammarion engraving in a group"],
+  note:"Two links passed through Derek and one through my own search. For an honest count they are marked as less independent.",
+  imgs:[["avatar.jpg","The Flammarion engraving, later my own avatar"]]},
+ {id:"e18",title:"The fractal: two fish and a sphere",date:"October 2025",t:2025.82,types:["sync"],mult:2,origin:"inner",place:0,body:0,med:"Derek",hubs:["derek","redbook","canvas"],
+  text:["Before I knew Jung well I painted, without a plan, two fish swimming towards each other, with a sphere that appeared between them on its own.","In October 2025 a reply from Derek answered the painting, and I saw its link to the Red Book."],
+  steps:["The painting: two fish, a sphere between them","Derek's reply and the link to the Red Book"]},
+ {id:"e19",title:"John and the exhibition",date:"16 November 2025",t:2025.875,types:["ser"],mult:2,origin:"outside",place:0,body:0,med:"",hubs:["john","park"],
+  text:["After a gap of a month or two John stopped me in the park one morning and reminded me of an exhibition that day, which I had forgotten.","Walking through central Dublin with my mother on the way to it, we saw John coming towards us, absorbed in conversation, passing like a ghost."],
+  steps:["Morning: John reminds me of the exhibition","Afternoon: John passes us in the city centre"]},
+ {id:"e20",title:"Ur-Phänomen, the engraving, Bardon's triangle",date:"November 2025",t:2025.9,types:["ser","sync"],mult:4,origin:"inner",place:0,body:1,med:"Derek",hubs:["derek","flammarion"],
+  text:["The coincidences of those days led me to Goethe's Ur-Phänomen, and among the readers of a circle by that name I saw someone with Derek's avatar, the Flammarion engraving.","Days later a star appeared in another coincidence; Derek wrote to me about Franz Bardon, and on a Bardon site I found the magic triangle with that same star at its centre. Goosebumps, and then tears."],
+  steps:["Goethe's Ur-Phänomen; the engraving again","A star in that day's coincidence","Derek writes about Bardon","Bardon's triangle with the star at its centre"]},
+ {id:"e21",title:"The rune in the park and Tomasz",date:"February 2026",t:2026.12,types:["sern"],mult:2,origin:"inner",place:1,body:0,med:"",hubs:["park"],
+  text:["I found a rune in the park and linked it in my mind with a man I had once seen meditating on that spot.","Half a year later I went up to him and asked. The rune was not his, but Tomasz turned out to be a meditation coach steeped in Jung and synchronicity."],
+  steps:["A rune where a man meditated","Months later: Tomasz, Jung and synchronicity"]},
+ {id:"e22",title:"The ashtray, Marcus and the engraving at Beitman's page",date:"19 November 2026",t:2026.885,types:["sync","ser","sern"],mult:4,origin:"inner",place:0,body:1,med:"AI, Derek",hubs:["flammarion","ai","beitman"],
+  text:["One evening. On a call with my mother I picked up an old brass ashtray with a horned face, an object I almost never touch, and we talked about Lucifer, for me a symbol, not a belief. About half an hour later, at 19:49, my friend Marcus wrote for the first time in months and sent his dark paintings, faces emerging from the paint. When I told him about the ashtray, he answered that a ram's face had appeared in his painting that night, though he had meant to paint a skull.","That evening sent me back to my old question: who else has documented long series of coincidences? An AI named a few researchers, Bernard Beitman among them. I opened his page, and its first image was the Flammarion engraving, the picture I had made my own avatar."],
+  steps:["The brass ashtray shown to my mother","19:49: Marcus's dark paintings, the ram instead of the skull","An AI names researchers, Beitman among them","His page opens on the Flammarion engraving"],
+  imgs:[["ashtray.jpg","The brass ashtray"],["marcus-painting.jpg","One of Marcus's dark paintings"],["beitman-page.jpg","Bernard Beitman's public page, 19 November 2026"]],
+  link:[ESS+"beyond-the-firmament/","Beyond the Firmament"]}
+];
+const THREADS=[["e2","e3","Gerard opens the way into synchronicity"],["e3","e4","The dream comes a month before Dorset Street"],["e3","e7","The dream room is seen again in RED"],["e4","e7","The colleague who recognised the man suggests RED"],["e4","e5","Osman lives 300 m from the photo spot"],["e4","e11","The elephant is set on the same crossing"],["e5","e10","Helen's letters go onto the red painting"],["e13","e19","The same John"],["e17","e20","The engraving returns"],["e20","e22","The engraving returns on Beitman's page"],["e15","e22","The AI search that reaches Beitman"]];
+
+/* ---------- derived ---------- */
+const byId={};E.forEach(e=>{e.kind="ep";byId[e.id]=e});HUBS.forEach(h=>byId[h.id]=h);
+const order=E.slice().sort((a,b)=>a.t-b.t);
+const $=id=>document.getElementById(id);
+const root=$("sxs"),stage=$("sx-stage"),cv=$("sx-cv"),ctx=cv.getContext("2d"),tip=$("sx-tip");
+const reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+let rnd=(s=>()=>(s=(s*16807)%2147483647)/2147483647)(20211130);
+
+/* stats */
+(function(){const n=E.length,mult=E.filter(e=>e.mult>=3).length,links=E.reduce((a,e)=>a+e.mult,0),inner=E.filter(e=>e.origin!=="outside").length,place=E.filter(e=>e.place).length,body=E.filter(e=>e.body).length,med=E.filter(e=>e.med).length;
+ $("sx-stats").innerHTML=[[n,"documented chains, 2019 to 2026"],[mult,"multipliers, three or more linked coincidences"],[(links/n).toFixed(2),"linked coincidences per chain on average"],[inner,"chains that began inside, in a dream, image or thought"],[place,"returned to a place already marked"],[body,"with a bodily response: goosebumps, trembling, tears"],[med,"passed partly through a mediator, a person or an AI"]].map(s=>`<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join("");})();
+$("sx-types").innerHTML=Object.values(TYPES).map(t=>`<div><h3>${t.label} · ${E.filter(e=>e.types.includes(Object.keys(TYPES).find(k=>TYPES[k]===t))).length}</h3><p>${t.def}</p></div>`).join("");
+
+/* chips */
+const active=new Set(Object.keys(TYPES));
+$("sx-chips").innerHTML=Object.entries(TYPES).map(([k,t])=>`<button type="button" data-k="${k}" aria-pressed="true">${t.label} · ${E.filter(e=>e.types.includes(k)).length}</button>`).join("")+`<button type="button" data-k="hubs" aria-pressed="true">Images, places, people</button>`;
+let showHubs=true;
+$("sx-chips").addEventListener("click",ev=>{const b=ev.target.closest("button");if(!b)return;const k=b.dataset.k;const on=b.getAttribute("aria-pressed")!=="true";b.setAttribute("aria-pressed",on);if(k==="hubs")showHubs=on;else{on?active.add(k):active.delete(k)}engage();});
+const visible=e=>e.types.some(t=>active.has(t));
+
+/* cards */
+$("sx-cards").innerHTML=order.map(e=>{const im=e.imgs&&e.imgs[0];return `<button type="button" class="card" data-id="${e.id}"><div class="ph" style="${im?`background-image:linear-gradient(180deg,transparent 40%,rgba(7,10,23,.8)),url('${IMG+im[0]}')`:""}"><i style="color:${ORIGIN[e.origin].c};background:${ORIGIN[e.origin].c}"></i></div><div class="bd"><div class="d">${e.date}</div><h3>${e.title}</h3><p>${e.types.map(t=>TYPES[t].label).join(" · ")}${e.mult>=3?" · multiplier":""}</p></div></button>`}).join("");
+$("sx-cards").addEventListener("click",ev=>{const b=ev.target.closest(".card");if(b)open(b.dataset.id,true)});
+
+/* ---------- 3D layout: time spirals outward ---------- */
+const P={};
+order.forEach((e,i)=>{const u=(e.t-2019.6)/7.4;const th=i*0.62+u*2.2;const r=90+u*360;P[e.id]={x:Math.cos(th)*r,z:Math.sin(th)*r,y:(rnd()-.5)*110-u*30,r:7+e.mult*2.6,moons:Array.from({length:e.mult},(_,k)=>({a:rnd()*6.28,s:.4+rnd()*.8,d:1.7+k*.55}))}});
+HUBS.forEach((h,j)=>{const ns=E.filter(e=>e.hubs.includes(h.id));let x=0,z=0;ns.forEach(e=>{x+=P[e.id].x;z+=P[e.id].z});const n=Math.max(1,ns.length);P[h.id]={x:x/n*.78+(rnd()-.5)*40,z:z/n*.78+(rnd()-.5)*40,y:(j%2?-1:1)*(150+rnd()*70),r:6,n:ns.length}});
+const STARS=Array.from({length:520},()=>({x:(rnd()-.5)*4200,y:(rnd()-.5)*2600,z:(rnd()-.5)*4200,b:rnd()}));
+
+/* ---------- camera ---------- */
+const cam={yaw:0.6,pitch:0.42,zoom:1,ty:0.6,tp:0.42,tz:1,fx:0,fz:0,fy:0,tfx:0,tfz:0,tfy:0};
+let W=0,H=0,DPR=1;
+function size(){DPR=Math.min(2,window.devicePixelRatio||1);const r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0)}
+new ResizeObserver(size).observe(cv);size();
+function proj(p){let x=p.x-cam.fx,y=p.y-cam.fy,z=p.z-cam.fz;const cy=Math.cos(cam.yaw),sy=Math.sin(cam.yaw);let x1=x*cy-z*sy,z1=x*sy+z*cy;const cp=Math.cos(cam.pitch),sp=Math.sin(cam.pitch);let y1=y*cp-z1*sp,z2=y*sp+z1*cp;const base=Math.min(W,H)/(W<700?800:1150)*cam.zoom;const f=1100/(1100+z2);return{x:W/2+x1*f*base,y:H*.52+y1*f*base,s:f*base,z:z2}}
+
+/* ---------- interaction ---------- */
+let engaged=false,hover=null,sel=null,auto=!reduce,playing=false,playT=0,jIdx=-1,lastInteract=0;
+function engage(){if(!engaged){engaged=true;stage.classList.add("engaged")}lastInteract=performance.now()}
+let drag=null;
+cv.addEventListener("pointerdown",e=>{drag={x:e.clientX,y:e.clientY,yaw:cam.ty,p:cam.tp,moved:0};cv.setPointerCapture(e.pointerId);cv.classList.add("drag");engage()});
+cv.addEventListener("pointermove",e=>{const r=cv.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
+ if(drag){const dx=e.clientX-drag.x,dy=e.clientY-drag.y;drag.moved=Math.max(drag.moved,Math.abs(dx)+Math.abs(dy));cam.ty=drag.yaw+dx*.005;cam.tp=Math.max(.05,Math.min(1.2,drag.p+dy*.004));if(drag.moved>4)stopPlay()}
+ hover=pick(mx,my);cv.style.cursor=hover?"pointer":(drag?"grabbing":"grab");
+ if(hover){const o=byId[hover];tip.style.display="block";tip.style.left=mx+"px";tip.style.top=my+"px";tip.textContent=o.kind==="ep"?`${o.date} · ${o.title}`:o.label}else tip.style.display="none"});
+cv.addEventListener("pointerup",e=>{cv.classList.remove("drag");if(drag&&drag.moved<5){const r=cv.getBoundingClientRect();const id=pick(e.clientX-r.left,e.clientY-r.top);if(id){const o=byId[id];if(o.kind==="ep"){stopPlay();open(id)}else hubInfo(id)}}drag=null});
+cv.addEventListener("pointerleave",()=>{tip.style.display="none";hover=null});
+cv.addEventListener("wheel",e=>{if(!engaged)return;e.preventDefault();cam.tz=Math.max(.55,Math.min(3.2,cam.tz*Math.exp(-e.deltaY*.0012)));engage()},{passive:false});
+cv.addEventListener("keydown",e=>{if(e.key==="ArrowRight"){step(1);e.preventDefault()}if(e.key==="ArrowLeft"){step(-1);e.preventDefault()}});
+function pick(mx,my){let best=null,bd=1e9;for(const e of E){if(!visible(e))continue;const p=proj(P[e.id]);const d=Math.hypot(p.x-mx,p.y-my);const rr=Math.max(14,P[e.id].r*p.s*1.4);if(d<rr&&d<bd){bd=d;best=e.id}}
+ if(!best&&showHubs)for(const h of HUBS){const p=proj(P[h.id]);const d=Math.hypot(p.x-mx,p.y-my);if(d<14&&d<bd){bd=d;best=h.id}}return best}
+function focus(id,z){const p=P[id];cam.tfx=p.x*.85;cam.tfz=p.z*.85;cam.tfy=p.y*.6;cam.ty=Math.atan2(-p.x,p.z)+(window.innerWidth>700?-0.35:0);cam.tz=z||1.9}
+function hubInfo(id){const h=byId[id];const ns=E.filter(e=>e.hubs.includes(id));sel=id;focus(id,1.6);
+ showDrawer(h.kind==="carrier"?"Returning image":h.kind==="place"?"Place":"Person or mediator",`<h2>${h.label}</h2><p>${h.text}</p><div class="rel">Chains linked here<br>${ns.map(e=>`<button type="button" data-go="${e.id}">${e.title}</button>`).join("")}</div>`)}
+
+/* ---------- drawer ---------- */
+const drawer=$("sx-drawer"),body=$("sx-body");
+function showDrawer(when,html){$("sx-when").textContent=when;body.innerHTML=html;drawer.classList.add("open");drawer.setAttribute("aria-hidden","false");drawer.scrollTop=0}
+function open(id,fromCard){const e=byId[id];sel=id;jIdx=order.indexOf(e);engage();focus(id);
+ const hubs=e.hubs.map(h=>byId[h]);const th=THREADS.filter(t=>t[0]===id||t[1]===id);
+ const html=`<h2>${e.title}</h2><div class="pills"><span class="pill o-${e.origin}">${ORIGIN[e.origin].label}</span>${e.types.map(t=>`<span class="pill">${TYPES[t].label}</span>`).join("")}${e.mult>=3?`<span class="pill">Multiplier · ${e.mult}</span>`:""}${e.med?`<span class="pill">Mediated: ${e.med}</span>`:""}</div>
+ ${(e.imgs||[]).length?`<div class="gal">${e.imgs.map(i=>`<figure><img src="${IMG+i[0]}" alt="${i[1]}" loading="lazy" data-cap="${i[1]}"><figcaption>${i[1]}</figcaption></figure>`).join("")}</div>`:""}
+ ${e.text.map(p=>`<p>${p}</p>`).join("")}
+ <ol class="steps">${e.steps.map(s=>`<li>${s}</li>`).join("")}</ol>
+ ${e.note?`<p class="note">${e.note}</p>`:""}
+ ${e.link?`<p><a href="${e.link[0]}" target="_blank" rel="noopener">${e.link[1]} →</a></p>`:""}
+ ${th.length?`<div class="rel">Direct continuations<br>${th.map(t=>{const o=t[0]===id?t[1]:t[0];return `<button type="button" data-go="${o}">${t[2]}</button>`}).join("")}</div>`:""}
+ ${hubs.length?`<div class="rel">Threads<br>${hubs.map(h=>`<button type="button" data-hub="${h.id}">${h.label}</button>`).join("")}</div>`:""}`;
+ showDrawer(e.date,html);
+ const lis=body.querySelectorAll(".steps li");lis.forEach((li,i)=>setTimeout(()=>li.classList.add("lit"),reduce?0:350+i*380));
+ if(fromCard)stage.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});updTL()}
+function closeD(){drawer.classList.remove("open");drawer.setAttribute("aria-hidden","true");sel=null;cam.tfx=cam.tfz=cam.tfy=0;cam.tz=1}
+$("sx-close").onclick=()=>{stopPlay();closeD()};
+body.addEventListener("click",ev=>{const g=ev.target.closest("[data-go]"),h=ev.target.closest("[data-hub]"),im=ev.target.closest("img[data-cap]");if(g){stopPlay();open(g.dataset.go)}if(h){stopPlay();hubInfo(h.dataset.hub)}if(im){$("sx-lbimg").src=im.src;$("sx-lbimg").alt=im.alt;$("sx-lbcap").textContent=im.dataset.cap;$("sx-lb").classList.add("open")}});
+$("sx-lb").addEventListener("click",ev=>{if(ev.target.id!=="sx-lbimg")$("sx-lb").classList.remove("open")});
+document.addEventListener("keydown",ev=>{if(ev.key==="Escape"){if($("sx-lb").classList.contains("open"))$("sx-lb").classList.remove("open");else if(drawer.classList.contains("open")){stopPlay();closeD()}}});
+function step(d){let i=jIdx<0?(d>0?-1:order.length):jIdx;do{i+=d}while(i>=0&&i<order.length&&!visible(order[i]));if(i<0||i>=order.length)return false;open(order[i].id);return true}
+$("sx-prev").onclick=()=>{stopPlay();step(-1)};$("sx-next").onclick=()=>{stopPlay();step(1)};
+
+/* journey */
+const tl=$("sx-tl");
+tl.insertAdjacentHTML("beforeend",order.map((e,i)=>`<button type="button" data-i="${i}" style="left:${(i/(order.length-1)*100).toFixed(2)}%" aria-label="${e.title}"></button>`).join("")+[2020,2021,2022,2023,2024,2025,2026].map(y=>{const i=order.findIndex(e=>e.t>=y);return i<0?"":`<span style="left:${(i/(order.length-1)*100).toFixed(2)}%">${y}</span>`}).join(""));
+tl.addEventListener("click",ev=>{const b=ev.target.closest("button");if(b){stopPlay();open(order[+b.dataset.i].id)}});
+function updTL(){tl.querySelectorAll("button").forEach((b,i)=>b.classList.toggle("on",i<=jIdx));$("sx-fill").style.width=(jIdx<0?0:jIdx/(order.length-1)*100)+"%"}
+function startPlay(){playing=true;stage.classList.add("journey");$("sx-play").setAttribute("aria-pressed","true");$("sx-play").textContent="❚❚ Pause the journey";engage();if(jIdx>=order.length-1)jIdx=-1;step(1);playT=performance.now()}
+function stopPlay(){if(!playing)return;playing=false;$("sx-play").setAttribute("aria-pressed","false");$("sx-play").textContent="▶ Play the journey"}
+$("sx-play").onclick=()=>playing?stopPlay():startPlay();
+$("sx-enter").onclick=()=>{engage();cam.tz=1.25;cam.tp=.55;cv.focus()};
+$("sx-reset").onclick=()=>{stopPlay();closeD();stage.classList.remove("journey");cam.ty=0.6;cam.tp=.42;cam.tz=1};
+
+/* ---------- draw ---------- */
+const HUBC={carrier:"#d8b46a",place:"#e0875b",person:"#ece6d6"};
+function rgba(hex,a){const n=parseInt(hex.slice(1),16);return `rgba(${n>>16},${n>>8&255},${n&255},${a})`}
+let last=performance.now();
+function frame(now){const dt=Math.min(50,now-last);last=now;
+ if(auto&&!drag&&!sel&&now-lastInteract>2500)cam.ty+=dt*.00004;
+ const k=reduce?1:1-Math.pow(.0025,dt/1000);
+ cam.yaw+=(cam.ty-cam.yaw)*k;cam.pitch+=(cam.tp-cam.pitch)*k;cam.zoom+=(cam.tz-cam.zoom)*k;cam.fx+=(cam.tfx-cam.fx)*k;cam.fz+=(cam.tfz-cam.fz)*k;cam.fy+=(cam.tfy-cam.fy)*k;
+ if(playing&&now-playT>9500){playT=now;if(!step(1))stopPlay()}
+ ctx.clearRect(0,0,W,H);
+ const g=ctx.createRadialGradient(W/2,H*.52,0,W/2,H*.52,Math.max(W,H)*.7);g.addColorStop(0,"#121a38");g.addColorStop(1,"#070a17");ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+ for(const s of STARS){const p=proj({x:s.x,y:s.y,z:s.z});if(p.z<-1000)continue;const a=.15+s.b*.5*(reduce?1:(.75+.25*Math.sin(now*.001+s.b*20)));ctx.fillStyle=`rgba(236,230,214,${a})`;ctx.fillRect(p.x,p.y,1.2,1.2)}
+ const T=now*.001;
+ // spiral of time
+ ctx.strokeStyle="rgba(216,180,106,.10)";ctx.lineWidth=1;ctx.beginPath();order.forEach((e,i)=>{const p=proj(P[e.id]);i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y)});ctx.stroke();
+ // hub links
+ if(showHubs)for(const e of E){if(!visible(e))continue;const a=proj(P[e.id]);for(const h of e.hubs){const b=proj(P[h]);const hot=sel&&(sel===e.id||sel===h);ctx.strokeStyle=rgba(HUBC[byId[h].kind],hot?.55:.09);ctx.lineWidth=hot?1.2:.8;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}}
+ // threads with flowing light
+ for(const [a0,b0] of THREADS){if(!visible(byId[a0])||!visible(byId[b0]))continue;const a=proj(P[a0]),b=proj(P[b0]);const hot=sel&&(sel===a0||sel===b0);ctx.strokeStyle=hot?"rgba(216,180,106,.9)":"rgba(216,180,106,.42)";ctx.lineWidth=hot?2:1.3;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+  if(!reduce)for(let q=0;q<3;q++){const f=((T*.25+q/3)%1);const x=a.x+(b.x-a.x)*f,y=a.y+(b.y-a.y)*f;ctx.fillStyle="rgba(255,230,170,.9)";ctx.beginPath();ctx.arc(x,y,1.8,0,6.3);ctx.fill()}}
+ // collect drawables by depth
+ const D=[];for(const e of E)D.push([e,proj(P[e.id])]);if(showHubs)for(const h of HUBS)D.push([h,proj(P[h.id])]);D.sort((u,v)=>v[1].z-u[1].z);
+ for(const [o,p] of D){if(o.kind==="ep"){const vis=visible(o);const c=ORIGIN[o.origin].c;const R=Math.max(3,P[o.id].r*p.s);const on=sel===o.id||hover===o.id;const al=vis?1:.12;
+   const gl=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,R*(on?4.2:3));gl.addColorStop(0,rgba(c,.55*al));gl.addColorStop(1,rgba(c,0));ctx.fillStyle=gl;ctx.beginPath();ctx.arc(p.x,p.y,R*(on?4.2:3),0,6.3);ctx.fill();
+   ctx.fillStyle=rgba(c,al);ctx.beginPath();ctx.arc(p.x,p.y,R*(reduce?1:1+.06*Math.sin(T*2+o.t*9)),0,6.3);ctx.fill();
+   ctx.fillStyle=`rgba(255,255,255,${.55*al})`;ctx.beginPath();ctx.arc(p.x-R*.3,p.y-R*.3,R*.3,0,6.3);ctx.fill();
+   if(o.place){ctx.setLineDash([2,4]);ctx.strokeStyle=rgba("#e0875b",.8*al);ctx.beginPath();ctx.arc(p.x,p.y,R*1.9,0,6.3);ctx.stroke();ctx.setLineDash([])}
+   if(on){ctx.strokeStyle="rgba(216,180,106,.95)";ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(p.x,p.y,R*1.55,0,6.3);ctx.stroke()}
+   for(const m of P[o.id].moons){const a=m.a+(reduce?0:T*m.s);ctx.fillStyle=rgba(c,.8*al);ctx.beginPath();ctx.arc(p.x+Math.cos(a)*R*m.d,p.y+Math.sin(a)*R*m.d*.55,Math.max(1,R*.16),0,6.3);ctx.fill()}
+   const showL=vis&&(on||cam.zoom>1.7||(engaged&&o.mult>=4&&p.s>.85)||(sel&&cam.zoom>1.5&&p.s>1.1));if(showL){ctx.font=`${on?600:500} ${on?13:12}px Inter,sans-serif`;ctx.fillStyle=on?"#ece6d6":"rgba(185,179,166,.85)";ctx.fillText(o.title.length>34&&!on?o.title.slice(0,32)+"…":o.title,p.x+R+6,p.y+4)}
+  }else{const c=HUBC[o.kind];const s=6*Math.max(.6,p.s);const on=sel===o.id||hover===o.id;ctx.strokeStyle=rgba(c,on?1:.75);ctx.lineWidth=on?2:1.2;ctx.beginPath();
+   if(o.kind==="carrier"){ctx.moveTo(p.x,p.y-s);ctx.lineTo(p.x+s,p.y);ctx.lineTo(p.x,p.y+s);ctx.lineTo(p.x-s,p.y);ctx.closePath()}else if(o.kind==="place"){ctx.rect(p.x-s*.8,p.y-s*.8,s*1.6,s*1.6)}else ctx.arc(p.x,p.y,s*.8,0,6.3);ctx.stroke();
+   if(engaged&&(on||cam.zoom>2.1)){ctx.font="600 11px Inter,sans-serif";ctx.fillStyle=rgba(c,on?1:.8);ctx.fillText(o.label,p.x+s+5,p.y+4)}}}
+ requestAnimationFrame(frame)}
+requestAnimationFrame(frame);
+})();
+</script>
