@@ -365,7 +365,7 @@ function updTL(){tl.querySelectorAll("button").forEach((b,i)=>b.classList.toggle
 function startPlay(){playing=true;stage.classList.add("journey");$("sx-play").setAttribute("aria-pressed","true");$("sx-play").textContent="❚❚ Pause the journey";engage();if(jIdx>=order.length-1)jIdx=-1;step(1);playT=performance.now()}
 function stopPlay(){if(!playing)return;playing=false;$("sx-play").setAttribute("aria-pressed","false");$("sx-play").textContent="▶ Play the journey"}
 $("sx-play").onclick=()=>playing?stopPlay():startPlay();
-$("sx-enter").onclick=()=>{engage();cam.tz=1.25;cam.tp=.55;cv.focus()};
+$("sx-enter").onclick=()=>{engage();cam.tz=W<700?1:1.25;cam.tp=.55;cv.focus()};
 $("sx-reset").onclick=()=>{stopPlay();closeD();stage.classList.remove("journey");cam.ty=0.6;cam.tp=.42;cam.tz=1};
 
 /* ---------- draw ---------- */
