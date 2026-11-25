@@ -151,7 +151,7 @@
 #sxs .bt dt{color:var(--mute)}#sxs .bt dd{margin:0;color:var(--ink2)}
 #sxs .method h3{font-size:18px;margin-top:30px}
 #sxs .method p,#sxs .method li{font-size:18px}
-#sxs .method .k{font:500 13px Inter,sans-serif;color:var(--mute);letter-spacing:.04em}
+#sxs .method .k,#sxs .overture .k{font:500 13px Inter,sans-serif;color:var(--mute);letter-spacing:.04em}
 #sxs .nums{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:18px 0}
 #sxs .nums div{border:1px solid var(--line);border-radius:6px;padding:12px;background:var(--bg2);font:400 13px/1.4 Inter,sans-serif;color:var(--ink2)}
 #sxs .nums b{display:block;font:500 26px Cinzel,serif;color:var(--gold)}
@@ -167,6 +167,24 @@
 #sxs .cf{margin:10px 0}#sxs .cf b{color:var(--gold)}
 #sxs .cf dl{display:grid;grid-template-columns:1fr auto;gap:3px 14px;margin:6px 0 0;font:400 13px/1.45 Inter,sans-serif}
 #sxs .cf dt{color:var(--ink2)}#sxs .cf dd{margin:0;color:var(--gold);text-align:right}
+
+#sxs .stage.codex{background:#e0cba0}
+#sxs .stage.codex .lk-hub{stroke:#7a5230;stroke-opacity:.35}
+#sxs .stage.codex .lk-thread{stroke:#5a3a1e;stroke-opacity:.7}
+#sxs .stage.codex .lk-thread.on{stroke:#a23a1a}
+#sxs .stage.codex .lk-echo{stroke:#a23a1a;stroke-opacity:.6}
+#sxs .stage.codex .node .core{stroke:#5a3a1e;stroke-width:1.2;fill-opacity:.55}
+#sxs .stage.codex .node .halo{stroke:#5a3a1e}
+#sxs .stage.codex .node text,#sxs .stage.codex .hub text{font:italic 500 13px "Cormorant Garamond",Georgia,serif;fill:#4a2f18;stroke:#e8d6b0;stroke-width:3px}
+#sxs .stage.codex .hub .shape{fill:#efe2c4;stroke:#5a3a1e}
+#sxs .stage.codex .hub text{font-weight:600}
+#sxs .stage.codex .axis text,#sxs .stage.codex .lane text{fill:#5a3a1e}
+#sxs .stage.codex .hint{color:#5a3a1e}
+
+#sxs .overture p{font-size:19px;line-height:1.75}
+#sxs .codexmap{margin:28px 0 8px}
+#sxs .codexmap img{width:100%;border-radius:8px;border:1px solid var(--line);display:block;cursor:zoom-in}
+#sxs .codexmap figcaption{font:400 13px/1.5 Inter,sans-serif;color:var(--mute);margin-top:8px}
 @media(prefers-reduced-motion:reduce){#sxs .drawer,#sxs .card{transition:none}}
 </style>
 
@@ -185,12 +203,21 @@
   <div class="zb"><button type="button" id="sx-zin" aria-label="Zoom in">+</button><button type="button" id="sx-zout" aria-label="Zoom out">−</button></div>
   <div class="tl" id="sx-tl" aria-hidden="true"><div class="bar"></div><div class="fill" id="sx-fill"></div></div>
   <div class="ctrl">
-   <span class="seg" id="sx-view"><button type="button" data-v="field" aria-pressed="true">Field</button><button type="button" data-v="time" aria-pressed="false">Timeline</button></span>
+   <span class="seg" id="sx-view"><button type="button" data-v="field" aria-pressed="true">Field</button><button type="button" data-v="time" aria-pressed="false">Timeline</button><button type="button" data-v="codex" aria-pressed="false">Codex</button></span>
    <button type="button" id="sx-play" aria-pressed="false">▶ Play the journey</button>
    <button type="button" id="sx-reset">Reset view</button>
   </div>
  </section>
 
+
+ <section class="sec narrow overture" id="sx-overture">
+  <h2>Overture</h2>
+  <p class="k">Everything here happened. The facts are checked against the record; only the language is allowed to dream.</p>
+  <p>It did not begin with an idea. It began with a morning in November 2021, at the corner of Dorset Street and Blessington Street, when I stopped the car for no reason I could name and photographed a stranger on the steps whose hands were shaking; and with the next morning, when on exactly that stone stood a man I had last seen twenty-five years earlier in a boutique in Riga, and it was my own hands that shook. Time stamps in the photo files keep those two mornings honest: 10:38 on the first, 10:25 on the second. The rest is what I lived between them.</p>
+  <p>Since then the coincidences have not stopped, and they rarely come alone. A dream of a hidden door waits half a year for a theatre set; a bundle of papers bought for five euro at a flea market in Balbriggan returns, three years later, as one German word in a lecture; a twig with four burned runes lies in a park I have crossed for fifteen years, on the one morning after I saw my soul as a child on the Moon. Like the madeleine in Proust, each of them opens not a single memory but a whole room, and in that room older objects are already waiting, as if the house had been furnished before I arrived.</p>
+  <p>I try to walk through those rooms without inventing the furniture. Every chain below is split into what the record shows, what I lived and how I read it, with a note of how sure each part is. Where a person, a book or a machine passed something to me, I say so. Where a date is only my working date, I say that too. The images are of three kinds: my own paintings and photographs, public pages, and illustrations made with AI in the visual world of my book Vitruvian Odyssey, each marked as such.</p>
+  <figure class="codexmap"><a href="https://ealoiontoir.github.io/philosophical-essays/synchronicity-serendipity/img/codex-map.jpg" target="_blank" rel="noopener"><img src="https://ealoiontoir.github.io/philosophical-essays/synchronicity-serendipity/img/codex-map.jpg" alt="A Leonardo-style notebook page with the Vitruvian man at the centre and the motifs of the coincidences around him" loading="lazy"></a><figcaption>The Codex sheet, AI illustration in the manner of Leonardo's notebooks: the door, the steps, the elephant at the crossing, the duck on the roof, the Red Book, the two fish, the rune, the wanderer at the edge of the sky, the cupola, the train, the crossing, the hill of carved figures and the child on the Moon, around one figure measured by a circle and a square.</figcaption></figure>
+ </section>
  <section class="sec">
   <h2>One field, many chains</h2>
   <p>Each coloured point is one chain: several coincidences joined by one meaning within a short span of time. Its colour shows where the chain began, in a dream, in a waking image or thought, or in an event outside. Every single coincidence inside a chain is counted on its own and has its own type: it is one of the small moons around the point, and its colour shows the type. Together the coincidences form the chain, which as a whole can be something more: several separate synchronicities that, taken together, make one serendipity. The diamonds are images that keep returning, the squares are places, the circles are people and mediators. Solid lines mark a direct continuation, where one chain leads straight into the next. Dashed golden lines are echoes: two chains that share one concrete element, a person, a place, an image or a date.</p>
@@ -470,7 +497,7 @@ const T0=2019.4,T1=2027.1;
 function tx(t){return -W/2+70+(t-T0)/(T1-T0)*(W-140)}
 const laneY={dream:0,inner:0,outside:0};
 function setLanes(){Object.assign(laneY,{dream:-H*.24,inner:H*.03,outside:H*.26})}
-function setView(v){view=v;document.querySelectorAll("#sx-view button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===v));drawAxis();fmApply();if(!sel)zoomTo(defK(),0,0);reheat(1)}
+function setView(v){stage.classList.toggle("codex",v==="codex");view=v==="codex"?"field":v;window.__sxv=v;document.querySelectorAll("#sx-view button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===v));drawAxis();fmApply();if(!sel)zoomTo(defK(),0,0);reheat(1)}
 function drawAxis(){gAxis.innerHTML="";gLane.innerHTML="";if(view!=="time")return;
  for(let y=2020;y<=2026;y++){const x=tx(y);mk("line",{x1:x,x2:x,y1:-H/2+70,y2:H/2-90},gAxis);const t=mk("text",{x:x+4,y:H/2-96},gAxis);t.textContent=y}
  Object.entries(laneY).forEach(([k,y])=>{const t=mk("text",{x:-W/2+16,y:y-18},gLane);t.textContent=ORIGIN[k].label})}
@@ -543,12 +570,24 @@ const BST=Array.from({length:240},()=>({x:rnd(),y:rnd(),r:rnd()*1.1+.2,a:rnd()*.
 function branch(x,y,len,ang,depth){if(depth===0||len<3)return;const x2=x+Math.cos(ang)*len,y2=y+Math.sin(ang)*len;
  bctx.globalAlpha=.035+depth*.012;bctx.lineWidth=Math.max(.4,depth*.35);bctx.beginPath();bctx.moveTo(x,y);bctx.lineTo(x2,y2);bctx.stroke();
  branch(x2,y2,len*.72,ang-.42,depth-1);branch(x2,y2,len*.72,ang+.42,depth-1)}
-function drawBg(){const dpr=Math.min(2,window.devicePixelRatio||1);if(bgc.width!==Math.round(W*dpr)||bgc.height!==Math.round(H*dpr)){bgc.width=W*dpr;bgc.height=H*dpr}bctx.setTransform(dpr,0,0,dpr,0,0);bctx.clearRect(0,0,W,H);
+function drawBg(){if(stage.classList.contains("codex"))return drawCodexBg();const dpr=Math.min(2,window.devicePixelRatio||1);if(bgc.width!==Math.round(W*dpr)||bgc.height!==Math.round(H*dpr)){bgc.width=W*dpr;bgc.height=H*dpr}bctx.setTransform(dpr,0,0,dpr,0,0);bctx.clearRect(0,0,W,H);
  BST.forEach(s=>{bctx.globalAlpha=s.a;bctx.fillStyle="#ece6d6";bctx.beginPath();bctx.arc(s.x*W,s.y*H,s.r,0,6.283);bctx.fill()});
  const ox=W/2+zoom.x*.35,oy=H/2+zoom.y*.35;bctx.strokeStyle="#c9a45c";
  for(let i=0;i<5;i++){bctx.globalAlpha=.05;bctx.lineWidth=1;bctx.beginPath();bctx.arc(ox,oy,(80+i*95)*Math.sqrt(zoom.k),0,6.283);bctx.stroke()}
  const L=Math.min(W,H)*.13*Math.sqrt(zoom.k);for(let i=0;i<6;i++)branch(ox,oy,L,-Math.PI/2+i*Math.PI/3,8);bctx.globalAlpha=1}
 
+
+function drawCodexBg(){const dpr=Math.min(2,window.devicePixelRatio||1);if(bgc.width!==Math.round(W*dpr)||bgc.height!==Math.round(H*dpr)){bgc.width=W*dpr;bgc.height=H*dpr}bctx.setTransform(dpr,0,0,dpr,0,0);bctx.clearRect(0,0,W,H);
+ const g=bctx.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.max(W,H)*.75);g.addColorStop(0,"#efe2c4");g.addColorStop(.7,"#e0cba0");g.addColorStop(1,"#c9ad78");bctx.fillStyle=g;bctx.fillRect(0,0,W,H);
+ bctx.globalAlpha=.07;for(let i=0;i<900;i++){const s=BST[i%BST.length];bctx.fillStyle=i%3?"#6b4a2b":"#8a5a2b";bctx.fillRect(((s.x*997+i*.37)%1)*W,((s.y*613+i*.71)%1)*H,1.2,1.2)}
+ const ox=W/2+zoom.x,oy=H/2+zoom.y,R0=Math.min(W,H)*.42*zoom.k;bctx.strokeStyle="#7a5230";bctx.lineWidth=1;
+ bctx.globalAlpha=.28;bctx.beginPath();bctx.arc(ox,oy+R0*.05,R0,0,6.283);bctx.stroke();
+ const sq=R0*1.58;bctx.strokeRect(ox-sq/2,oy+R0*1.05-sq,sq,sq);
+ bctx.globalAlpha=.12;for(let i=1;i<12;i++){const a=i*Math.PI/6;bctx.beginPath();bctx.moveTo(ox,oy);bctx.lineTo(ox+Math.cos(a)*R0*1.4,oy+Math.sin(a)*R0*1.4);bctx.stroke()}
+ bctx.globalAlpha=.16;for(let k=1;k<5;k++){bctx.beginPath();bctx.arc(ox,oy,R0*k/4.6,0,6.283);bctx.stroke()}
+ bctx.globalAlpha=.10;bctx.font="italic 13px 'Cormorant Garamond',serif";bctx.fillStyle="#5a3a1e";
+ for(let i=0;i<14;i++){const s=BST[i*7%BST.length];let str="";for(let j=0;j<28;j++)str+="ɑɛıɔʊɾʌʍɥɯ"[(i*7+j*3)%10];bctx.save();bctx.translate(s.x*W,s.y*H);bctx.scale(-1,1);bctx.fillText(str,0,0);bctx.restore()}
+ bctx.globalAlpha=1}
 /* size */
 let firstSize=true;
 function resize(){const b=stage.getBoundingClientRect();if(!b.width)return;W=b.width;H=b.height;svg.classList.toggle("compact",W<700);svg.setAttribute("viewBox",`0 0 ${W} ${H}`);setLanes();if(firstSize){zoom.k=defK();firstSize=false}applyZoom();drawAxis();reheat(.4)}
