@@ -80,8 +80,8 @@
 	
 <link rel="canonical" href="https://virtuvian.eu/beacons-of-thought">
 <meta property="og:url" content="https://virtuvian.eu/beacons-of-thought">
-<link rel="stylesheet" href="/virtuvian-migration.css?v=20261126h">
-<script defer src="/virtuvian-migration.js?v=20261126h"></script>
+<link rel="stylesheet" href="/virtuvian-migration.css?v=20261126o">
+<script defer src="/virtuvian-migration.js?v=20261126o"></script>
 </head>
 	<body class="header-page  wsite-theme-dark  wsite-page-beacons-of-thought"><div class="wrapper">
     <div class="cento-header">
@@ -1084,6 +1084,9 @@ footer a { color: var(--gold); text-decoration: none; }
   .author-name { font-size: 1.18rem; }
   .author-text { font-size: 1rem; }
 }
+
+#map-wrap { height: clamp(340px, 42vw, 540px) !important; }
+@media (max-width: 640px) { #map-wrap { height: 380px !important; } }
 </style>
 </head>
 <body>
@@ -1114,7 +1117,7 @@ footer a { color: var(--gold); text-decoration: none; }
     <p class="hero-sub">A cartography of the minds that lit the dark</p>
     <div class="hero-copy">
       <p>This is not a bibliography. These are <em>beacons</em>: figures encountered at precise moments on a path already forming, who named something present but not yet spoken.</p>
-      <p>Twenty authors. Six constellations. Ten story portals. The lines of force that run between them. An open map, not a closed canon.</p>
+      <p>Twenty authors. Six constellations. Twelve story portals. The lines of force that run between them. An open map, not a closed canon.</p>
     </div>
 
     <!-- ── CHRONOS MAP (live canvas) ──────────────────────── -->
@@ -1129,7 +1132,7 @@ footer a { color: var(--gold); text-decoration: none; }
         </div>
       </div>
       <div class="map-controls">
-        <span class="map-caption">Spirit of Time · Drag to rotate · hover events</span>
+        <span class="map-caption">Spirit of Time · twelve portals on three orbits · drag to rotate · click a planet to enter</span>
         <div class="map-timeline">
           <input type="range" id="map-slider" min="0" max="100" value="100">
           <span id="map-year">--</span>
@@ -1712,270 +1715,326 @@ footer a { color: var(--gold); text-decoration: none; }
 })();
 
 /* ════════════════════════════════════════════════════════
-   HERO CHRONOS MAP -- Spirit of Time
+   HERO CHRONOS MAP -- Spirit of Time, as an orrery
+   The twelve portals of the menu move as planets on three
+   tilted orbits, one per route, crossing around one light.
+   The slider still brings them in by year.
 ════════════════════════════════════════════════════════ */
 (function(){
   const wrap = document.getElementById('map-wrap');
   const mc   = document.getElementById('map-canvas');
   const tip  = document.getElementById('map-tip');
   if (!wrap || !mc) return;
-
-  let mW = 0, mH = 0;
   const mCtx = mc.getContext('2d');
-
+  let mW = 0, mH = 0, dpr = 1;
   function resize() {
-    mW = mc.width  = wrap.offsetWidth  || 800;
-    mH = mc.height = wrap.offsetHeight || 300;
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    mW = wrap.offsetWidth || 800; mH = wrap.offsetHeight || 300;
+    mc.width = Math.round(mW * dpr); mc.height = Math.round(mH * dpr);
+    mc.style.width = mW + 'px'; mc.style.height = mH + 'px';
+    mCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ── Event data ──────────────────────────────────────────
+  // ── Orbits: one per route of the menu ───────────────────
+  const ORB = {
+    stories: { name:'Lived coincidences',     col:'#d8b46a', R:3.05, inc:.42, node:.35,  w:.050 },
+    essays:  { name:'Essays on the threshold', col:'#5fc8b8', R:1.85, inc:-.78, node:1.9, w:.085 },
+    maps:    { name:'Maps of the archive',     col:'#9d93ee', R:2.45, inc:1.18, node:-.9, w:.064 },
+  };
+  // ── Portals (numbers and order as in the menu) ──────────
   const EV = [
-    { id:'gerard',  year:2018, mo:3,  col:'#c8a84a', cat:'Encounter',     title:'Gerard -- The Returned Morning', body:'A voice, a face at the first threshold.',   url:'/gerard-the-returned-morning', x:-.9, y:-.3 },
-    { id:'dream1',  year:2018, mo:8,  col:'#9b7fd4', cat:'Dream',         title:'The First Dream',               body:'A room becomes a space of recognition.',    url:'',  x:-.4, y:.6  },
-    { id:'dream2',  year:2019, mo:2,  col:'#9b7fd4', cat:'Dream',         title:'The Red Room',                  body:'The red book and the red room arrive.',     url:'',  x:.3,  y:.8  },
-    { id:'alps',    year:2019, mo:8,  col:'#7aaee8', cat:'Place',         title:'The Alps',                      body:'Altitude as a form of silence.',            url:'',  x:1.1, y:.2  },
-    { id:'dorset',  year:2020, mo:1,  col:'#c07890', cat:'Synchronicity', title:'Trembling on Dorset Street',    body:'Dublin. The city as a living text.',        url:'/trembling-on-dorset-street.html',  x:1.6, y:-.4 },
-    { id:'thresh',  year:2020, mo:5,  col:'#c8a84a', cat:'Encounter',     title:'The Threshold',                 body:'A door without a frame. Kafka enters.',    url:'/the-threshold.html',  x:-.6, y:-.8 },
-    { id:'war',     year:2022, mo:2,  col:'#d47070', cat:'History',       title:'February 2022 -- War',           body:'The Angel of History turns its face.',     url:'',  x:.5,  y:-1.1 },
-    { id:'transf',  year:2022, mo:6,  col:'#52c4b0', cat:'Painting',      title:'Transformation / Threat',       body:'Form and danger: the same gesture.',       url:'/transformation--threat.html',  x:1.3, y:-.9 },
-    { id:'anthr',   year:2023, mo:7,  col:'#dfa850', cat:'Essay',         title:'Anthropocene → Noocene',        body:'Planetary threshold of consciousness.',    url:'/from-anthropocene-to-noocene.html',  x:-.2, y:-1.3 },
-    { id:'syntax',  year:2023, mo:11, col:'#dfa850', cat:'Essay',         title:'Syntax of Living Meaning',      body:'Language as a biological event.',         url:'',  x:.9,  y:-1.4 },
-    { id:'semantic',year:2024, mo:4,  col:'#8890d8', cat:'Text',          title:'Semantic Map of Meaning',       body:'The archive made spatial.',               url:'/semantic-map-of-meaning.html',  x:1.7, y:-1.1 },
-    { id:'core',    year:2025, mo:2,  col:'#c8a84a', cat:'Archive',       title:'The Core',                      body:'The Codex, two AI streams, the bridge.',  url:'/the-core.html',  x:-.1, y:.1  },
+    { id:'gerard', n:'01', g:'stories', year:2018, mo:3,  title:'Gerard — The Returned Morning', body:'A voice, a face, and the first threshold of Spirit of Time.', url:'/gerard-the-returned-morning' },
+    { id:'thresh', n:'02', g:'stories', year:2020, mo:5,  title:'The Threshold', body:'A dream of two elders, a hidden door and the raised left hand.', url:'/the-threshold' },
+    { id:'dorset', n:'03', g:'stories', year:2020, mo:1,  title:'Trembling on Dorset Street', body:'A synchronicity narrative from Dublin.', url:'/trembling-on-dorset-street' },
+    { id:'hilma',  n:'10', g:'stories', year:2024, mo:1,  title:'The Place I Had Already Found', body:'Beth, Hilma af Klint, a dream and the return to the Goetheanum.', url:'/hilma-dream-goetheanum' },
+    { id:'twol',   n:'11', g:'stories', year:2026, mo:11, title:'Two Letters', body:'How the name Virtuvian came: from the man of proportion to the man of possibility.', url:'/two-letters-virtuvian/', fresh:true },
+    { id:'sleep',  n:'12', g:'stories', year:2026, mo:11.9, title:'Sleep Will Come', body:'26 November 2026, the day the book entered its own story. With music.', url:'/sleep-will-come/', fresh:true },
+    { id:'transf', n:'04', g:'essays',  year:2022, mo:6,  title:'Transformation / Threat', body:'When transformation carries danger.', url:'/transformation--threat' },
+    { id:'anthr',  n:'05', g:'essays',  year:2023, mo:7,  title:'From Anthropocene to Noocene', body:'On the threshold of planetary consciousness.', url:'/from-anthropocene-to-noocene' },
+    { id:'syntax', n:'06', g:'essays',  year:2023, mo:11, title:'The Syntax of Living Meaning', body:'Membrane intelligence and synthetic emergence.', url:'/the-syntax-of-living-meaning-membrane-intelligence-and-the-map-of-synthetic-emergence' },
+    { id:'const',  n:'07', g:'maps',    year:2026, mo:6,  title:'The Constellation', body:'Thirty-two beacons in navigable deep space.', url:'/the-constellation' },
+    { id:'core',   n:'08', g:'maps',    year:2025, mo:2,  title:'The Core', body:'The Codex, two AI streams, the bridge.', url:'/the-core' },
+    { id:'sem',    n:'09', g:'maps',    year:2024, mo:4,  title:'Semantic Map of Meaning', body:'A visual structure of symbolic relations.', url:'/semantic-map-of-meaning' },
   ];
-  const LINKS = [
-    ['gerard','dream1'],['dream1','dream2'],['dream2','alps'],
-    ['alps','dorset'],['dorset','thresh'],['thresh','war'],
-    ['war','transf'],['transf','anthr'],['anthr','syntax'],
-    ['syntax','semantic'],['semantic','core'],
-    ['gerard','thresh'],['dream2','transf'],['war','anthr'],
+  // events of the path that have no page of their own: small moons
+  const MOONS = [
+    { id:'dream1', of:'thresh', year:2018, mo:8, title:'The First Dream', body:'A room becomes a space of recognition.', col:'#b9a6e8' },
+    { id:'dream2', of:'thresh', year:2019, mo:2, title:'The Red Room', body:'The red book and the red room arrive.', col:'#e07a7a' },
+    { id:'alps',   of:'hilma',  year:2019, mo:8, title:'The Alps', body:'Altitude as a form of silence.', col:'#8fb8f0' },
+    { id:'war',    of:'transf', year:2022, mo:2, title:'February 2022 — War', body:'The Angel of History turns its face.', col:'#d47070' },
   ];
+  const THREAD = [['twol','sleep']];
 
-  const Y0 = Math.min(...EV.map(e=>e.year));
-  const Y1 = Math.max(...EV.map(e=>e.year)) + 1;
-  EV.forEach(e => {
-    const tval = (e.year + (e.mo-1)/12 - Y0) / (Y1 - Y0);
-    e.pz = (tval - .5) * 7;
-    e.px = e.x * 2.6;
-    e.py = e.y * 1.8;
+  const Y0 = 2018, Y1 = 2027;
+  const tOf = (e) => (e.year + (e.mo - 1) / 12 - Y0) / (Y1 - Y0);
+  Object.keys(ORB).forEach(k => {
+    const list = EV.filter(e => e.g === k);
+    list.forEach((e, i) => { e.base = i / list.length * Math.PI * 2 + (k === 'essays' ? .5 : k === 'maps' ? 1.2 : 0); });
   });
+  MOONS.forEach((m, i) => { m.base = i * 1.7; m.r = .34 + (i % 2) * .1; m.w = .55 + i * .08; });
 
-  // ── Camera state ────────────────────────────────────────
-  let rX=.32, rY=-.22, tRX=.32, tRY=-.22;
-  let zoom=1, tZoom=1;
-  let isDrag=false, lx=0, ly=0;
-  let timeF=1, autoplay=false;
-  let hovId=null;
-  const projC={};
-  let mt=0;
+  // ── Camera ──────────────────────────────────────────────
+  let rX = .38, rY = -.3, tRX = .38, tRY = -.3, zoom = 1, tZoom = 1;
+  let isDrag = false, dragMoved = 0, lx = 0, ly = 0;
+  let timeF = 1, autoplay = false, hovId = null, clock = 0, last = 0, spin = 1;
+  const projC = {};
+
+  function orbitPoint(o, th) {
+    let x = o.R * Math.cos(th), y = 0, z = o.R * Math.sin(th);
+    const ci = Math.cos(o.inc), si = Math.sin(o.inc);
+    let y1 = y * ci - z * si, z1 = y * si + z * ci;
+    const cn = Math.cos(o.node), sn = Math.sin(o.node);
+    return [x * cn - z1 * sn, y1, x * sn + z1 * cn];
+  }
+  function proj(px, py, pz) {
+    const cY = Math.cos(rY), sY = Math.sin(rY);
+    const x1 = px * cY - pz * sY, z1 = px * sY + pz * cY;
+    const cX = Math.cos(rX), sX = Math.sin(rX);
+    const y1 = py * cX - z1 * sX, z2 = py * sX + z1 * cX;
+    const SC = Math.min(mW / 8.2, mH / 6.4) * zoom, FOV = 10;
+    const zz = z2 + FOV; if (zz <= 0) return null;
+    const s = FOV / zz;
+    return { sx: mW / 2 + x1 * SC * s, sy: mH / 2 + y1 * SC * s, sc: s * zoom, depth: z2 };
+  }
+  function hexA(hex, a) {
+    const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+  }
+  const alphaOf = (e) => { if (timeF >= .999) return 1; const d = timeF - tOf(e); return d < 0 ? 0 : Math.min(1, d / .05); };
 
   // ── Input ───────────────────────────────────────────────
-  mc.addEventListener('mousedown', e => { isDrag=true; lx=e.offsetX; ly=e.offsetY; });
+  mc.addEventListener('mousedown', e => { isDrag = true; dragMoved = 0; lx = e.clientX; ly = e.clientY; });
   window.addEventListener('mousemove', e => {
-    if (isDrag) { tRY += e.movementX/mW*3.2; tRX += e.movementY/mH*2.4; }
-    const r=wrap.getBoundingClientRect();
-    checkHover(e.clientX-r.left, e.clientY-r.top);
+    if (isDrag) { tRY += e.movementX / mW * 3.2; tRX += e.movementY / mH * 2.4; dragMoved += Math.abs(e.movementX) + Math.abs(e.movementY); }
+    const r = wrap.getBoundingClientRect();
+    checkHover(e.clientX - r.left, e.clientY - r.top);
   });
-  window.addEventListener('mouseup', () => isDrag=false);
-  mc.addEventListener('wheel', e => {
-    tZoom=Math.max(.5,Math.min(2.2,tZoom-e.deltaY*.001));
-    e.preventDefault();
-  }, {passive:false});
-
-  let tDist=0;
+  window.addEventListener('mouseup', () => { isDrag = false; });
+  mc.addEventListener('click', () => {
+    if (dragMoved > 6) return;
+    const e = EV.find(x => x.id === hovId);
+    if (e && e.url) location.href = e.url;
+  });
+  mc.addEventListener('wheel', e => { tZoom = Math.max(.6, Math.min(2.2, tZoom - e.deltaY * .001)); e.preventDefault(); }, { passive: false });
+  let tDist = 0, tapX = 0, tapY = 0;
   mc.addEventListener('touchstart', e => {
-    if (e.touches.length===1) { lx=e.touches[0].clientX; ly=e.touches[0].clientY; isDrag=true; }
-    if (e.touches.length===2) tDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
-  }, {passive:true});
+    if (e.touches.length === 1) { lx = tapX = e.touches[0].clientX; ly = tapY = e.touches[0].clientY; isDrag = true; }
+    if (e.touches.length === 2) tDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+  }, { passive: true });
   mc.addEventListener('touchmove', e => {
-    if (e.touches.length===1 && isDrag) {
-      tRY+=(e.touches[0].clientX-lx)/mW*3.2;
-      tRX+=(e.touches[0].clientY-ly)/mH*2.4;
-      lx=e.touches[0].clientX; ly=e.touches[0].clientY;
+    if (e.touches.length === 1 && isDrag) {
+      tRY += (e.touches[0].clientX - lx) / mW * 3.2; tRX += (e.touches[0].clientY - ly) / mH * 2.4;
+      lx = e.touches[0].clientX; ly = e.touches[0].clientY;
     }
-    if (e.touches.length===2) {
-      const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
-      tZoom=Math.max(.5,Math.min(2.2,tZoom*(d/tDist))); tDist=d;
+    if (e.touches.length === 2) {
+      const d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+      tZoom = Math.max(.6, Math.min(2.2, tZoom * (d / tDist))); tDist = d;
     }
     e.preventDefault();
-  }, {passive:false});
-  mc.addEventListener('touchend', () => isDrag=false);
-
-  // ── Projection ──────────────────────────────────────────
-  function proj(px,py,pz) {
-    const cY=Math.cos(rY),sY=Math.sin(rY);
-    const x1=px*cY-pz*sY, z1=px*sY+pz*cY;
-    const cX=Math.cos(rX),sX=Math.sin(rX);
-    const y1=py*cX-z1*sX, z2=py*sX+z1*cX;
-    const SC=Math.min(mW,mH)*.115*zoom, FOV=9;
-    const zz=z2+FOV; if(zz<=0) return null;
-    const s=FOV/zz;
-    return { sx:mW/2+x1*SC*s, sy:mH/2+y1*SC*s, sc:s*zoom, depth:z2 };
-  }
-
-  function evAlpha(e) {
-    const t=(e.year+(e.mo-1)/12-Y0)/(Y1-Y0);
-    const d=timeF-t; if(d<0) return 0;
-    return Math.min(1,d/.07);
-  }
-
-  function hexA(hex,a) {
-    const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
-    return `rgba(${r},${g},${b},${a})`;
-  }
+  }, { passive: false });
+  mc.addEventListener('touchend', e => {
+    isDrag = false;
+    const t = e.changedTouches[0]; if (!t) return;
+    if (Math.hypot(t.clientX - tapX, t.clientY - tapY) > 8) return;
+    const r = wrap.getBoundingClientRect(), prev = hovId;
+    checkHover(t.clientX - r.left, t.clientY - r.top, 22);
+    const ev = EV.find(x => x.id === hovId);
+    if (ev && ev.url && prev === hovId) location.href = ev.url;
+  });
 
   // ── Hover & tooltip ─────────────────────────────────────
-  function checkHover(mx,my) {
-    let best=null, bestD=9999;
-    EV.forEach(e => {
-      const p=projC[e.id]; if(!p||evAlpha(e)<.1) return;
-      const r=12*Math.max(.5,p.sc);
-      const d=Math.hypot(mx-p.sx,my-p.sy);
-      if(d<r&&d<bestD){bestD=d;best=e;}
+  function checkHover(mx, my, pad) {
+    let best = null, bestD = 1e9;
+    [...EV, ...MOONS].forEach(e => {
+      const p = projC[e.id]; if (!p || alphaOf(e) < .1) return;
+      const r = (e.of ? 9 : 16) * Math.max(.6, p.sc) + (pad || 0);
+      const d = Math.hypot(mx - p.sx, my - p.sy);
+      if (d < r && d < bestD) { bestD = d; best = e; }
     });
-    const newId=best?best.id:null;
-    if(newId!==hovId){ hovId=newId; showTip(best,best?projC[best.id]:null); }
+    const id = best ? best.id : null;
+    mc.style.cursor = best && best.url ? 'pointer' : 'grab';
+    if (id !== hovId) { hovId = id; showTip(best, best ? projC[best.id] : null); }
   }
-
-  function showTip(e,p) {
-    if(!e||!p){tip.classList.remove('on');return;}
-    tip.style.setProperty('--mt-col',e.col);
-    document.getElementById('mt-cat').textContent=e.cat;
-    document.getElementById('mt-title').textContent=e.title;
-    document.getElementById('mt-year').textContent=e.year;
-    document.getElementById('mt-body').textContent=e.body;
-    let tx=p.sx+16, ty=p.sy-10;
-    if(tx+230>mW) tx=p.sx-235;
-    if(ty+130>mH) ty=mH-135;
-    if(ty<5) ty=10;
-    tip.style.left=tx+'px'; tip.style.top=ty+'px';
+  function showTip(e, p) {
+    if (!e || !p) { tip.classList.remove('on'); return; }
+    const col = e.of ? e.col : ORB[e.g].col;
+    tip.style.setProperty('--mt-col', col);
+    document.getElementById('mt-cat').textContent = e.of ? 'An event on the path · no page' : (e.n + ' · ' + ORB[e.g].name);
+    document.getElementById('mt-title').textContent = e.title;
+    document.getElementById('mt-year').textContent = e.year + (e.url ? ' · click to enter' : '');
+    document.getElementById('mt-body').textContent = e.body;
+    let tx = p.sx + 18, ty = p.sy - 12;
+    if (tx + 236 > mW) tx = p.sx - 242;
+    if (ty + 140 > mH) ty = mH - 145;
+    if (ty < 6) ty = 8;
+    tip.style.left = tx + 'px'; tip.style.top = ty + 'px';
     tip.classList.add('on');
   }
-  tip.addEventListener('click',()=>{
-    const e=EV.find(ev=>ev.id===hovId);
-    if(e&&e.url) window.open(e.url,'_blank');
-  });
 
-  // ── Mini stars ──────────────────────────────────────────
-  const MSTARS = Array.from({length:80},()=>({
-    x:(Math.random()-.5)*6, y:(Math.random()-.5)*4, z:(Math.random()-.5)*8,
-    r:Math.random()*.7+.1, a:Math.random()*.45+.06,
-    tw:Math.random()*Math.PI*2, ts:.005+Math.random()*.01
-  }));
+  // ── Background dust ─────────────────────────────────────
+  const DUST = Array.from({ length: 140 }, () => ({ x: (Math.random() - .5) * 10, y: (Math.random() - .5) * 6, z: (Math.random() - .5) * 10, r: Math.random() * .7 + .1, a: Math.random() * .4 + .05, tw: Math.random() * 6.28 }));
 
-  // ── Draw ────────────────────────────────────────────────
-  function mapFrame() {
-    rX+=(tRX-rX)*.09; rY+=(tRY-rY)*.09; zoom+=(tZoom-zoom)*.09;
-    mCtx.clearRect(0,0,mW,mH);
+  function drawPlanet(p, col, r, a, isHov, fresh, sun) {
+    // glow
+    let g = mCtx.createRadialGradient(p.sx, p.sy, 0, p.sx, p.sy, r * 4.2);
+    g.addColorStop(0, hexA(col, .22 * a * (isHov ? 1.7 : 1))); g.addColorStop(1, hexA(col, 0));
+    mCtx.fillStyle = g; mCtx.beginPath(); mCtx.arc(p.sx, p.sy, r * 4.2, 0, 6.283); mCtx.fill();
+    // lit sphere: light comes from the centre of the system
+    const lx = sun.sx - p.sx, ly = sun.sy - p.sy, ll = Math.hypot(lx, ly) || 1;
+    const hx = p.sx + lx / ll * r * .45, hy = p.sy + ly / ll * r * .45;
+    g = mCtx.createRadialGradient(hx, hy, r * .1, p.sx, p.sy, r * 1.05);
+    g.addColorStop(0, 'rgba(255,248,230,' + .95 * a + ')'); g.addColorStop(.35, hexA(col, .95 * a)); g.addColorStop(1, 'rgba(8,8,20,' + .9 * a + ')');
+    mCtx.fillStyle = g; mCtx.beginPath(); mCtx.arc(p.sx, p.sy, r, 0, 6.283); mCtx.fill();
+    // thin atmosphere ring
+    mCtx.strokeStyle = hexA(col, .45 * a); mCtx.lineWidth = .7;
+    mCtx.beginPath(); mCtx.arc(p.sx, p.sy, r * 1.35, 0, 6.283); mCtx.stroke();
+    if (fresh) {
+      const pr = r * (1.8 + .9 * ((clock * .6) % 1));
+      mCtx.strokeStyle = 'rgba(240,166,216,' + .5 * a * (1 - ((clock * .6) % 1)) + ')'; mCtx.lineWidth = 1;
+      mCtx.beginPath(); mCtx.arc(p.sx, p.sy, pr, 0, 6.283); mCtx.stroke();
+    }
+    if (isHov) {
+      mCtx.strokeStyle = hexA(col, .9 * a); mCtx.lineWidth = 1;
+      mCtx.beginPath(); mCtx.arc(p.sx, p.sy, r * 2, 0, 6.283); mCtx.stroke();
+    }
+  }
 
-    // mini star field
-    MSTARS.forEach(s => {
-      s.tw+=s.ts;
-      const p=proj(s.x,s.y,s.z); if(!p) return;
-      const a=Math.max(0,s.a+Math.sin(s.tw)*.1);
-      mCtx.beginPath(); mCtx.arc(p.sx,p.sy,s.r*Math.max(.4,p.sc),0,Math.PI*2);
-      mCtx.fillStyle=`rgba(200,190,165,${a})`; mCtx.fill();
+  function mapFrame(now) {
+    const dt = Math.min(.05, last ? (now - last) / 1000 : .016); last = now;
+    rX += (tRX - rX) * .09; rY += (tRY - rY) * .09; zoom += (tZoom - zoom) * .09;
+    spin += ((hovId ? 0 : 1) - spin) * .08;
+    if (!still) clock += dt * spin;
+    mCtx.clearRect(0, 0, mW, mH);
+
+    DUST.forEach(s => {
+      const p = proj(s.x, s.y, s.z); if (!p) return;
+      mCtx.fillStyle = 'rgba(200,190,165,' + Math.max(0, s.a + Math.sin(clock * 1.2 + s.tw) * .1) + ')';
+      mCtx.beginPath(); mCtx.arc(p.sx, p.sy, s.r * Math.max(.4, p.sc), 0, 6.283); mCtx.fill();
     });
 
-    // project events
-    EV.forEach(e => { projC[e.id]=proj(e.px,e.py,e.pz); });
-
-    // sort depth back→front
-    const sorted=[...EV].sort((a,b)=>(projC[a.id]?.depth||0)-(projC[b.id]?.depth||0));
-
-    // links
-    LINKS.forEach(([ai,bi]) => {
-      const pa=projC[ai],pb=projC[bi]; if(!pa||!pb) return;
-      const ea=EV.find(e=>e.id===ai), eb=EV.find(e=>e.id===bi);
-      const a=Math.min(evAlpha(ea),evAlpha(eb)); if(a<.02) return;
-      const isHov=hovId===ai||hovId===bi;
-      mCtx.beginPath(); mCtx.moveTo(pa.sx,pa.sy); mCtx.lineTo(pb.sx,pb.sy);
-      mCtx.strokeStyle=isHov?`rgba(200,168,74,${.6*a})`:`rgba(200,168,74,${.12*a})`;
-      mCtx.lineWidth=isHov?.9:.45;
-      mCtx.setLineDash(isHov?[]:[3,6]); mCtx.stroke(); mCtx.setLineDash([]);
+    const sun = proj(0, 0, 0);
+    // orbits: back halves first
+    const ringPts = {};
+    Object.keys(ORB).forEach(k => {
+      const o = ORB[k], pts = [];
+      for (let i = 0; i <= 160; i++) { const q = orbitPoint(o, i / 160 * 6.2832); pts.push(proj(q[0], q[1], q[2])); }
+      ringPts[k] = pts;
     });
-
-    // nodes
-    sorted.forEach(e => {
-      const p=projC[e.id]; if(!p) return;
-      const a=evAlpha(e); if(a<.02) return;
-      const sc=Math.max(.45,p.sc);
-      const isHov=hovId===e.id;
-      const r=(isHov?13:8)*sc;
-
-      // glow
-      mCtx.beginPath(); mCtx.arc(p.sx,p.sy,r*3.5,0,Math.PI*2);
-      mCtx.fillStyle=hexA(e.col,.1*a*(isHov?1.8:1)); mCtx.fill();
-
-      // ring
-      mCtx.beginPath(); mCtx.arc(p.sx,p.sy,r*1.8,0,Math.PI*2);
-      mCtx.strokeStyle=hexA(e.col,.3*a); mCtx.lineWidth=.6*sc; mCtx.stroke();
-
-      // animated pulse ring
-      const pr=r*(1.4+.3*Math.sin(mt*.7+e.px));
-      mCtx.beginPath(); mCtx.arc(p.sx,p.sy,pr,0,Math.PI*2);
-      mCtx.strokeStyle=hexA(e.col,.12*a); mCtx.lineWidth=.5; mCtx.stroke();
-
-      // core
-      mCtx.beginPath(); mCtx.arc(p.sx,p.sy,r,0,Math.PI*2);
-      mCtx.fillStyle=hexA(e.col,.92*a); mCtx.fill();
-
-      // cross ticks
-      const tk=r*2.2;
-      [[0,-1],[0,1],[-1,0],[1,0]].forEach(([dx,dy]) => {
-        mCtx.beginPath();
-        mCtx.moveTo(p.sx+dx*r*1.15, p.sy+dy*r*1.15);
-        mCtx.lineTo(p.sx+dx*tk, p.sy+dy*tk);
-        mCtx.strokeStyle=hexA(e.col,.42*a); mCtx.lineWidth=.6; mCtx.stroke();
-      });
-
-      // label
-      if(a>.35) {
-        const ls=Math.max(.7,Math.min(1,sc));
-        mCtx.font=`${9.5*ls}px Cinzel,serif`;
-        mCtx.textAlign='center';
-        mCtx.fillStyle=`rgba(240,232,215,${.78*a*(isHov?1:.7)})`;
-        const lbl=e.title.length>20?e.title.slice(0,18)+'…':e.title;
-        mCtx.fillText(lbl, p.sx, p.sy+r+14*ls);
-        if(isHov){
-          mCtx.font=`italic ${8.5*ls}px Georgia,serif`;
-          mCtx.fillStyle=`rgba(120,116,110,${.85*a})`;
-          mCtx.fillText(e.year, p.sx, p.sy+r+26*ls);
+    function rings(front) {
+      Object.keys(ORB).forEach(k => {
+        const pts = ringPts[k], o = ORB[k];
+        for (let i = 0; i < pts.length - 1; i++) {
+          const a = pts[i], b = pts[i + 1]; if (!a || !b) continue;
+          if ((a.depth < 0) !== front) continue;
+          mCtx.strokeStyle = hexA(o.col, front ? .38 : .14); mCtx.lineWidth = front ? 1 : .7;
+          mCtx.beginPath(); mCtx.moveTo(a.sx, a.sy); mCtx.lineTo(b.sx, b.sy); mCtx.stroke();
         }
+      });
+    }
+    rings(false);
+
+    // bodies
+    EV.forEach(e => {
+      const o = ORB[e.g], th = e.base + clock * o.w;
+      e.pos = orbitPoint(o, th); projC[e.id] = proj(e.pos[0], e.pos[1], e.pos[2]);
+    });
+    MOONS.forEach(m => {
+      const host = EV.find(e => e.id === m.of), th = m.base + clock * m.w;
+      const q = [host.pos[0] + m.r * Math.cos(th), host.pos[1] + m.r * .6 * Math.sin(th * .9), host.pos[2] + m.r * Math.sin(th)];
+      projC[m.id] = proj(q[0], q[1], q[2]);
+    });
+    const items = [{ sun: true, depth: sun ? sun.depth : 0 }]
+      .concat(EV.map(e => ({ e, depth: projC[e.id] ? projC[e.id].depth : 0 })))
+      .concat(MOONS.map(m => ({ m, depth: projC[m.id] ? projC[m.id].depth : 0 })))
+      .sort((a, b) => b.depth - a.depth);
+
+    // the thread between the two newest portals
+    THREAD.forEach(([a, b]) => {
+      const pa = projC[a], pb = projC[b], ea = EV.find(e => e.id === a), eb = EV.find(e => e.id === b);
+      if (!pa || !pb) return;
+      const al = Math.min(alphaOf(ea), alphaOf(eb)); if (al < .05) return;
+      mCtx.strokeStyle = 'rgba(240,166,216,' + .55 * al + ')'; mCtx.setLineDash([2, 4]); mCtx.lineWidth = .9;
+      mCtx.beginPath(); mCtx.moveTo(pa.sx, pa.sy); mCtx.lineTo(pb.sx, pb.sy); mCtx.stroke(); mCtx.setLineDash([]);
+    });
+
+    items.forEach(it => {
+      if (it.sun) {
+        if (!sun) return;
+        const R = 20 * sun.sc;
+        let g = mCtx.createRadialGradient(sun.sx, sun.sy, 0, sun.sx, sun.sy, R * 5);
+        g.addColorStop(0, 'rgba(255,236,190,.55)'); g.addColorStop(.2, 'rgba(216,180,106,.22)'); g.addColorStop(1, 'rgba(216,180,106,0)');
+        mCtx.fillStyle = g; mCtx.beginPath(); mCtx.arc(sun.sx, sun.sy, R * 5, 0, 6.283); mCtx.fill();
+        g = mCtx.createRadialGradient(sun.sx - R * .25, sun.sy - R * .25, 1, sun.sx, sun.sy, R);
+        g.addColorStop(0, '#fffaf0'); g.addColorStop(.6, '#f1d79a'); g.addColorStop(1, 'rgba(216,180,106,.9)');
+        mCtx.fillStyle = g; mCtx.beginPath(); mCtx.arc(sun.sx, sun.sy, R * (1 + .03 * Math.sin(clock * 2)), 0, 6.283); mCtx.fill();
+        mCtx.font = (8.5 * Math.max(.8, sun.sc)) + 'px Cinzel,serif'; mCtx.textAlign = 'center';
+        mCtx.fillStyle = 'rgba(240,232,215,.55)'; mCtx.fillText('SPIRIT OF TIME', sun.sx, sun.sy + R + 15);
+        return;
+      }
+      if (it.m) {
+        const m = it.m, p = projC[m.id]; if (!p) return;
+        const a = alphaOf(m); if (a < .02) return;
+        const r = 3 * Math.max(.6, p.sc) * (hovId === m.id ? 1.5 : 1);
+        mCtx.fillStyle = hexA(m.col, .85 * a); mCtx.beginPath(); mCtx.arc(p.sx, p.sy, r, 0, 6.283); mCtx.fill();
+        if (hovId === m.id) { mCtx.strokeStyle = hexA(m.col, .8); mCtx.beginPath(); mCtx.arc(p.sx, p.sy, r * 2.2, 0, 6.283); mCtx.stroke(); }
+        return;
+      }
+      const e = it.e, p = projC[e.id]; if (!p) return;
+      const a = alphaOf(e); if (a < .02) return;
+      const col = ORB[e.g].col, isHov = hovId === e.id;
+      const sc = Math.max(.55, p.sc), r = (e.g === 'maps' ? 9.5 : e.g === 'essays' ? 8.5 : 8) * sc * (isHov ? 1.25 : 1);
+      drawPlanet(p, col, r, a, isHov, e.fresh, sun || p);
+      if (a > .3) {
+        const ls = Math.max(.75, Math.min(1.1, sc)), front = p.depth < .5;
+        mCtx.textAlign = 'center';
+        mCtx.font = (8 * ls) + 'px Cinzel,serif';
+        mCtx.fillStyle = hexA(col, .9 * a * (front || isHov ? 1 : .55));
+        mCtx.fillText(e.n, p.sx, p.sy - r - 7 * ls);
+        if (mW < 560 && !isHov && p.depth > -.2) return;
+        mCtx.font = (10 * ls) + 'px "Cormorant Garamond",Georgia,serif';
+        mCtx.fillStyle = 'rgba(240,232,215,' + .88 * a * (front || isHov ? 1 : .5) + ')';
+        const lbl = isHov || e.title.length <= 24 ? e.title : e.title.slice(0, 22) + '…';
+        mCtx.fillText(lbl, p.sx, p.sy + r + 14 * ls);
       }
     });
+    rings(true);
 
-    mt+=.018;
+    // legend
+    mCtx.textAlign = 'left'; mCtx.font = '8.5px Cinzel,serif';
+    Object.keys(ORB).forEach((k, i) => {
+      const y = 18 + i * 15;
+      mCtx.fillStyle = hexA(ORB[k].col, .9); mCtx.beginPath(); mCtx.arc(16, y - 3, 3, 0, 6.283); mCtx.fill();
+      mCtx.fillStyle = 'rgba(240,232,215,.6)'; mCtx.fillText(ORB[k].name.toUpperCase(), 26, y);
+    });
     requestAnimationFrame(mapFrame);
   }
 
-  // ── Slider & play ────────────────────────────────────────
-  const sl=document.getElementById('map-slider');
-  const yr=document.getElementById('map-year');
-  const pb=document.getElementById('map-play');
-  if(sl) sl.addEventListener('input',()=>{
-    timeF=parseFloat(sl.value)/100;
-    autoplay=false; pb.textContent='▶ Play'; pb.classList.remove('playing');
-    yr.textContent=Math.round(Y0+(Y1-Y0)*timeF);
+  // ── Slider & play ───────────────────────────────────────
+  const sl = document.getElementById('map-slider'), yr = document.getElementById('map-year'), pb = document.getElementById('map-play');
+  const yearAt = (f) => Math.min(2026, Math.floor(Y0 + (Y1 - Y0) * f));
+  if (sl) sl.addEventListener('input', () => {
+    timeF = parseFloat(sl.value) / 100; autoplay = false;
+    if (pb) { pb.textContent = '▶ Play'; pb.classList.remove('playing'); }
+    if (yr) yr.textContent = yearAt(timeF);
   });
-  if(pb) pb.addEventListener('click',function(){
-    autoplay=!autoplay;
-    this.textContent=autoplay?'⏸ Pause':'▶ Play';
-    this.classList.toggle('playing',autoplay);
-    if(autoplay&&timeF>=.99){timeF=0;if(sl)sl.value=0;}
+  if (pb) pb.addEventListener('click', function () {
+    autoplay = !autoplay;
+    this.textContent = autoplay ? '⏸ Pause' : '▶ Play';
+    this.classList.toggle('playing', autoplay);
+    if (autoplay && timeF >= .99) { timeF = 0; if (sl) sl.value = 0; }
   });
-  setInterval(()=>{
-    if(!autoplay)return;
-    timeF=Math.min(1,timeF+.0025);
-    if(sl) sl.value=timeF*100;
-    if(yr) yr.textContent=Math.round(Y0+(Y1-Y0)*timeF);
-    if(timeF>=1){autoplay=false;if(pb){pb.textContent='▶ Play';pb.classList.remove('playing');}}
-  },30);
-  if(yr) yr.textContent=Y1;
+  setInterval(() => {
+    if (!autoplay) return;
+    timeF = Math.min(1, timeF + .0022);
+    if (sl) sl.value = timeF * 100;
+    if (yr) yr.textContent = yearAt(timeF);
+    if (timeF >= 1) { autoplay = false; if (pb) { pb.textContent = '▶ Play'; pb.classList.remove('playing'); } }
+  }, 30);
+  if (yr) yr.textContent = 2026;
 
-  // ── Kick off ─────────────────────────────────────────────
   window.addEventListener('resize', resize);
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{ resize(); mapFrame(); }));
+  requestAnimationFrame(() => requestAnimationFrame(() => { resize(); requestAnimationFrame(mapFrame); }));
 })();
 </script>
 

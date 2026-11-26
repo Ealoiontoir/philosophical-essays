@@ -279,7 +279,7 @@
   html.vn-dark-head .cento-header > .container,
   html.vn-dark-head .cento-header .nav-wrap { position: relative; z-index: 1; }
   .vn-head-canvas {
-    position: absolute; inset: 0; z-index: 0; pointer-events: none; display: block;
+    position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; display: block;
     -webkit-mask-image: linear-gradient(90deg, #000 0, #000 16%, rgba(0,0,0,.22) 33%, rgba(0,0,0,.1) 50%, rgba(0,0,0,.22) 67%, #000 84%, #000 100%);
             mask-image: linear-gradient(90deg, #000 0, #000 16%, rgba(0,0,0,.22) 33%, rgba(0,0,0,.1) 50%, rgba(0,0,0,.22) 67%, #000 84%, #000 100%);
   }
@@ -317,3 +317,10 @@
 }
 .vn-head-modes { display: none; }
 @media (min-width: 993px) { html.vn-dark-head .vn-head-modes { display: flex; } }
+
+/* dark page ground: no white margins around the dark pages */
+html.vn-js, html.vn-js body, html.vn-js body > .wrapper, html.vn-js .content-wrap, html.vn-js #main-wrap, html.vn-js #footer-wrap, html.vn-js .footer-wrap { background-color: #07080f !important; }
+html.vn-js body.wsite-page-contact .wsite-section.wsite-body-section, html.vn-js body.wsite-page-contact .wsite-section-wrap { background: transparent !important; }
+html.vn-js body.wsite-page-contact .content-wrap {
+  background: radial-gradient(900px 420px at 15% 0%, rgba(216,180,106,.08), transparent 70%), radial-gradient(800px 400px at 90% 100%, rgba(110,130,255,.06), transparent 70%), #07080f !important;
+}
