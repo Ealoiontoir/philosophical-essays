@@ -1,0 +1,33 @@
+.virtuvian-contact {
+  padding-block: 1rem;
+}
+
+.virtuvian-contact a:focus-visible,
+.virtuvian-submenu-toggle:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+.virtuvian-submenu-toggle {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  padding: 0.5rem 0.75rem;
+}
+
+.desktop-nav li:focus-within > .wsite-menu-wrap {
+  display: block !important;
+  visibility: visible;
+}
+
+@media (max-width: 992px) {
+  .mobile-nav .wsite-menu-wrap[data-virtuvian-open="false"] {
+    display: none;
+  }
+
+  .mobile-nav .wsite-menu-wrap[data-virtuvian-open="true"] {
+    display: block;
+  }
+}

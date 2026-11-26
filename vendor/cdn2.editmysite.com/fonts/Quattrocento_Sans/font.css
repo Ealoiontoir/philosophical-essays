@@ -1,0 +1,44 @@
+
+@font-face {
+  font-family: 'Quattrocento Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url("/vendor/cdn2.editmysite.com/fonts/Quattrocento_Sans/regular.eot"); /* IE9 Compat Modes */
+  src: url("/vendor/cdn2.editmysite.com/fonts/Quattrocento_Sans/regular.eot") format('embedded-opentype'), /* IE6-IE8 */
+       url("/vendor/cdn2.editmysite.com/fonts/Quattrocento_Sans/regular.woff2") format('woff2'), /* Super Modern Browsers */
+       url("/vendor/cdn2.editmysite.com/fonts/Quattrocento_Sans/regular.woff") format('woff'), /* Modern Browsers */
+       url("/vendor/cdn2.editmysite.com/fonts/Quattrocento_Sans/regular.ttf") format('truetype'); /* Safari, Android, iOS */
+}
+
+@font-face {
+  font-family: 'Quattrocento Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: url("/vendor/cdn2.editmysite.com/fonts/Quattrocento_Sans/italic.eot"); /* IE9 Compat Modes */
+  src: url("/vendor/cdn2.editmysite.com/fonts/Quattrocento_Sans/italic.eot") format('embedded-opentype'), /* IE6-IE8 */
+       url("/vendor/cdn2.editmysite.com/fonts/Quattrocento_Sans/italic.woff2") format('woff2'), /* Super Modern Browsers */
+       url("/vendor/cdn2.editmysite.com/fonts/Quattrocento_Sans/italic.woff") format('woff'), /* Modern Browsers */
+       url("/vendor/cdn2.editmysite.com/fonts/Quattrocento_Sans/italic.ttf") format('truetype'); /* Safari, Android, iOS */
+}
+
+@font-face {
+  font-family: 'Quattrocento Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: url("/vendor/cdn2.editmysite.com/fonts/Quattrocento_Sans/bold.eot"); /* IE9 Compat Modes */
+  src: url("/vendor/cdn2.editmysite.com/fonts/Quattrocento_Sans/bold.eot") format('embedded-opentype'), /* IE6-IE8 */
+       url("/vendor/cdn2.editmysite.com/fonts/Quattrocento_Sans/bold.woff2") format('woff2'), /* Super Modern Browsers */
+       url("/vendor/cdn2.editmysite.com/fonts/Quattrocento_Sans/bold.woff") format('woff'), /* Modern Browsers */
+       url("/vendor/cdn2.editmysite.com/fonts/Quattrocento_Sans/bold.ttf") format('truetype'); /* Safari, Android, iOS */
+}
+
+@font-face {
+  font-family: 'Quattrocento Sans';
+  font-style: italic;
+  font-weight: 700;
+  src: url("/vendor/cdn2.editmysite.com/fonts/Quattrocento_Sans/bolditalic.eot"); /* IE9 Compat Modes */
+  src: url("/vendor/cdn2.editmysite.com/fonts/Quattrocento_Sans/bolditalic.eot") format('embedded-opentype'), /* IE6-IE8 */
+       url("/vendor/cdn2.editmysite.com/fonts/Quattrocento_Sans/bolditalic.woff2") format('woff2'), /* Super Modern Browsers */
+       url("/vendor/cdn2.editmysite.com/fonts/Quattrocento_Sans/bolditalic.woff") format('woff'), /* Modern Browsers */
+       url("/vendor/cdn2.editmysite.com/fonts/Quattrocento_Sans/bolditalic.ttf") format('truetype'); /* Safari, Android, iOS */
+}
