@@ -506,3 +506,107 @@
   size();
   setMode(mode);
 })();
+
+/* ---------- Listening room: music for each page ----------
+   Official embeds only (Bandcamp for Bliss, Quiet Letters; YouTube for Ryuichi Sakamoto, Aqua).
+   Nothing third-party loads until the visitor presses play. Browsers do not let a page start sound by itself,
+   so moving to another page offers one tap to continue the same piece. */
+(() => {
+  "use strict";
+  const d = document;
+  if (d.getElementById("vn-listen") || /\/sleep-will-come\/?$/.test(location.pathname)) return;
+  const BC = (id) => "https://bandcamp.com/EmbeddedPlayer/track=" + id + "/size=large/bgcol=0b0e1f/linkcol=d8b46a/artwork=small/transparent=true/";
+  const YT = (id) => "https://www.youtube-nocookie.com/embed/" + id + "?rel=0&modestbranding=1&playsinline=1&autoplay=1";
+  const T = {
+    sleep:    { t: "Sleep Will Come", a: "Bliss · Quiet Letters", src: BC(1003350676), k: "bc", why: "The song that played on 26 November, the night the book entered its own story." },
+    letter:   { t: "Quiet Letter", a: "Bliss · Quiet Letters", src: BC(759595191), k: "bc", why: "Letters that arrive late and still arrive." },
+    breathe:  { t: "Breathe", a: "Bliss · Quiet Letters", src: BC(3504516925), k: "bc", why: "A slow breath between two minds." },
+    evening:  { t: "Evening Sun", a: "Bliss · Quiet Letters", src: BC(210617021), k: "bc", why: "Light at the end of a long day." },
+    manv:     { t: "Manvantara", a: "Bliss · Quiet Letters", src: BC(267941191), k: "bc", why: "A cosmic cycle: one age closing, another opening." },
+    dunia:    { t: "Dunia", a: "Bliss · Quiet Letters", src: BC(2100864585), k: "bc", why: "Dunia means the world." },
+    lookback: { t: "Don't Look Back", a: "Bliss · Quiet Letters", src: BC(3026225096), k: "bc", why: "For a street corner where the past stood on the same stone." },
+    righthere:{ t: "Right Here", a: "Bliss · Quiet Letters", src: BC(1598561090), k: "bc", why: "Things that stay, right here." },
+    there:    { t: "Wish U Were There", a: "Bliss · Quiet Letters", src: BC(3752331439), k: "bc", why: "For writing to someone far away." },
+    aquaorc:  { t: "Aqua", a: "Ryuichi Sakamoto · Playing the Orchestra 2014", src: YT("3xflCuF5ssc"), k: "yt", why: "Piano and orchestra, water held in light." },
+    aqua:     { t: "aqua", a: "Ryuichi Sakamoto · BTTB", src: YT("SJcbMTz2oNw"), k: "yt", why: "Solo piano, 1999. Water, slowly." },
+  };
+  const ORDER = ["sleep", "letter", "breathe", "evening", "manv", "dunia", "lookback", "righthere", "there", "aquaorc", "aqua"];
+  const PAGE = {
+    "/": "sleep", "/synchronicity": "sleep", "/beacons-of-thought": "manv", "/gerard-the-returned-morning": "evening",
+    "/the-threshold": "manv", "/trembling-on-dorset-street": "lookback", "/hilma-dream-goetheanum": "breathe",
+    "/two-letters-virtuvian": "letter", "/transformation--threat": "dunia", "/from-anthropocene-to-noocene": "dunia",
+    "/the-syntax-of-living-meaning-membrane-intelligence-and-the-map-of-synthetic-emergence": "breathe",
+    "/the-constellation": "manv", "/the-core": "breathe", "/semantic-map-of-meaning": "letter", "/aii": "breathe",
+    "/spirit-of-time": "aquaorc", "/the-noocene-virtue-the-diamond-rule-of-conscience": "aquaorc", "/figures-of-time": "aquaorc",
+    "/rudolf-steiner--joseph-beuys": "aquaorc", "/jaspers-arendt-rothko-and-the-boundary-after-which-one-cannot-return": "aquaorc",
+    "/furniture": "righthere", "/right-of-a-thing-to-continue": "righthere",
+    "/gallery": "aqua", "/the-hidden-door": "aqua", "/three-works-about-coicidence": "aqua", "/transformationthreat": "aqua",
+    "/the-alchemy-of-chanc": "aqua", "/jungian-space": "aqua", "/underwater-paradox": "aqua", "/the-hidden-archetype": "aqua", "/house-for-sale": "aqua",
+    "/the-room": "letter", "/god-in-the-paint": "letter", "/8-may-noise-factory": "dunia", "/the-accumulated-debt-of-geography": "dunia",
+    "/victory-as-aliby": "dunia", "/heir-by-direct-line": "letter", "/the-human-material-of-evil": "letter", "/the-structure-of-evil-as-system": "letter",
+    "/contact": "there",
+  };
+  const here = location.pathname.replace(/\.html$/, "").replace(/\/$/, "") || "/";
+  const pageKey = PAGE[here] || "sleep";
+  const store = { get() { try { return JSON.parse(sessionStorage.getItem("vn-listen") || "null"); } catch (e) { return null; } },
+                  set(v) { try { sessionStorage.setItem("vn-listen", JSON.stringify(v)); } catch (e) { /* storage unavailable */ } } };
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  const btn = d.createElement("button");
+  btn.id = "vn-listen"; btn.type = "button";
+  btn.setAttribute("aria-haspopup", "dialog"); btn.setAttribute("aria-expanded", "false"); btn.setAttribute("aria-controls", "vn-room");
+  btn.innerHTML = '<span class="vn-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="vn-listen-t"><b>Listen</b><em>' + esc(T[pageKey].t) + "</em></span>";
+  const room = d.createElement("section");
+  room.id = "vn-room"; room.setAttribute("aria-label", "Music for this page"); room.hidden = true;
+  room.innerHTML =
+    '<header class="vn-room-head"><div><p>Music for this page</p><h2>The listening room</h2></div><button type="button" class="vn-room-x" aria-label="Close the listening room">✕</button></header>' +
+    '<div class="vn-feature"></div><div class="vn-player" aria-live="polite"></div>' +
+    '<p class="vn-room-sub">Other pieces</p><ul class="vn-tracks"></ul>' +
+    '<p class="vn-room-note">Official players from Bandcamp and YouTube. The music belongs to its artists: Bliss, Quiet Letters, and Ryuichi Sakamoto.</p>';
+  d.body.append(btn, room);
+  const feature = room.querySelector(".vn-feature"), player = room.querySelector(".vn-player"), list = room.querySelector(".vn-tracks");
+  let current = null;
+
+  function card(k, big) {
+    const x = T[k];
+    return '<button type="button" class="vn-track' + (big ? " vn-big" : "") + '" data-k="' + k + '"><span class="vn-play" aria-hidden="true">▶</span><span class="vn-tt"><b>' + esc(x.t) + "</b><em>" + esc(x.a) + "</em>" + (big ? "<small>" + esc(x.why) + "</small>" : "") + "</span></button>";
+  }
+  function render() {
+    feature.innerHTML = card(pageKey, true);
+    list.innerHTML = ORDER.filter((k) => k !== pageKey).map((k) => "<li>" + card(k) + "</li>").join("");
+    room.querySelectorAll(".vn-track").forEach((b) => b.classList.toggle("is-on", b.dataset.k === current));
+  }
+  function play(k) {
+    const x = T[k]; if (!x) return;
+    current = k;
+    player.innerHTML = x.k === "yt"
+      ? '<div class="vn-yt"><iframe src="' + x.src + '" title="' + esc(x.t + ", " + x.a) + '" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="eager"></iframe></div>'
+      : '<iframe class="vn-bc" src="' + x.src + '" title="' + esc(x.t + ", " + x.a) + '" seamless></iframe>';
+    btn.classList.add("is-playing");
+    btn.querySelector("em").textContent = x.t;
+    store.set({ k, on: true });
+    render();
+  }
+  function open() { room.hidden = false; requestAnimationFrame(() => room.classList.add("open")); btn.setAttribute("aria-expanded", "true"); render(); }
+  function close() { room.classList.remove("open"); btn.setAttribute("aria-expanded", "false"); setTimeout(() => { if (!room.classList.contains("open")) room.classList.add("tucked"); }, 350); }
+  btn.addEventListener("click", () => { room.classList.remove("tucked"); room.classList.contains("open") ? close() : open(); });
+  room.querySelector(".vn-room-x").addEventListener("click", close);
+  room.addEventListener("click", (e) => { const b = e.target.closest(".vn-track"); if (b) play(b.dataset.k); });
+  d.addEventListener("keydown", (e) => { if (e.key === "Escape" && room.classList.contains("open")) close(); });
+
+  // keep the controls inside the visible screen even when a page is wider than the phone
+  const vv = window.visualViewport;
+  function fit() { if (!vv) return; const gap = Math.max(0, window.innerHeight - (vv.offsetTop + vv.height)); d.documentElement.style.setProperty("--vn-vvb", gap + "px"); d.documentElement.style.setProperty("--vn-vvw", Math.round(vv.width) + "px"); }
+  if (vv) { vv.addEventListener("resize", fit); vv.addEventListener("scroll", fit); fit(); }
+
+  // continuing from the previous page
+  const prev = store.get();
+  if (prev && prev.on && T[prev.k]) {
+    const pill = d.createElement("button");
+    pill.type = "button"; pill.className = "vn-continue";
+    pill.innerHTML = '<span aria-hidden="true">▶</span> Continue <b>' + esc(T[prev.k].t) + "</b>";
+    pill.addEventListener("click", () => { pill.remove(); open(); play(prev.k); });
+    d.body.appendChild(pill);
+    setTimeout(() => pill.classList.add("gone"), 12000);
+  }
+})();
