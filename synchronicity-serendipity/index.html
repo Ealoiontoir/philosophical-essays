@@ -633,7 +633,7 @@ function hubInfo(id){const h=byId[id];const ns=E.filter(e=>e.hubs.includes(id));
 
 
 /* ---------- codex of connections ---------- */
-const SHEETS=[{id:"dorset",img:"hub-dorset.jpg",cap:"Codex sheet, AI illustration: the corner of Dorset Street and Blessington Street with the times of the two photographs, 29 November 2021 at 10:38 and 30 November 2021 at 10:25, and the four chains that return to it",note:"The corner photographed on two mornings in a row; four chains come back to it."}];
+const SHEETS=[{id:"dorset",img:"hub-dorset.jpg",cap:"Codex sheet, AI illustration: the corner of Dorset Street and Blessington Street with the times of the two photographs, 29 November 2021 at 10:38 and 30 November 2021 at 10:25, and the four chains that return to it",note:"The corner photographed on two mornings in a row; four chains come back to it."},{id:"crossing",img:"hub-crossing.jpg",cap:"Codex sheet, AI illustration: the crossing as a threshold between two worlds, and the four chains that return to it in time order, Dorset Street 2021, the elephant 2023, Verner in Latvia 2024, the pull-up bars 2025",note:"A threshold that keeps returning, in Dublin and in Latvia."}];
 function sheetOf(id){return SHEETS.find(s=>s.id===id)}
 function renderCodex(){const g=$("sx-codexgrid");if(!g)return;
  g.innerHTML=SHEETS.map(s=>{const h=byId[s.id];const ns=s.chains?s.chains.map(i=>E.find(e=>e.id===i)).filter(Boolean):E.filter(e=>e.hubs.includes(s.id));const lab=h?h.label:s.label;
