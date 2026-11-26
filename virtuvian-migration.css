@@ -36,7 +36,7 @@
   .vn-open > .vn-caret, .vn-caret:hover { opacity: 1; }
   .vn-open > .vn-caret { transform: rotate(180deg); }
   .vn-caret:focus-visible { outline: 2px solid var(--vn-gold); outline-offset: 2px; }
-  .desktop-nav .vn-open > a.wsite-menu-item { color: #000 !important; }
+  .desktop-nav .vn-open > a.wsite-menu-item { color: #fff3d6 !important; }
 
   /* ordinary dropdowns: a compact glass card with a clear tree */
   .desktop-nav .wsite-menu-default > li > .wsite-menu-wrap:not(.vn-mega) {
@@ -263,3 +263,57 @@
 @media (prefers-reduced-motion: reduce) {
   .vn-panel, #vn-sheet, .desktop-nav .vn-mega, .desktop-nav .wsite-menu-wrap, .vn-mega > * { transition: none !important; }
 }
+
+/* ---------- Living header (desktop): dark band, light menu, quiet motion at the edges ---------- */
+@media (min-width: 993px) {
+  html.vn-dark-head .cento-header {
+    background: radial-gradient(1200px 260px at 50% -40px, rgba(216, 180, 106, .10), transparent 70%), linear-gradient(180deg, #0c0e1c 0%, #07080f 100%) !important;
+    isolation: isolate;
+  }
+  html.vn-dark-head .cento-header::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; z-index: 2; pointer-events: none;
+    background: linear-gradient(90deg, transparent, rgba(216, 180, 106, .45) 30%, rgba(216, 180, 106, .45) 70%, transparent);
+  }
+  html.vn-dark-head .cento-header .nav-wrap,
+  html.vn-dark-head body.affix .cento-header .nav-wrap { background: transparent !important; border-bottom: 0 !important; }
+  html.vn-dark-head .cento-header > .container,
+  html.vn-dark-head .cento-header .nav-wrap { position: relative; z-index: 1; }
+  .vn-head-canvas {
+    position: absolute; inset: 0; z-index: 0; pointer-events: none; display: block;
+    -webkit-mask-image: linear-gradient(90deg, #000 0, #000 16%, rgba(0,0,0,.22) 33%, rgba(0,0,0,.1) 50%, rgba(0,0,0,.22) 67%, #000 84%, #000 100%);
+            mask-image: linear-gradient(90deg, #000 0, #000 16%, rgba(0,0,0,.22) 33%, rgba(0,0,0,.1) 50%, rgba(0,0,0,.22) 67%, #000 84%, #000 100%);
+  }
+  html.vn-dark-head .desktop-nav a.wsite-menu-item {
+    position: relative; color: rgba(234, 219, 192, .74) !important; text-shadow: 0 0 18px rgba(7, 8, 15, .9);
+    transition: color .3s, text-shadow .3s;
+  }
+  html.vn-dark-head .desktop-nav a.wsite-menu-item::after {
+    content: ""; position: absolute; left: 15px; right: 15px; bottom: 1px; height: 1px; background: var(--vn-gold);
+    transform: scaleX(0); transform-origin: 50% 50%; transition: transform .45s var(--vn-ease);
+  }
+  html.vn-dark-head .desktop-nav li:hover > a.wsite-menu-item,
+  html.vn-dark-head .desktop-nav .vn-open > a.wsite-menu-item,
+  html.vn-dark-head .desktop-nav a.wsite-menu-item:focus-visible { color: #fff3d6 !important; text-shadow: 0 0 16px rgba(216, 180, 106, .45); }
+  html.vn-dark-head .desktop-nav li:hover > a.wsite-menu-item::after,
+  html.vn-dark-head .desktop-nav .vn-open > a.wsite-menu-item::after { transform: scaleX(1); }
+  html.vn-dark-head .desktop-nav li#active > a.wsite-menu-item,
+  html.vn-dark-head .desktop-nav li.vn-here > a.wsite-menu-item { color: var(--vn-gold) !important; }
+  html.vn-dark-head .desktop-nav li#active > a.wsite-menu-item::after,
+  html.vn-dark-head .desktop-nav li.vn-here > a.wsite-menu-item::after { transform: scaleX(.35); }
+  html.vn-dark-head .vn-caret { color: rgba(234, 219, 192, .8); }
+
+  .vn-head-modes {
+    position: absolute; top: 14px; right: 18px; z-index: 3; display: flex; gap: 2px; padding: 3px;
+    border: 1px solid rgba(216, 180, 106, .18); border-radius: 999px; background: rgba(7, 8, 15, .45);
+    opacity: .45; transition: opacity .3s;
+  }
+  .vn-head-modes:hover, .vn-head-modes:focus-within { opacity: 1; }
+  .vn-head-modes button {
+    width: 26px; height: 26px; padding: 0; border: 0; border-radius: 50%; background: transparent; cursor: pointer;
+    color: rgba(234, 219, 192, .75); font: 13px/1 Georgia, serif; display: grid; place-items: center;
+  }
+  .vn-head-modes button[aria-pressed="true"] { background: rgba(216, 180, 106, .22); color: #fff3d6; }
+  .vn-head-modes button:focus-visible { outline: 1px solid var(--vn-gold); }
+}
+.vn-head-modes { display: none; }
+@media (min-width: 993px) { html.vn-dark-head .vn-head-modes { display: flex; } }
